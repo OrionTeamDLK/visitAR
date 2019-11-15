@@ -28,11 +28,11 @@ const navigator = createStackNavigator({
   initialRouteName: 'Index',
   defaultNavigationOptions:{
     title:'VisitAR  ',
-    headerTitleStyle: { 
-      textAlign:"center", 
+    headerTitleStyle: {
+      textAlign:"center",
       flex:1 ,
       fontWeight: 'bold'
-  },    
+  },
   headerStyle: {
     backgroundColor: '#f4511e',
   },
@@ -40,9 +40,9 @@ const navigator = createStackNavigator({
   }
 });
 
-//Donal commit 15 - 11 - 19 
+//Donal commit 15 - 11 - 19
 //Donal commit 15 - 11 - 19
 //paddy commit better than donals
+// Oisin's test commit - it's not "visitARRR" Paddy why are pirates involved I don't get it.
 
 export default createAppContainer(navigator);
-
