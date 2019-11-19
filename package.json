@@ -31,12 +31,8 @@
     "react-dom": "^16.8.3"
   },
   "jest": {
-    "preset":
-      "react-native"
-    ,
-    "transformIgnorePatterns": [
-      "node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)"
-    ],
+    "preset": "react-native",
+    "transformIgnorePatterns": ["node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)"],
     "setupFilesAfterEnv": ["jest-enzyme"],
     "testEnvironment": "enzyme",
     "testEnvironmentOptions": {
