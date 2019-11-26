@@ -6,7 +6,7 @@ import MapView from "react-native-maps";
 const GoogleMapsScreen = () => {
 	return (
 		<View style={styles.container}>
-			{/*<MapView
+			<MapView
 				style={styles.mapStyle}
 				customMapStyle={mapStyle}
 				initialRegion={{
@@ -15,7 +15,7 @@ const GoogleMapsScreen = () => {
 					latitudeDelta: 0.03,
 					longitudeDelta: 0.03
 				}}
-			/>*/}
+			/>
 			<View
 				style={styles.ovewrlayView}>
 				<NavigationButton
