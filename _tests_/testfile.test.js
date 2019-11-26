@@ -5,7 +5,7 @@
 import 'react-native';
 import React from 'react';
 import { shallow } from 'enzyme';
-import Testfile from '../src/screens/testfile';
+import Testfile from '../src/screensTests/testfile';
 
 
 // Note: this is just for use with Jest snapshot testing
