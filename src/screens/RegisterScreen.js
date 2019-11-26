@@ -4,10 +4,10 @@ import NavigationButton from '../Components/NavigationButton';
 
 const RegisterScreen = () => {
     return (
-        <View>
-        <Text>VisitAR</Text>
-        <Text>Register screen</Text>
-        <Text>inpit fields</Text>
+        <View data-test = "RegisterScreen_view">
+        <Text data-test = "RegisterScreen_text">VisitAR</Text>
+        <Text data-test = "RegisterScreen_text">Register screen</Text>
+        <Text data-test = "RegisterScreen_text">inpit fields</Text>
         </View>
     );
 };

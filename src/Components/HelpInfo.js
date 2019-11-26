@@ -3,8 +3,8 @@ import {View, Text, StyleSheet} from 'react-native';
 
 const HelpInfo = (props) => {
     return(
-        <View style={styles.slideDefault}>
-            <Text style={styles.text}>Help {props.num} </Text>
+        <View data-test = "helpinfo_view" style={styles.slideDefault}>
+            <Text data-test = "helpinfo_text" style={styles.text}>Help {props.num} </Text>
         </View>
     );
 };

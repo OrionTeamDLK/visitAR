@@ -5,8 +5,9 @@ import MapView from "react-native-maps";
 
 const GoogleMapsScreen = () => {
 	return (
-		<View style={styles.container}>
+		<View data-test = "GoogleMapsScreen_view" style={styles.container}>
 			<MapView
+				data-test = "GoogleMapsScreen_map_view"
 				style={styles.mapStyle}
 				customMapStyle={mapStyle}
 				initialRegion={{
@@ -19,6 +20,7 @@ const GoogleMapsScreen = () => {
 			<View
 				style={styles.ovewrlayView}>
 				<NavigationButton
+					data-test = "GoogleMapsScreen_button"
 					title="AR View"
 					icon="globe"
 					navName="Index"

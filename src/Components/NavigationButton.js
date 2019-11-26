@@ -8,20 +8,24 @@ import { withNavigation } from 'react-navigation';
 
 const NavigationButton =(props) => {
     return (
+
         <Button
         icon={<Icon name={props.icon} size={30} color="white" style={styles.iconStyle} />}
         raised
         color="white"
         buttonStyle={styles.button}
         title={props.title}onPress={() => props.navigation.navigate(props.navName)}
+
+
     />
+
     );
 };
 
 const styles = StyleSheet.create({
 	button: {
         minWidth:150,
-        alignSelf:'center', 
+        alignSelf:'center',
     },
     iconStyle:{
         marginHorizontal:10

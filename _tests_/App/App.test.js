@@ -5,7 +5,7 @@
 import 'react-native';
 import React from 'react';
 import { shallow } from 'enzyme';
-
+import App from '../../App'
 
 // Note: this is just for use with Jest snapshot testing
 // and comes packaged with react-native init project.
@@ -13,6 +13,9 @@ import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 
 // This test just uses Jest snapshot testing
-it('renders correctly, test using Jest', () => {
-  expect(1).toBe(1);
+describe('<App />', () => {
+  it('App renders...', () => {
+
+    expect(1).toBe(1);
+  });
 });

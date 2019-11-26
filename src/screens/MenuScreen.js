@@ -5,22 +5,26 @@ import NavigationButton from '../Components/NavigationButton';
 
 const MenuScreen = ({ navigation }) => {
 	return (
-		<View>
-			<Text>VisitAR</Text>
-			<Text>Menu Screen!</Text>
-			<NavigationButton 
+		<View data-test = "MenuScreen_view">
+			<Text data-test = "MenuScreen_text">VisitAR</Text>
+			<Text data-test = "MenuScreen_text">Menu Screen!</Text>
+			<NavigationButton
+			data-test = "MenuScreen_button"
 			title="Profile"
 			icon = "address-card"
 			navName = "Profile"/>
-			<NavigationButton 
+			<NavigationButton
+			data-test = "MenuScreen_button"
 			title="Login"
 			icon = "sign-in"
 			navName = "Login"/>
-			<NavigationButton 
+			<NavigationButton
+			data-test = "MenuScreen_button"
 			title="Language"
 			icon = "language"
 			navName = "Language"/>
-			<NavigationButton 
+			<NavigationButton
+			data-test = "MenuScreen_button"
 			title="Settings"
 			icon = "cog"
 			navName = "Settings"/>
