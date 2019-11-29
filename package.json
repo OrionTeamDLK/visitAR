@@ -30,21 +30,29 @@
     "jest": "^24.9.0",
     "jest-environment-enzyme": "^7.1.2",
     "jest-enzyme": "^7.1.2",
+    "jest-expo": "^35.0.0",
     "react-dom": "^16.8.3"
   },
   "jest": {
+<<<<<<< HEAD
     "preset": "react-native",
 <<<<<<< HEAD
+=======
+    "preset": "jest-expo",
+>>>>>>> 10eff28b75b2bc720ec32ee1dd4bff0084146bf8
     "transformIgnorePatterns": [
       "node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)"
     ],
     "setupFilesAfterEnv": [
       "jest-enzyme"
     ],
+<<<<<<< HEAD
 =======
     "transformIgnorePatterns": ["node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)"],
     "setupFilesAfterEnv": ["jest-enzyme"],
 >>>>>>> dac87718bdc65937f606a1c33e15ace3c176c5cd
+=======
+>>>>>>> 10eff28b75b2bc720ec32ee1dd4bff0084146bf8
     "testEnvironment": "enzyme",
     "testEnvironmentOptions": {
       "enzymeAdapter": "react16"

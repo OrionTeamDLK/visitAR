@@ -10,20 +10,20 @@ const theme = {
 
 const IndexScreen = ({ navigation }) => {
 	return (
-		<View>
-			<Text>VisitAR</Text>
-			<Text>Index Screen!</Text>
-			<NavigationButton 
+		<View data-test = "index_view">
+			<Text data-test = "index_text">VisitAR</Text>
+			<Text data-test = "index_text">Index Screen!</Text>
+			<NavigationButton data-test = "index_nav_button"
 			title="Maps View"
 			icon = "map-o"
 			navName = "GMaps"
 			/>
-			<NavigationButton 
+			<NavigationButton data-test = "index_nav_button"
 			title="Menu View"
 			icon = "cogs"
 			navName = "Menu"
 			/>
-			<NavigationButton 
+			<NavigationButton data-test = "index_nav_button"
 			title="Help"
 			icon = "question-circle"
 			navName = "Help"
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
 	button: {
         maxWidth:300,
         marginHorizontal:100,
-        
+
     },
     iconStyle:{
         marginHorizontal:10

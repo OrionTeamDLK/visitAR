@@ -5,10 +5,10 @@ import NavigationButton from '../Components/NavigationButton';
 
 const EditProfileScreen= () => {
     return (
-        <View>
-            <Text>Edit profile screen</Text>
-            <Text>Editable input fields</Text>
-            <NavigationButton 
+        <View data-test = "edit_profile_view">
+            <Text data-test = "edit_profile_text">Edit profile screen</Text>
+            <Text data-test = "edit_profile_text" >Editable input fields</Text>
+            <NavigationButton data-test = "edit_profile_button"
 			title="Update Profile"
 			icon = "edit"
 			navName = "Profile"

@@ -3,9 +3,11 @@ import {View, Text, StyleSheet} from 'react-native';
 
 const Testfile = () =>{
     return (
-        <header className = "Hello">
-        
+        <View data-test = "Hello2">
+        <header data-test = "Hello">
+
         </header>
+      </View>
     );
 };
 

@@ -5,15 +5,17 @@ import NavigationButton from '../Components/NavigationButton';
 
 const ProfileScreen = ({ navigation }) => {
     return (
-        <View>
-        <Text>VisitAR</Text>
-        <Text>profile screen</Text>
-        <Text>Profile data</Text>
-        <NavigationButton 
+        <View data-test = "ProfileScreen_view">
+        <Text data-test = "ProfileScreen_text">VisitAR</Text>
+        <Text data-test = "ProfileScreen_text">profile screen</Text>
+        <Text data-test = "ProfileScreen_text">Profile data</Text>
+        <NavigationButton
+        data-test = "ProfileScreen_button"
         title="Home"
         icon = "home"
         navName = "Index"/>
-        <NavigationButton 
+        <NavigationButton
+        data-test = "ProfileScreen_button"
         title="Update Profile"
         icon = "edit"
         navName = "EditProfile"/>
