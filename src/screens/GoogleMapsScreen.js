@@ -1,35 +1,115 @@
 import React from "react";
-import { StyleSheet, Text, View, Dimensions, Button } from "react-native";
+import { StyleSheet, Text, View, Dimensions, Button, requireNativeComponent } from "react-native";
 import NavigationButton from "../Components/NavigationButton";
 import MapView from "react-native-maps";
+import * as Permissions from 'expo-permissions';
+import * as Location from 'expo-location';
 
-const GoogleMapsScreen = () => {
-	return (
-		<View data-test = "GoogleMapsScreen_view" style={styles.container}>
-			<MapView
-				data-test = "GoogleMapsScreen_map_view"
-				style={styles.mapStyle}
-				customMapStyle={mapStyle}
-				initialRegion={{
-					latitude: 54.0406827,
-					longitude: -6.1853137,
-					latitudeDelta: 0.03,
-					longitudeDelta: 0.03
-				}}
-			/>
-			<View
-				style={styles.ovewrlayView}>
-				<NavigationButton
-					data-test = "GoogleMapsScreen_button"
-					title="AR View"
-					icon="globe"
-					navName="Index"
-					style={{ position: "absolute", bottom: 250 }}
-				/>
-			</View>
-		</View>
-	);
-};
+export default class GoogleMapsScreen extends React.Component {
+
+	// state = {
+	// 	latitiude: null,
+	// 	longitude: null
+	// };
+
+	// componentDidMount() {
+	// 	this.getLocation();
+	// }
+
+	// getLocation = async () => {
+	// 	console.log("Currently: ");
+
+	// 	//Declaring a variable, status. to ask for permission for location services.
+	// 	let { status } = await Permissions.askAsync(Permissions.LOCATION);
+
+	// 	//If Permissions were not given, error message to display.
+	// 	if (status !== 'granted') {
+	// 		this.setState({
+	// 			errorMessage: 'Permission to access location was denied!'
+	// 		})
+	// 	}
+	// 	//Setting location equal to the user's current co-ordinates.
+	// 	navigator.geolocation.getCurrentPosition(
+	// 		({ coords: { latitude, longitude } }) => this.setState({ latitude, longitude }))
+	// };
+
+	//Setting Default values for Lat and Long
+	state = {
+		latitude: null,
+		longitude: null,
+		proximity: null
+	}
+
+	//AS class is run, ensure permissions have been gotten.
+	async componentDidMount() {
+
+		//Declaring a variable, status. to ask for permission for location services.
+		let { status } = await Permissions.askAsync(Permissions.LOCATION);
+
+		//If Permissions were not given, error message to display.
+		if (status !== 'granted') {
+			this.setState({
+				errorMessage: 'Permission to access location was denied',
+			});
+		}
+
+		//Takes two arguments, both callbacks, one for sucess, one for error
+		navigator.geolocation.getCurrentPosition(
+			({ coords: { latitude, longitude } }) => this.setState({ latitude, longitude }),
+			(error) => console.log('Error:', error)
+		)
+
+			//Comparing Current psoition with passable objects, set to 0 for now
+		if (this.state.latitude == 0 && this.state.latitude == 0) {
+			this.setState({ proximity: "yes" })
+		}
+	}
+
+	render() {
+		console.log("Current State:", this.state.latitude)
+		console.log("Current State:", this.state.longitude)
+		const { latitude, longitude } = this.state
+
+		if (latitude) {
+			return (
+
+				<View data-test="GoogleMapsScreen_view" style={styles.container}>
+					<MapView
+						showsUserLocation
+						data-test="GoogleMapsScreen_map_view"
+						style={styles.mapStyle}
+						customMapStyle={mapStyle}
+						initialRegion={{
+							latitude,
+							longitude,
+							latitudeDelta: 0.002,
+							longitudeDelta: 0.002
+						}}
+					/>
+					<View
+						style={styles.ovewrlayView}>
+						<NavigationButton
+							data-test="GoogleMapsScreen_button"
+							title="AR View"
+							icon="globe"
+							navName="Index"
+							style={{ position: "absolute", bottom: 250 }}
+						/>
+					</View>
+					if (!proximity) {
+							//Alert
+					}
+				</View>
+			);
+		} else {
+			return (
+				<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+					<Text>We Need your permission!!</Text>
+				</View>
+			);
+		}
+	}
+}
 
 const styles = StyleSheet.create({
 	container: {
@@ -45,15 +125,15 @@ const styles = StyleSheet.create({
 	overlayButton: {
 		position: "absolute",
 		bottom: 50
-    },
-    ovewrlayView:{
-        position: "absolute", //use absolute position to show button on top of the map
-        top: "0%", //for center align
-        alignSelf:'center'
-    }
+	},
+	ovewrlayView: {
+		position: "absolute", //use absolute position to show button on top of the map
+		top: "0%", //for center align
+		alignSelf: 'center'
+	}
 });
 
-export default GoogleMapsScreen;
+// export default GoogleMapsScreen;
 
 const mapStyle = [
 	{
