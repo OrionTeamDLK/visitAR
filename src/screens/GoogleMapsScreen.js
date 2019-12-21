@@ -1,43 +1,19 @@
 import React from "react";
-import { StyleSheet, Text, View, Dimensions, Button, requireNativeComponent } from "react-native";
+import { StyleSheet, Text, View, Dimensions, Button, Animated, Image, Easing, requireNativeComponent } from "react-native";
 import NavigationButton from "../Components/NavigationButton";
+import AnimatedLoadingBar from "../Components/AnimatedLoadingBar"
 import MapView from "react-native-maps";
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 
 export default class GoogleMapsScreen extends React.Component {
 
-	// state = {
-	// 	latitiude: null,
-	// 	longitude: null
-	// };
-
-	// componentDidMount() {
-	// 	this.getLocation();
-	// }
-
-	// getLocation = async () => {
-	// 	console.log("Currently: ");
-
-	// 	//Declaring a variable, status. to ask for permission for location services.
-	// 	let { status } = await Permissions.askAsync(Permissions.LOCATION);
-
-	// 	//If Permissions were not given, error message to display.
-	// 	if (status !== 'granted') {
-	// 		this.setState({
-	// 			errorMessage: 'Permission to access location was denied!'
-	// 		})
-	// 	}
-	// 	//Setting location equal to the user's current co-ordinates.
-	// 	navigator.geolocation.getCurrentPosition(
-	// 		({ coords: { latitude, longitude } }) => this.setState({ latitude, longitude }))
-	// };
-
 	//Setting Default values for Lat and Long
 	state = {
 		latitude: null,
 		longitude: null,
-		proximity: null
+		latitudeDelta: 0.004,
+		longitudeDelta: 0.004
 	}
 
 	//AS class is run, ensure permissions have been gotten.
@@ -59,32 +35,37 @@ export default class GoogleMapsScreen extends React.Component {
 			(error) => console.log('Error:', error)
 		)
 
-			//Comparing Current psoition with passable objects, set to 0 for now
-		if (this.state.latitude == 0 && this.state.latitude == 0) {
+		//Comparing Current psoition with passable objects, set to 0 for now
+		if (this.state.latitude == 0 && this.state.longitude == 0) {
 			this.setState({ proximity: "yes" })
 		}
+
+
+	}
+
+	//Managing Recentering the Map
+	recenter = () => {
+		console.log("Current State (recenter):", this.state)
+		const { latitude, longitude, latitudeDelta, longitudeDelta } = this.state;
+		this.mapView.animateToRegion({ latitude, longitude, latitudeDelta, longitudeDelta })
 	}
 
 	render() {
-		console.log("Current State:", this.state.latitude)
-		console.log("Current State:", this.state.longitude)
-		const { latitude, longitude } = this.state
 
-		if (latitude) {
+		console.log("Current State:", this.state)
+
+		if (this.state.latitude) {
 			return (
 
 				<View data-test="GoogleMapsScreen_view" style={styles.container}>
 					<MapView
+						ref={(ref) => this.mapView = ref}
 						showsUserLocation
 						data-test="GoogleMapsScreen_map_view"
 						style={styles.mapStyle}
 						customMapStyle={mapStyle}
-						initialRegion={{
-							latitude,
-							longitude,
-							latitudeDelta: 0.002,
-							longitudeDelta: 0.002
-						}}
+						region={this.state}
+						
 					/>
 					<View
 						style={styles.ovewrlayView}>
@@ -95,16 +76,18 @@ export default class GoogleMapsScreen extends React.Component {
 							navName="Index"
 							style={{ position: "absolute", bottom: 250 }}
 						/>
+						<Button
+						title="Press me"
+						onPress={() => this.recenter()}
+					/>
 					</View>
-					if (!proximity) {
-							//Alert
-					}
+					
 				</View>
 			);
 		} else {
 			return (
 				<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-					<Text>We Need your permission!!</Text>
+					<AnimatedLoadingBar />
 				</View>
 			);
 		}
