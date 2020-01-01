@@ -4,7 +4,6 @@ import NavigationButton from "../Components/NavigationButton";
 import AnimatedLoadingBar from "../Components/AnimatedLoadingBar"
 import MapView from "react-native-maps";
 import * as Permissions from 'expo-permissions';
-import * as Location from 'expo-location';
 
 export default class GoogleMapsScreen extends React.Component {
 
@@ -13,7 +12,14 @@ export default class GoogleMapsScreen extends React.Component {
 		latitude: null,
 		longitude: null,
 		latitudeDelta: 0.004,
-		longitudeDelta: 0.004
+		longitudeDelta: 0.004,
+	}
+
+	setCurrentLocation = () => {
+		navigator.geolocation.getCurrentPosition(
+			({ coords: { latitude, longitude } }) => this.setState({ latitude, longitude }),
+			(error) => console.log('Error:', error), {timeout: 2000}
+		)
 	}
 
 	//AS class is run, ensure permissions have been gotten.
@@ -30,10 +36,7 @@ export default class GoogleMapsScreen extends React.Component {
 		}
 
 		//Takes two arguments, both callbacks, one for sucess, one for error
-		navigator.geolocation.getCurrentPosition(
-			({ coords: { latitude, longitude } }) => this.setState({ latitude, longitude }),
-			(error) => console.log('Error:', error)
-		)
+		this.setCurrentLocation();
 
 		//Comparing Current psoition with passable objects, set to 0 for now
 		if (this.state.latitude == 0 && this.state.longitude == 0) {
@@ -43,18 +46,26 @@ export default class GoogleMapsScreen extends React.Component {
 
 	}
 
+	// recenter = () => {
+	// 	console.log("Current State (recenter):", this.state)
+	// 	const { latitude, longitude, latitudeDelta, longitudeDelta } = this.state;
+	// 	this.mapView.animateToRegion({ latitude, longitude, latitudeDelta, longitudeDelta }, 1000)
+	// }
+
 	//Managing Recentering the Map
-	recenter = () => {
-		console.log("Current State (recenter):", this.state)
-		const { latitude, longitude, latitudeDelta, longitudeDelta } = this.state;
-		this.mapView.animateToRegion({ latitude, longitude, latitudeDelta, longitudeDelta })
+	recenterHandler = () => {
+		// this.setCurrentLocation();
+		// setTimeout(() => {this.recenter()}, 2000);
 	}
+
+	
 
 	render() {
 
 		console.log("Current State:", this.state)
 
 		if (this.state.latitude) {
+			//this.setCurrentLocation()
 			return (
 
 				<View data-test="GoogleMapsScreen_view" style={styles.container}>
@@ -78,7 +89,7 @@ export default class GoogleMapsScreen extends React.Component {
 						/>
 						<Button
 						title="Press me"
-						onPress={() => this.recenter()}
+						onPress={() => this.setCurrentLocation()}
 					/>
 					</View>
 					
@@ -97,7 +108,7 @@ export default class GoogleMapsScreen extends React.Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#fff",
+		backgroundColor: "#c9b391",
 		alignItems: "center",
 		justifyContent: "center"
 	},
