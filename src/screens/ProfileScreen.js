@@ -1,9 +1,31 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import NavigationButton from '../Components/NavigationButton';
+import * as firebase from 'firebase';
 
+export default class ProfileScreen extends React.Component{
 
-const ProfileScreen = ({ navigation }) => {
+  // componentDidMount(){
+  //   this.checkIfLoggedIn()
+  
+  // }
+
+  constructor(props){
+    super(props)
+  }
+
+  checkIfLoggedIn = () => {
+    console.log('called');
+    firebase.auth().onAuthStateChanged( user => {
+      console.log(user);
+      if(!user){
+
+        this.props.navigation.navigate('Login');
+      }
+    })
+  }
+
+  render() {
     return (
         <View data-test = "ProfileScreen_view">
         <Text data-test = "ProfileScreen_text">VisitAR</Text>
@@ -21,8 +43,11 @@ const ProfileScreen = ({ navigation }) => {
         navName = "EditProfile"/>
         </View>
     );
-};
+  }
+
+}
+
+
+
 
 const styles = StyleSheet.create({});
-
-export default ProfileScreen;
