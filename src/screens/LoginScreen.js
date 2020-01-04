@@ -19,7 +19,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 
-export default class App extends React.Component {
+export default class Login extends React.Component {
 
   constructor(props){
     super(props)
@@ -28,29 +28,31 @@ export default class App extends React.Component {
       email: '',
       password: ''
     })
+
   }
 
-  signUpUser = async (email, password) => {
-    try{
-      if(this.state.password.length<6){
-        alert("Enter More Than 6 Characters");
-        return;
-      }
 
-      const userData = await firebase.auth().createUserWithEmailAndPassword(email, password);
-      await userData.user.sendEmailVerification().then(function() {
-        console.log(`Email Sent To ${email}`);
-      }).catch(function(error) {
-        console.log(error);
-      });
+  loginUser = (email, password) => {
+    try{
+      firebase.auth().signInWithEmailAndPassword(email, password).then( (user)=> {
+
+        if(user){
+          this.props.navigation.navigate('Profile');
+        }
+
+
+      })
     } catch(error){
-      console.log(error.toString());
+      conosle.log(error.toString());
+      alert("Login Error Try Again");
     }
   }
 
   render() {
     return (
       <Container style={styles.container} >
+
+        <Text>Emial & Password Login</Text>
         <Form>
           <Item floatingLabel>
             <Label>Email: </Label>
@@ -69,17 +71,51 @@ export default class App extends React.Component {
               onChangeText={(password) => this.setState({password})}
             />
           </Item>
-
-          <Button style={ styles.loginButton }
+          <Button style={ styles.Button }
             full
             rounded
             info
-            onPress={()=>this.signUpUser(this.state.email, this.state.password)}
+            onPress={()=>this.loginUser(this.state.email, this.state.password)}
           >
-          <Text style={{ color: '#fff' }}>Sign Up</Text>
+          <Text style={{ color: '#fff' }}>Email Login</Text>
           </Button>
         </Form>
+
+        <Text>Google Login</Text>
+        <Form>
+          <Item floatingLabel>
+            <Label>Email: </Label>
+            <Input
+              autoCorrect={false}
+              autoCapitalize="none"
+              onChangeText={(email) => this.setState({email})}
+            />
+          </Item>
+          <Item floatingLabel>
+            <Label>Password: </Label>
+            <Input
+              secureTextEntry={true}
+              autoCorrect={false}
+              autoCapitalize="none"
+              onChangeText={(password) => this.setState({password})}
+            />
+          </Item>
+          <Button style={ styles.Button }
+            full
+            rounded
+            success
+            onPress={()=>this.signUpUser(this.state.email, this.state.password)}
+          >
+          <Text style={{ color: '#fff' }}>Google Login</Text>
+          </Button>
+        </Form>
+        <NavigationButton
+        data-test = "LoginScreen_button"
+        title="Register"
+        icon = "pencil-square-o"
+        navName = "Register"/>
       </Container>
+
     );
   }
 }
@@ -90,8 +126,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'center',
   },
-  loginButton: {
-    marginTop: 10
+  Button: {
+    marginTop: 10,
+    marginBottom: 15
   },
 });
 
