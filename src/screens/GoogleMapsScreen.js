@@ -6,12 +6,11 @@ import MapView from "react-native-maps";
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 
-export default class GoogleMapsScreen extends React.Component {
+
 export default class GoogleMapsScreen extends React.Component
 {
 
 	//Setting Default values for Lat and Long
-	state = {
 	state =
 	{
 		latitude: null,
@@ -21,7 +20,6 @@ export default class GoogleMapsScreen extends React.Component
 	}
 
 	//AS class is run, ensure permissions have been gotten.
-	async componentDidMount() {
 	async componentDidMount()
 	{
 
@@ -29,7 +27,6 @@ export default class GoogleMapsScreen extends React.Component
 		let { status } = await Permissions.askAsync(Permissions.LOCATION);
 
 		//If Permissions were not given, error message to display.
-		if (status !== 'granted') {
 		if (status !== 'granted')
 		{
 			this.setState({
@@ -38,7 +35,6 @@ export default class GoogleMapsScreen extends React.Component
 		}
 
 		//Takes two arguments, both callbacks, one for sucess, one for error
-		navigator.geolocation.getCurrentPosition(
 		navigator.geolocation.getCurrentPosition
 		(
 			({ coords: { latitude, longitude } }) => this.setState({ latitude, longitude }),
@@ -46,7 +42,6 @@ export default class GoogleMapsScreen extends React.Component
 		)
 
 		//Comparing Current psoition with passable objects, set to 0 for now
-		if (this.state.latitude == 0 && this.state.longitude == 0) {
 		if (this.state.latitude == 0 && this.state.longitude == 0)
 		{
 			this.setState({ proximity: "yes" })
@@ -62,44 +57,33 @@ export default class GoogleMapsScreen extends React.Component
 		this.mapView.animateToRegion({ latitude, longitude, latitudeDelta, longitudeDelta })
 	}
 
-	render() {
+
 	render()
 	{
 
+// Gets current location.
 		console.log("Current State:", this.state)
 
-		if (this.state.latitude) {
 		if (this.state.latitude)
 		{
-
-
 			return (
-
-				<View data-test="GoogleMapsScreen_view" style={styles.container}>
-
 
 				<View data-test="GoogleMaps_ScreenView" style={styles.container}>
 
 					<MapView
 						ref={(ref) => this.mapView = ref}
 						showsUserLocation
-						data-test="GoogleMapsScreen_map_view"
 						data-test="MapView"
 						style={styles.mapStyle}
 						customMapStyle={mapStyle}
 						region={this.state}
-						
-
 					/>
 
 					<View
-						style={styles.ovewrlayView}>
-
 					data-test="ButtonView"
 					style={styles.ovewrlayView}>
 
 						<NavigationButton
-							data-test="GoogleMapsScreen_button"
 							data-test="Screen_Nav_Button"
 							title="AR View"
 							icon="globe"
@@ -109,22 +93,17 @@ export default class GoogleMapsScreen extends React.Component
 
 						<Button
 						title="Press me"
-						onPress={() => this.recenter()}
-					/>
 						data-test="Screen_Recenter_Button"
-						onPress={() => this.recenter()} />
+						onPress={() => this.recenter()}
+						/>
+
 
 					</View>
-					
+
 
 				</View>
 
 			);
-		} else {
-			return (
-				<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-					<AnimatedLoadingBar />
-
 		}
 		else
 		{
@@ -134,7 +113,6 @@ export default class GoogleMapsScreen extends React.Component
 					<AnimatedLoadingBar data-test = "Loading_Bar" />
 				</View>
 			);
-
 		}
 	}
 }
