@@ -5,20 +5,6 @@ import * as Google from 'expo-google-app-auth';
 import { Container, Content, Header, Form, Input, Item, Button, Label } from 'native-base';
 import * as firebase from 'firebase';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyD76GKd6cJwFZuSDdJsFUnJmL31xEG5Iaw",
-  authDomain: "orion-57b76.firebaseapp.com",
-  databaseURL: "https://orion-57b76.firebaseio.com",
-  projectId: "orion-57b76",
-  storageBucket: "orion-57b76.appspot.com",
-  messagingSenderId: "943400221085",
-  appId: "1:943400221085:web:25c1b2ddce16b9fbd71774",
-  measurementId: "G-56R04KRSTK"
-};
-
-firebase.initializeApp(firebaseConfig);
-
-
 export default class Login extends React.Component {
 
   constructor(props){

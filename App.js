@@ -11,6 +11,21 @@ import SettingsScreen from './src/screens/SettingsScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import EditProfileScreen from './src/screens/EditProfileScreen';
+import * as firebase from 'firebase';
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD76GKd6cJwFZuSDdJsFUnJmL31xEG5Iaw",
+  authDomain: "orion-57b76.firebaseapp.com",
+  databaseURL: "https://orion-57b76.firebaseio.com",
+  projectId: "orion-57b76",
+  storageBucket: "orion-57b76.appspot.com",
+  messagingSenderId: "943400221085",
+  appId: "1:943400221085:web:25c1b2ddce16b9fbd71774",
+  measurementId: "G-56R04KRSTK"
+};
+
+firebase.initializeApp(firebaseConfig);
 
 
 const navigator = createStackNavigator({
