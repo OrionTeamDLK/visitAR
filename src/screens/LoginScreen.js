@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import NavigationButton from '../Components/NavigationButton';
-
+import * as Google from 'expo-google-app-auth';
 import { Container, Content, Header, Form, Input, Item, Button, Label } from 'native-base';
 import * as firebase from 'firebase';
 
@@ -31,6 +31,79 @@ export default class Login extends React.Component {
 
   }
 
+  isUserEqual = (googleUser, firebaseUser) => {
+    if (firebaseUser) {
+      var providerData = firebaseUser.providerData;
+      for (var i = 0; i < providerData.length; i++) {
+        if (
+          providerData[i].providerId ===
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID &&
+          providerData[i].uid === googleUser.getBasicProfile().getId()
+        ) {
+          // We don't need to reauth the Firebase connection.
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
+  onSignIn = googleUser => {
+
+  console.log('Google Auth Response', googleUser);
+  // We need to register an Observer on Firebase Auth to make sure auth is initialized.
+    var unsubscribe = firebase.auth().onAuthStateChanged(
+      function(firebaseUser) {
+        unsubscribe();
+        // Check if we are already signed-in Firebase with the correct user.
+        if (!this.isUserEqual(googleUser, firebaseUser)) {
+          // Build Firebase credential with the Google ID token.
+          var credential = firebase.auth.GoogleAuthProvider.credential(
+            googleUser.idToken,
+            googleUser.accessToken
+          );
+          // Sign in with credential from the Google user.
+          firebase
+            .auth()
+            .signInWithCredential(credential)
+            .then(function(result) {
+              console.log('user signed in ');
+            })
+            .catch(function(error) {
+              // Handle Errors here.
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              // The email of the user's account used.
+              var email = error.email;
+              // The firebase.auth.AuthCredential type that was used.
+              var credential = error.credential;
+            });
+        } else {
+          console.log('User already signed-in Firebase.');
+        }
+      }.bind(this)
+    );
+  };
+
+  signInWithGoogleAsync = async () => {
+    try {
+      console.log('Called signInWithGoogleAsync')
+      const result = await Google.logInAsync({
+        androidClientId: '943400221085-vge945ckhl05c3c9gbt7bpvpr3mhkjfv.apps.googleusercontent.com',
+        scopes: ['profile', 'email']
+      });
+
+      if (result.type === 'success') {
+        this.onSignIn(result);
+        this.props.navigation.navigate('Profile');
+        return result.accessToken;
+      } else {
+        return { cancelled: true };
+      }
+    } catch (e) {
+      return { error: true };
+    }
+  };
 
   loginUser = (email, password) => {
     try{
@@ -48,11 +121,32 @@ export default class Login extends React.Component {
     }
   }
 
+  // loginUserWithGoogle = (email, password) => {
+  //
+  //   var provider = new firebase.auth.GoogleAuthProvider();
+  //   console.log('Google Signin Called');
+  //   firebase.auth().signInWithRedirect(provider).then(function(result) {
+  //     // This gives you a Google Access Token. You can use it to access the Google API.
+  //     var token = result.credential.accessToken;
+  //     // The signed-in user info.
+  //     var user = result.user;
+  //     // ...
+  //   }).catch(function(error) {
+  //     // Handle Errors here.
+  //     var errorCode = error.code;
+  //     var errorMessage = error.message;
+  //     // The email of the user's account used.
+  //     var email = error.email;
+  //     // The firebase.auth.AuthCredential type that was used.
+  //     var credential = error.credential;
+  //     // ...
+  //   });
+  //
+  // }
+
   render() {
     return (
       <Container style={styles.container} >
-
-        <Text>Emial & Password Login</Text>
         <Form>
           <Item floatingLabel>
             <Label>Email: </Label>
@@ -81,34 +175,27 @@ export default class Login extends React.Component {
           </Button>
         </Form>
 
-        <Text>Google Login</Text>
         <Form>
-          <Item floatingLabel>
-            <Label>Email: </Label>
-            <Input
-              autoCorrect={false}
-              autoCapitalize="none"
-              onChangeText={(email) => this.setState({email})}
-            />
-          </Item>
-          <Item floatingLabel>
-            <Label>Password: </Label>
-            <Input
-              secureTextEntry={true}
-              autoCorrect={false}
-              autoCapitalize="none"
-              onChangeText={(password) => this.setState({password})}
-            />
-          </Item>
           <Button style={ styles.Button }
             full
             rounded
             success
-            onPress={()=>this.signUpUser(this.state.email, this.state.password)}
+            onPress={()=>this.signInWithGoogleAsync()}
           >
           <Text style={{ color: '#fff' }}>Google Login</Text>
           </Button>
         </Form>
+        <Form>
+          <Button style={ styles.FacebookButton }
+            full
+            rounded
+            success
+            onPress={()=>this.loginUserWithFacebook(this.state.email, this.state.password)}
+          >
+          <Text style={{ color: '#fff' }}>Facebook Login</Text>
+          </Button>
+        </Form>
+
         <NavigationButton
         data-test = "LoginScreen_button"
         title="Register"
@@ -130,6 +217,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 15
   },
+  FacebookButton: {
+    marginTop: 10,
+    marginBottom: 15,
+    backgroundColor: '#4267B2'
+  }
 });
 
 
