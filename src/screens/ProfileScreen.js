@@ -20,7 +20,11 @@ export default class ProfileScreen extends React.Component{
     const user = firebase.auth().currentUser;
 
     console.log(user);
-    const name, email, photoUrl, uid, emailVerified;
+    const name = '';
+    const email = '';
+    const photoUrl = '';
+    const uid = '';
+    const emailVerified = '';
 
     if (user != null) {
       name = user.displayName;
