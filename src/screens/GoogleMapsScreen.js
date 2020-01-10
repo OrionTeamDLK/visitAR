@@ -2,28 +2,94 @@ import React from "react";
 import { StyleSheet, Text, View, Dimensions, Button, Animated, Image, Easing, requireNativeComponent } from "react-native";
 import NavigationButton from "../Components/NavigationButton";
 import AnimatedLoadingBar from "../Components/AnimatedLoadingBar"
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import * as Permissions from 'expo-permissions';
+
+const locations = require('../locations.json')
+import Polyline from '@mapbox/polyline';
+
+
 
 export default class GoogleMapsScreen extends React.Component {
 
-	//Setting Default values for Lat and Long
-	state = {
-		latitude: null,
-		longitude: null,
-		latitudeDelta: 0.004,
-		longitudeDelta: 0.004,
+	//Setting Default values for Lat and Long, latDelta and longDelta
+	constructor(props) {
+		super(props)
+		this.state = {
+			latitude: null,
+			longitude: null,
+			latitudeDelta: 0.004,
+			longitudeDelta: 0.004,
+			locations: locations,
+			coords: []
+		}
 	}
 
 	setCurrentLocation = () => {
 		navigator.geolocation.getCurrentPosition(
 			({ coords: { latitude, longitude } }) => this.setState({ latitude, longitude }),
-			(error) => console.log('Error:', error), {timeout: 2000}
+			(error) => console.log('Error:', error), { timeout: 2000 }
 		)
 	}
 
+	async componentWillMount() {
+
+		const startinglocation = locations[0].latitude.toString() + "," + locations[0].longitude.toString()
+
+		const endingLocation = locations[locations.length - 1].latitude.toString() + "," + locations[locations.length - 1].longitude.toString()
+
+		console.log("Current State in getDirections (start):", startinglocation, " and ", endingLocation)
+		try {
+			//testing api key: AIzaSyBMnobh4eBn1gM1lEetqGSLrKmvF_qecgU
+			//fetches direction data from Google
+			let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${startinglocation}&destination=${endingLocation}&key=AIzaSyBMnobh4eBn1gM1lEetqGSLrKmvF_qecgU
+			`)
+			//Decoding encoded ployline data
+			let respJson = await resp.json();
+			//Converted decoded data into a lost of objects
+			let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
+			//Updating state
+			let coords = points.map((point, index) => {
+				return {
+					latitude: point[0],
+					longitude: point[1]
+				}
+			})
+			this.setState({ coords: coords })
+		} catch (error) {
+			console.log("An Error Has occurred: ", error)
+		}
+		//console.log("Current State in getDirections (ENd):", this.state)
+
+	}
+
+	markers() {
+		const {mLocations} = this.state.locations
+		console.log("MarkerLocations: ", mLocations)
+		// return (
+		// 	<View>
+		// 		{
+		// 		mLocations.map((location,index) => {
+		// 			const {
+		// 				coords: {latitude, longitude} 
+		// 			} = location
+					
+		// 			return (
+		// 				<Marker
+		// 				key = {index}
+		// 				coordinate={{latitude, longitude}}
+		// 				/>
+		// 			)
+		// 		})
+		// 	}
+		// 	</View>
+		// )
+	}
+
+
 	//AS class is run, ensure permissions have been gotten.
 	async componentDidMount() {
+
 
 		//Declaring a variable, status. to ask for permission for location services.
 		let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -44,7 +110,19 @@ export default class GoogleMapsScreen extends React.Component {
 		}
 
 
+
+
 	}
+
+	// const {locations: [sampleLocation]} = this.state
+
+	// this.setState({
+	// 	desLatitude: sampleLocation.coords.latitude,
+	// 	desLongitude: sampleLocation.coords.longitude
+	// }, () => console.log())
+
+
+
 
 	// recenter = () => {
 	// 	console.log("Current State (recenter):", this.state)
@@ -53,16 +131,20 @@ export default class GoogleMapsScreen extends React.Component {
 	// }
 
 	//Managing Recentering the Map
-	recenterHandler = () => {
-		// this.setCurrentLocation();
-		// setTimeout(() => {this.recenter()}, 2000);
-	}
+	// recenterHandler = () => {
+	// this.setCurrentLocation();
+	// setTimeout(() => {this.recenter()}, 2000);}
+
+
+	//https://medium.com/@ali_oguzhan/react-native-maps-with-google-directions-api-bc716ed7a366
+
 
 	
 
 	render() {
 
-		console.log("Current State:", this.state)
+
+		console.log("Current State (Render):", this.state.locations)
 
 		if (this.state.latitude) {
 			//this.setCurrentLocation()
@@ -77,7 +159,15 @@ export default class GoogleMapsScreen extends React.Component {
 						customMapStyle={mapStyle}
 						region={this.state}
 						
-					/>
+						>
+						<MapView.Polyline
+							coordinates={this.state.coords}
+							strokeWidth={2}
+							strokeColor="red" />
+
+						{this.markers()}
+
+					</MapView>
 					<View
 						style={styles.ovewrlayView}>
 						<NavigationButton
@@ -88,12 +178,12 @@ export default class GoogleMapsScreen extends React.Component {
 							style={{ position: "absolute", bottom: 250 }}
 						/>
 						<Button
-						title="Press me"
-						onPress={() => this.setCurrentLocation()}
-					/>
+							title="Press me"
+							onPress={() => this.setCurrentLocation()}
+						/>
 					</View>
-					
-				</View>
+
+				</View >
 			);
 		} else {
 			return (
