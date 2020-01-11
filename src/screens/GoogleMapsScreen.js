@@ -52,52 +52,39 @@ export default class GoogleMapsScreen extends React.Component {
 
 	render() {
 
-		console.log("Current State:", this.state)
+		return (
+				this.state.latitude ?
+					<View data-test="GoogleMaps_ScreenView" style={styles.container}>
 
-		if (this.state.latitude)
-		{
-			return (
-
-				<View data-test="GoogleMaps_ScreenView" style={styles.container}>
-
-					<MapView
-						ref={(ref) => this.mapView = ref}
-						showsUserLocation
-						data-test="MapView"
-						style={styles.mapStyle}
-						customMapStyle={mapStyle}
-						region={this.state}
-					/>
-
-					<View data-test="ButtonView" style={styles.ovewrlayView}>
-						<NavigationButton
-							data-test="Screen_Nav_Button"
-							title="AR View"
-							icon="globe"
-							navName="Index"
-							style={{ position: "absolute", bottom: 250 }}
+						<MapView
+							ref={(ref) => this.mapView = ref}
+							showsUserLocation
+							data-test="MapView"
+							style={styles.mapStyle}
+							customMapStyle={mapStyle}
+							region={this.state}
 						/>
 
-						<Button
-						title="Press me"
-						data-test="Screen_Recenter_Button"
-						onPress={() => this.recenter()}
-					/>
-					
+						<View data-test="ButtonView" style={styles.ovewrlayView}>
+							<NavigationButton
+								data-test="Screen_Nav_Button"
+								title="AR View"
+								icon="globe"
+								navName="Index"
+								style={{ position: "absolute", bottom: 250 }}
+							/>
+							<Button
+							title="Center"
+							data-test="Screen_Recenter_Button"
+							onPress={() => this.recenter()}
+						/>
+						</View>
+					</View> :
+					<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} data-test="Alt_View">
+						<AnimatedLoadingBar data-test = "Loading_Bar" />
 					</View>
-
-				</View>
 			);
 		}
-		else
-		{
-			return (
-				<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} data-test="Alt_View">
-					<AnimatedLoadingBar data-test = "Loading_Bar" />
-				</View>
-			);
-		}
-	}
 }
 
 const styles = StyleSheet.create({
