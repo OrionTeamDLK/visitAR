@@ -41,6 +41,13 @@ describe('The following components should pass, as latitude cannot be gotten: ',
 
     });
 
+    it('Button view Element.', () =>
+    {
+        const wrapper = findByTestAtt(component, 'ButtonView');
+        expect(wrapper.length).toBe(0);
+
+    });
+
     it('Nav Screen button.', () =>
     {
         const wrapper = findByTestAtt(component, 'Screen_Nav_Button');
@@ -57,7 +64,7 @@ describe('The following components should pass, as latitude cannot be gotten: ',
 
 });
 
-describe('The following components should pass, it technically displays the loading bar: ', () =>
+describe('The following components should pass, displays the loading bar: ', () =>
 {
 
     let component;

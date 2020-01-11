@@ -21,7 +21,16 @@ export default class ProfileScreen extends React.Component{
     super(props)
   }
 
+  getUserDetails = () => {
+    const user = firebase.auth().currentUser;
 
+    console.log(user);
+    const name = '';
+    const email = '';
+    const photoUrl = '';
+    const uid = '';
+    const emailVerified = '';
+}
 
   logOut = () => {
     firebase.auth().signOut().then( () => {
