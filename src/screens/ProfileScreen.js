@@ -6,30 +6,22 @@ import * as firebase from 'firebase';
 
 export default class ProfileScreen extends React.Component{
 
-  componentDidMount(){
-    //this.checkIfLoggedIn()
-    this.getUserDetails();
+  componentWillMount(){
+    const user = firebase.auth().currentUser;
 
+    if (user != null) {
+    	this.setState({name: user.displayName})
+      this.setState({email: user.email})
+      this.setState({emailVerified: user.emailVerified})
+      this.setState({uid: user.uid})
+    }
   }
 
   constructor(props){
     super(props)
   }
 
-  getUserDetails = () => {
-    const user = firebase.auth().currentUser;
 
-    console.log(user);
-    const name, email, photoUrl, uid, emailVerified;
-
-    if (user != null) {
-      name = user.displayName;
-      email = user.email;
-      photoUrl = user.photoURL;
-      emailVerified = user.emailVerified;
-      uid = user.uid;
-    }
-  }
 
   logOut = () => {
     firebase.auth().signOut().then( () => {
@@ -56,7 +48,9 @@ export default class ProfileScreen extends React.Component{
 
       <Container style={styles.container} >
 
-        <Text>{name}</Text>
+        <Text>Name: {this.state.name && null}</Text>
+        <Text>Email: {this.state.email}</Text>
+        <Text>User ID: {this.state.uid}</Text>
 
         <NavigationButton
         style={ styles.Button }

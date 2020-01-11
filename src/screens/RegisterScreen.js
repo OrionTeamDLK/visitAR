@@ -1,8 +1,10 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import NavigationButton from '../Components/NavigationButton';
 import { Container, Content, Header, Form, Input, Item, Button, Label } from 'native-base';
 import * as firebase from 'firebase';
+import * as ImagePicker from 'expo-image-picker';
+
 
 export default class Register extends React.Component {
 
@@ -12,12 +14,45 @@ export default class Register extends React.Component {
     this.state = ({
       email: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      image: null
     })
+  }
+
+  componentDidMount() {
+    this.getPermissionAsync();
+  }
+
+  _pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      this.setState({ image: result.uri });
+    }
+  };
+
+  getPermissionAsync = async () => {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
+      }
+    }
   }
 
   signUpUser = async (email, password, confirmPassword) => {
     try{
+
+      const storageRef = firebase.storage().ref();
+
+
       if(this.state.password.length<7){
         alert("Enter More Than 6 Characters");
         return;
@@ -41,7 +76,11 @@ export default class Register extends React.Component {
     }
   }
 
+
   render() {
+
+    let { image } = this.state;
+
     return (
       <Container style={styles.container} >
         <Form>
@@ -77,6 +116,16 @@ export default class Register extends React.Component {
             full
             rounded
             info
+            onPress={this._pickImage}
+          >
+          <Text style={{ color: '#fff' }}>Upload</Text>
+          </Button>
+          {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+
+          <Button style={ styles.Button }
+            full
+            rounded
+            success
             onPress={()=>this.signUpUser(this.state.email, this.state.password, this.state.confirmPassword)}
           >
           <Text style={{ color: '#fff' }}>Sign Up</Text>
