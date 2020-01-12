@@ -13,6 +13,13 @@ const origin = locations[0].latitude.toString() + "," + locations[0].longitude.t
 
 const destination = locations[locations.length - 1].latitude.toString() + "," + locations[locations.length - 1].longitude.toString()
 
+const wayponintArr = []
+
+for (var i = 1; i <= locations.length-2; i++) {
+	const temp = locations[i].latitude.toString() + "," + locations[i].longitude.toString()
+	wayponintArr.push(temp);
+}
+
 const GOOGLE_MAPS_APIKEY = "AIzaSyBMnobh4eBn1gM1lEetqGSLrKmvF_qecgU"
 
 
@@ -174,6 +181,8 @@ export default class GoogleMapsScreen extends React.Component {
 							strokeWidth={2.5}
 							strokeColor="#4d99e6"
 							mode="WALKING"
+							splitWaypoints={true}
+							waypoints={wayponintArr}
 						/>
 
 					</MapView>
