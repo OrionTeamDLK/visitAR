@@ -7,7 +7,6 @@ import * as Permissions from 'expo-permissions';
 import MapViewDirections from 'react-native-maps-directions'
 
 const locations = require('../locations.json')
-import Polyline from '@mapbox/polyline';
 
 const origin = locations[0].latitude.toString() + "," + locations[0].longitude.toString()
 
@@ -183,6 +182,11 @@ export default class GoogleMapsScreen extends React.Component {
 							mode="WALKING"
 							splitWaypoints={true}
 							waypoints={wayponintArr}
+						/>
+						
+						<MapView.Marker 
+						coordinate={locations[0]} 
+						icon={require('../../assets/PointOfInterestIcon.png')}
 						/>
 
 					</MapView>
