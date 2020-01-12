@@ -4,10 +4,16 @@ import NavigationButton from "../Components/NavigationButton";
 import AnimatedLoadingBar from "../Components/AnimatedLoadingBar"
 import MapView, { Marker } from "react-native-maps";
 import * as Permissions from 'expo-permissions';
+import MapViewDirections from 'react-native-maps-directions'
 
 const locations = require('../locations.json')
 import Polyline from '@mapbox/polyline';
 
+const origin = locations[0].latitude.toString() + "," + locations[0].longitude.toString()
+
+const destination = locations[locations.length - 1].latitude.toString() + "," + locations[locations.length - 1].longitude.toString()
+
+const GOOGLE_MAPS_APIKEY = "AIzaSyBMnobh4eBn1gM1lEetqGSLrKmvF_qecgU"
 
 
 export default class GoogleMapsScreen extends React.Component {
@@ -32,36 +38,36 @@ export default class GoogleMapsScreen extends React.Component {
 		)
 	}
 
-	async componentWillMount() {
+	// async componentWillMount() {
 
-		const startinglocation = locations[0].latitude.toString() + "," + locations[0].longitude.toString()
+	// 	const startinglocation = locations[0].latitude.toString() + "," + locations[0].longitude.toString()
 
-		const endingLocation = locations[locations.length - 1].latitude.toString() + "," + locations[locations.length - 1].longitude.toString()
+	// 	const endingLocation = locations[locations.length - 1].latitude.toString() + "," + locations[locations.length - 1].longitude.toString()
 
-		console.log("Current State in getDirections (start):", startinglocation, " and ", endingLocation)
-		try {
-			//testing api key: AIzaSyBMnobh4eBn1gM1lEetqGSLrKmvF_qecgU
-			//fetches direction data from Google
-			let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${startinglocation}&destination=${endingLocation}&key=AIzaSyBMnobh4eBn1gM1lEetqGSLrKmvF_qecgU
-			`)
-			//Decoding encoded ployline data
-			let respJson = await resp.json();
-			//Converted decoded data into a lost of objects
-			let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
-			//Updating state
-			let coords = points.map((point, index) => {
-				return {
-					latitude: point[0],
-					longitude: point[1]
-				}
-			})
-			this.setState({ coords: coords })
-		} catch (error) {
-			console.log("An Error Has occurred: ", error)
-		}
-		//console.log("Current State in getDirections (ENd):", this.state)
+	// 	console.log("Current State in getDirections (start):", startinglocation, " and ", endingLocation)
+	// 	try {
+	// 		//testing api key: AIzaSyBMnobh4eBn1gM1lEetqGSLrKmvF_qecgU
+	// 		//fetches direction data from Google
+	// 		let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${startinglocation}&destination=${endingLocation}&key=AIzaSyBMnobh4eBn1gM1lEetqGSLrKmvF_qecgU
+	// 		`)
+	// 		//Decoding encoded ployline data
+	// 		let respJson = await resp.json();
+	// 		//Converted decoded data into a lost of objects
+	// 		let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
+	// 		//Updating state
+	// 		let coords = points.map((point, index) => {
+	// 			return {
+	// 				latitude: point[0],
+	// 				longitude: point[1]
+	// 			}
+	// 		})
+	// 		this.setState({ coords: coords })
+	// 	} catch (error) {
+	// 		console.log("An Error Has occurred: ", error)
+	// 	}
+	// 	//console.log("Current State in getDirections (ENd):", this.state)
 
-	}
+	// }
 
 	markers() {
 		const { mLocations } = this.state.locations
@@ -156,10 +162,19 @@ export default class GoogleMapsScreen extends React.Component {
 						region={this.state}
 					>
 
-						<MapView.Polyline
+						{/* <MapView.Polyline
 							coordinates={this.state.coords}
 							strokeWidth={2.5}
-							strokeColor="#4d99e6" />
+							strokeColor="#4d99e6" /> */}
+
+						<MapViewDirections
+							origin={origin}
+							destination={destination}
+							apikey={GOOGLE_MAPS_APIKEY}
+							strokeWidth={2.5}
+							strokeColor="#4d99e6"
+							mode="WALKING"
+						/>
 
 					</MapView>
 
