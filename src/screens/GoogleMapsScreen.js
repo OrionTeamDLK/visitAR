@@ -64,7 +64,7 @@ export default class GoogleMapsScreen extends React.Component {
 	}
 
 	markers() {
-		const {mLocations} = this.state.locations
+		const { mLocations } = this.state.locations
 		console.log("MarkerLocations: ", mLocations)
 		// return (
 		// 	<View>
@@ -73,7 +73,7 @@ export default class GoogleMapsScreen extends React.Component {
 		// 			const {
 		// 				coords: {latitude, longitude} 
 		// 			} = location
-					
+
 		// 			return (
 		// 				<Marker
 		// 				key = {index}
@@ -124,11 +124,11 @@ export default class GoogleMapsScreen extends React.Component {
 
 
 
-	// recenter = () => {
-	// 	console.log("Current State (recenter):", this.state)
-	// 	const { latitude, longitude, latitudeDelta, longitudeDelta } = this.state;
-	// 	this.mapView.animateToRegion({ latitude, longitude, latitudeDelta, longitudeDelta }, 1000)
-	// }
+	recenter = () => {
+		console.log("Current State (recenter):", this.state)
+		const { latitude, longitude, latitudeDelta, longitudeDelta } = this.state;
+		this.mapView.animateToRegion({ latitude, longitude, latitudeDelta, longitudeDelta }, 1000)
+	}
 
 	//Managing Recentering the Map
 	// recenterHandler = () => {
@@ -139,43 +139,50 @@ export default class GoogleMapsScreen extends React.Component {
 	//https://medium.com/@ali_oguzhan/react-native-maps-with-google-directions-api-bc716ed7a366
 
 
-	
+
 
 	render() {
 
 		return (
-				this.state.latitude ?
-					<View data-test="GoogleMaps_ScreenView" style={styles.container}>
+			this.state.latitude ?
+				<View data-test="GoogleMaps_ScreenView" style={styles.container}>
 
-						<MapView
-							ref={(ref) => this.mapView = ref}
-							showsUserLocation
-							data-test="MapView"
-							style={styles.mapStyle}
-							customMapStyle={mapStyle}
-							region={this.state}
+					<MapView
+						ref={(ref) => this.mapView = ref}
+						showsUserLocation
+						data-test="MapView"
+						style={styles.mapStyle}
+						customMapStyle={mapStyle}
+						region={this.state}
+					>
+
+						<MapView.Polyline
+							coordinates={this.state.coords}
+							strokeWidth={2.5}
+							strokeColor="#4d99e6" />
+
+					</MapView>
+
+					<View data-test="ButtonView" style={styles.ovewrlayView}>
+						<NavigationButton
+							data-test="Screen_Nav_Button"
+							title="AR View"
+							icon="globe"
+							navName="Index"
+							style={{ position: "absolute", bottom: 250 }}
 						/>
-
-						<View data-test="ButtonView" style={styles.ovewrlayView}>
-							<NavigationButton
-								data-test="Screen_Nav_Button"
-								title="AR View"
-								icon="globe"
-								navName="Index"
-								style={{ position: "absolute", bottom: 250 }}
-							/>
-							<Button
+						<Button
 							title="Center"
 							data-test="Screen_Recenter_Button"
 							onPress={() => this.recenter()}
 						/>
-						</View>
-					</View> :
-					<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} data-test="Alt_View">
-						<AnimatedLoadingBar data-test = "Loading_Bar" />
 					</View>
-			);
-		}
+				</View > :
+				<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} data-test="Alt_View">
+					<AnimatedLoadingBar data-test="Loading_Bar" />
+				</View>
+		);
+	}
 }
 
 const styles = StyleSheet.create({
