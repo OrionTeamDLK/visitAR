@@ -18,7 +18,7 @@ const  setup = (props = {}) =>
 };
 
 
-describe('Renders the following components correctly: ', () =>
+describe('The following components should pass, as latitude cannot be gotten: ', () =>
 {
 
     let component;
@@ -27,26 +27,62 @@ describe('Renders the following components correctly: ', () =>
         component = setup();
     });
 
-    it('View test.', () =>
+    it('Main View Element.', () =>
     {
-        console.log(component.debug());
         const wrapper = findByTestAtt(component, 'GoogleMapsScreen_view');
+        expect(wrapper.length).toBe(0);
+
+    });
+
+    it('Map view Element.', () =>
+    {
+        const wrapper = findByTestAtt(component, 'MapView');
+        expect(wrapper.length).toBe(0);
+
+    });
+
+    it('Button view Element.', () =>
+    {
+        const wrapper = findByTestAtt(component, 'ButtonView');
+        expect(wrapper.length).toBe(0);
+
+    });
+
+    it('Nav Screen button.', () =>
+    {
+        const wrapper = findByTestAtt(component, 'Screen_Nav_Button');
+        expect(wrapper.length).toBe(0);
+
+    });
+
+    it('Recentre button.', () =>
+    {
+        const wrapper = findByTestAtt(component, 'Screen_Recenter_Button');
+        expect(wrapper.length).toBe(0);
+
+    });
+
+});
+
+describe('The following components should pass, displays the loading bar: ', () =>
+{
+
+    let component;
+    beforeEach(() =>
+    {
+        component = setup();
+    });
+
+    it('Alternate View.', () =>
+    {
+        const wrapper = findByTestAtt(component, 'Alt_View');
         expect(wrapper.length).toBe(1);
 
     });
 
-    it('Map view test.', () =>
+    it('Loading Bar.', () =>
     {
-        console.log(component.debug());
-        const wrapper = findByTestAtt(component, 'GoogleMapsScreen_map_view');
-        expect(wrapper.length).toBe(1);
-
-    });
-
-    it('Text button.', () =>
-    {
-        console.log(component.debug());
-        const wrapper = findByTestAtt(component, 'GoogleMapsScreen_button');
+        const wrapper = findByTestAtt(component, 'Loading_Bar');
         expect(wrapper.length).toBe(1);
 
     });

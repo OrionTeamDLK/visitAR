@@ -143,56 +143,39 @@ export default class GoogleMapsScreen extends React.Component {
 
 	render() {
 
+		return (
+				this.state.latitude ?
+					<View data-test="GoogleMaps_ScreenView" style={styles.container}>
 
-		console.log("Current State (Render):", this.state.locations)
-
-		if (this.state.latitude) {
-			//this.setCurrentLocation()
-			return (
-
-				<View data-test="GoogleMapsScreen_view" style={styles.container}>
-					<MapView
-						ref={(ref) => this.mapView = ref}
-						showsUserLocation
-						data-test="GoogleMapsScreen_map_view"
-						style={styles.mapStyle}
-						customMapStyle={mapStyle}
-						region={this.state}
-						
-						>
-						<MapView.Polyline
-							coordinates={this.state.coords}
-							strokeWidth={2}
-							strokeColor="red" />
-
-						{this.markers()}
-
-					</MapView>
-					<View
-						style={styles.ovewrlayView}>
-						<NavigationButton
-							data-test="GoogleMapsScreen_button"
-							title="AR View"
-							icon="globe"
-							navName="Index"
-							style={{ position: "absolute", bottom: 250 }}
+						<MapView
+							ref={(ref) => this.mapView = ref}
+							showsUserLocation
+							data-test="MapView"
+							style={styles.mapStyle}
+							customMapStyle={mapStyle}
+							region={this.state}
 						/>
-						<Button
-							title="Press me"
-							onPress={() => this.setCurrentLocation()}
+
+						<View data-test="ButtonView" style={styles.ovewrlayView}>
+							<NavigationButton
+								data-test="Screen_Nav_Button"
+								title="AR View"
+								icon="globe"
+								navName="Index"
+								style={{ position: "absolute", bottom: 250 }}
+							/>
+							<Button
+							title="Center"
+							data-test="Screen_Recenter_Button"
+							onPress={() => this.recenter()}
 						/>
+						</View>
+					</View> :
+					<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} data-test="Alt_View">
+						<AnimatedLoadingBar data-test = "Loading_Bar" />
 					</View>
-
-				</View >
-			);
-		} else {
-			return (
-				<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-					<AnimatedLoadingBar />
-				</View>
 			);
 		}
-	}
 }
 
 const styles = StyleSheet.create({
