@@ -5,8 +5,8 @@ import * as firebase from 'firebase';
 
 export default class MenuScreen extends React.Component{
 
-	componentWillMount(){
-	  this.checkIfLoggedIn()
+	async componentWillMount(){
+	  await this.checkIfLoggedIn()
 	}
 
 	checkIfLoggedIn = async () => {
