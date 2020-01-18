@@ -8,9 +8,9 @@ import MapViewDirections from 'react-native-maps-directions'
 
 const locations = require('../locations.json')
 
-const origin = locations[0].latitude.toString() + "," + locations[0].longitude.toString()
+//let origin = locations[0].latitude.toString() + "," + locations[0].longitude.toString()
 
-const destination = locations[locations.length - 1].latitude.toString() + "," + locations[locations.length - 1].longitude.toString()
+//let destination = locations[locations.length - 1].latitude.toString() + "," + locations[locations.length - 1].longitude.toString()
 
 const wayponintArr = []
 
@@ -33,7 +33,9 @@ export default class GoogleMapsScreen extends React.Component {
 			latitudeDelta: 0.004,
 			longitudeDelta: 0.004,
 			locations: locations,
-			coords: []
+			coords: [],
+			origin: locations[0].latitude.toString() + "," + locations[0].longitude.toString(),
+			destination: locations[locations.length - 1].latitude.toString() + "," + locations[locations.length - 1].longitude.toString()
 		}
 	}
 
@@ -142,6 +144,25 @@ export default class GoogleMapsScreen extends React.Component {
 		this.mapView.animateToRegion({ latitude, longitude, latitudeDelta, longitudeDelta }, 1000)
 	}
 
+	toStart = () => {
+		this.setState({origin: this.state.latitude.toString() + "," + this.state.longitude.toString(), destination: "54.038587,-6.164321"})
+		console.log("ToStart: ", this.state)
+		//origin = this.state.latitude.toString() + "," + this.state.longitude.toString()
+		//destination = "54.038587,-6.164321"
+		// return (
+		// 	<MapViewDirections
+		// 					origin={origin}
+		// 					destination={destination}
+		// 					apikey={GOOGLE_MAPS_APIKEY}
+		// 					strokeWidth={2.5}
+		// 					strokeColor="#4d99e6"
+		// 					mode="WALKING"
+		// 					splitWaypoints={true}
+		// 					waypoints={wayponintArr}
+		// 				/>
+		// )
+	}
+
 	//Managing Recentering the Map
 	// recenterHandler = () => {
 	// this.setCurrentLocation();
@@ -174,14 +195,15 @@ export default class GoogleMapsScreen extends React.Component {
 							strokeColor="#4d99e6" /> */}
 
 						<MapViewDirections
-							origin={origin}
-							destination={destination}
+							origin={this.state.origin}
+							destination={this.state.destination}
 							apikey={GOOGLE_MAPS_APIKEY}
 							strokeWidth={2.5}
 							strokeColor="#4d99e6"
 							mode="WALKING"
 							splitWaypoints={true}
 							waypoints={wayponintArr}
+							
 						/>
 						
 						<MapView.Marker 
@@ -203,6 +225,11 @@ export default class GoogleMapsScreen extends React.Component {
 							title="Center"
 							data-test="Screen_Recenter_Button"
 							onPress={() => this.recenter()}
+						/>
+						<Button
+							title="ToStart"
+							// data-test="Screen_Recenter_Button"
+							onPress={this.toStart.bind(this)}
 						/>
 					</View>
 				</View > :
