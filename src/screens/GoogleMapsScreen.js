@@ -9,8 +9,10 @@ import {
     Image,
     Easing
 } from "react-native";
+import { GOOGLE_MAPS_APIKEY, JWT_SECRET } from "../../config/config.js"
 import NavigationButton from "../Components/NavigationButton";
 import AnimatedLoadingBar from "../Components/AnimatedLoadingBar"
+import Spinner from "react-native-loading-spinner-overlay";
 import MapView, {
 Marker
 } from "react-native-maps";
@@ -18,10 +20,6 @@ import * as Permissions from 'expo-permissions';
 import MapViewDirections from 'react-native-maps-directions'
 import JWT from "expo-jwt";
 import Axios from "axios";
-
-
-const GOOGLE_MAPS_APIKEY = "AIzaSyBMnobh4eBn1gM1lEetqGSLrKmvF_qecgU"
-
 
 export default class GoogleMapsScreen extends React.Component {
 
@@ -35,13 +33,13 @@ export default class GoogleMapsScreen extends React.Component {
             coords: [],
             origin: null,
             destination: null,
+            showLoader: false
         }
     }
 
 		async componentDidMount() {
 				//set Axios Request Auth Header with JWT Token
-				let key = "XVSHDsTWogsEszjM";
-				let access_token = JWT.encode({ foo: "bar" }, key);
+				let access_token = JWT.encode({ foo: "bar" }, JWT_SECRET);
 				Axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
 
 				//Declaring a variable, status. to ask for permission for location services.
@@ -99,8 +97,9 @@ export default class GoogleMapsScreen extends React.Component {
     }
 
     toStart = () => {
-
+      this.showLoader();
 			const tourId = 1;
+
 			Axios({
 				method: "get",
 				url: `https://orion-visitar.herokuapp.com/tourData?id=${tourId}`
@@ -119,13 +118,23 @@ export default class GoogleMapsScreen extends React.Component {
 						}
 	      })
 				console.log("To Start Call Finished: Fn toStart: ", this.state)
+        this.hideLoader();
 			})
     }
+
+    showLoader = () => {
+      this.setState({ showLoader: true });
+    };
+
+    hideLoader = () => {
+      this.setState({ showLoader: false });
+    };
 
     render() {
 
         let {
-            destination
+          destination,
+          origin
         } = this.state
 
 				return (
@@ -141,7 +150,7 @@ export default class GoogleMapsScreen extends React.Component {
 							region={this.state}
 						>
 							<MapViewDirections
-								origin={this.state.origin}
+								origin={origin}
 								destination={destination}
 								apikey={GOOGLE_MAPS_APIKEY}
 								strokeWidth={2.5}
@@ -154,6 +163,14 @@ export default class GoogleMapsScreen extends React.Component {
 							/>}
 
 						</MapView>
+
+            {this.state.showLoader && (
+              <Spinner
+                visible={true}
+                textContent={"Getting Route..."}
+                textStyle={styles.spinnerTextStyle}
+              />
+            )}
 
 						<View data-test="ButtonView" style={styles.ovewrlayView}>
 							<NavigationButton
@@ -174,6 +191,7 @@ export default class GoogleMapsScreen extends React.Component {
 								data-test="Screen_Recenter_Button"
 								onPress={this.toStart.bind(this)}
 							/>
+
 						</View>
 					</View >
 					:
