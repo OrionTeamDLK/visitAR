@@ -56,6 +56,13 @@ export default class MenuScreen extends React.Component{
 				title="Settings"
 				icon = "cog"
 				navName = "Settings"/>
+
+				<NavigationButton
+				data-test = "ArTest_button"
+				title="ArTest"
+				icon = "cog"
+				navName = "ArTest"/>
+
 			</View>
 		)
 	}
