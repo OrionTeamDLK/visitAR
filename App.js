@@ -11,6 +11,7 @@ import SettingsScreen from './src/screens/SettingsScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import EditProfileScreen from './src/screens/EditProfileScreen';
+import ArTestScreen from './src/screens/ArTestScreen';
 import * as firebase from 'firebase';
 
 
@@ -38,7 +39,8 @@ const navigator = createStackNavigator({
   Settings: SettingsScreen,
   Profile: ProfileScreen,
   Register: RegisterScreen,
-  EditProfile: EditProfileScreen
+  EditProfile: EditProfileScreen,
+  ArTest: ArTestScreen
 },{
   initialRouteName: 'Index',
   defaultNavigationOptions:{
