@@ -7,7 +7,8 @@ import {
     Button,
     Animated,
     Image,
-    Easing
+    Easing,
+    TouchableOpacity
 } from "react-native";
 import { GOOGLE_MAPS_APIKEY, JWT_SECRET } from "../../config/config.js"
 import NavigationButton from "../Components/NavigationButton";
@@ -20,6 +21,9 @@ import * as Permissions from 'expo-permissions';
 import MapViewDirections from 'react-native-maps-directions'
 import JWT from "expo-jwt";
 import Axios from "axios";
+import { withTheme } from "react-native-elements";
+import UserInterface from "../Components/UserInterface"
+import { HitTestResultTypes } from "expo/build/AR";
 
 export default class GoogleMapsScreen extends React.Component {
 
@@ -33,7 +37,8 @@ export default class GoogleMapsScreen extends React.Component {
             coords: [],
             origin: null,
             destination: null,
-            showLoader: false
+            showLoader: false,
+            uiState: 0
         }
     }
 
@@ -99,6 +104,8 @@ export default class GoogleMapsScreen extends React.Component {
     toStart = () => {
 
         console.log("Setting the start point")
+
+        this.setState({uiState: 1})
 
         this.showLoader();
         const tourId = 1;
@@ -197,7 +204,7 @@ export default class GoogleMapsScreen extends React.Component {
 
                     <View data-test="ButtonView" style={{
                         position: "absolute",
-                        bottom: 140,
+                        bottom: 150,
                         alignSelf: 'center'
                     }}>
 
@@ -210,27 +217,12 @@ export default class GoogleMapsScreen extends React.Component {
                     </View>
 
                     {/* Start Tour Button  */}
-
-                    <View data-test="ButtonView" style={{
-                        position: "absolute",
-                        bottom: 20,
-                        alignSelf: 'center'}}
-                        onPress={this.toStart.bind(this)}>
-
-                        <View data-test="Screen_Recenter_Button"
-                            
-                            style={{
-                                borderWidth: 7,
-                                borderColor: '#e4d9c0',
-                                borderRadius: 75,
-                                overflow: 'hidden',
-                                height: 150,
-                                width: 150,
-                                backgroundColor: '#4c6294'
-                            }}>
-                            <Text>Start Tour</Text></View>
-
-                    </View>
+                    <UserInterface 
+                    CallStartTour={this.toStart.bind(this)} 
+                    CallReCenter={this.recenter.bind(this)} 
+                    status={this.state.uiState}
+                    />
+                    
                 </View >
                 :
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} data-test="Alt_View">
