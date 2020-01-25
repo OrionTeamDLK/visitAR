@@ -202,19 +202,7 @@ export default class GoogleMapsScreen extends React.Component {
 
                     {/* ReCenter Button  */}
 
-                    <View data-test="ButtonView" style={{
-                        position: "absolute",
-                        bottom: 150,
-                        alignSelf: 'center'
-                    }}>
-
-                        <Button
-                            title="Re-Center"
-                            data-test="Screen_Recenter_Button"
-                            onPress={() => this.recenter()}
-                        />
-
-                    </View>
+                    
 
                     {/* Start Tour Button  */}
                     <UserInterface 
