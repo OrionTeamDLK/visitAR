@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { TouchableOpacity, View, Text, Button } from 'react-native'
 
 HideStartedTourReCenterButton = (props) => {
-
     if (props.status == 0) {
         return (
             <View data-test="ButtonView" style={{
@@ -15,6 +14,31 @@ HideStartedTourReCenterButton = (props) => {
                     title="Re-Center"
                     data-test="Screen_Recenter_Button"
                     onPress={props.CallReCenter}
+                />
+
+            </View>
+        )
+    } else {
+        return null
+    }
+
+}
+
+ShowEndTourButton = (props) => {
+    console.log(props.status)
+    if (props.status == 1) {
+        return (
+            <View data-test="ButtonView" style={{
+                position: "absolute",
+                top: 20,
+                left: 10
+            }}>
+
+                <Button
+                    title="End Tour"
+                    style={{
+                        height: 50
+                    }}
                 />
 
             </View>
@@ -56,10 +80,10 @@ class UserInterface extends Component {
 
 
     render() {
-        console.log("ShowView: ", this.state.uiState[this.props.status].showView)
         return (
             <>
                 <HideStartedTourReCenterButton status={this.props.status} CallReCenter={this.props.CallReCenter}/>
+                <ShowEndTourButton status={this.props.status} />
                 <TouchableOpacity style={{
                     position: "absolute",
                     bottom: 20,
