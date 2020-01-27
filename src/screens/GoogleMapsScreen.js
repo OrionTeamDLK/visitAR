@@ -37,6 +37,7 @@ export default class GoogleMapsScreen extends React.Component {
             coords: [],
             origin: null,
             destination: null,
+            waypoints: null,
             showLoader: false,
             uiState: 0
         }
@@ -108,6 +109,7 @@ export default class GoogleMapsScreen extends React.Component {
         this.setState({uiState: 1})
 
         this.showLoader();
+
         const tourId = 1;
 
         Axios({
@@ -115,7 +117,25 @@ export default class GoogleMapsScreen extends React.Component {
             url: `https://orion-visitar.herokuapp.com/tourData?id=${tourId}`
         }).then((results) => {
             console.log("Tour Data Request Response: Fn toStart")
-            console.log(results.data.starting_point)
+
+            let waypointArr = [];
+            let markerArr = [];
+
+            for(let waypoint of results.data.tourStops){
+              waypointArr.push({
+                "title": waypoint.name,
+                "description": waypoint.history,
+                "location": {
+                  "latitude": waypoint.location._latitude,
+                  "longitude": waypoint.location._longitude
+                }
+              })
+
+              markerArr.push({
+                "latitude": waypoint.location._latitude,
+                "longitude": waypoint.location._longitude
+              })
+            }
 
             this.setState({
                 origin: {
@@ -125,26 +145,27 @@ export default class GoogleMapsScreen extends React.Component {
                 destination: {
                     "latitude": results.data.starting_point._latitude,
                     "longitude": results.data.starting_point._longitude
-                }
+                },
+                waypoints: waypointArr,
+                markers: markerArr
             })
             console.log("To Start Call Finished: Fn toStart: ", this.state)
             this.hideLoader();
         })
     }
 
-    showLoader = () => {
-        this.setState({ showLoader: true });
-    };
+    showLoader = () => this.setState({ showLoader: true });
 
-    hideLoader = () => {
-        this.setState({ showLoader: false });
-    };
+    hideLoader = () => this.setState({ showLoader: false });
+
 
     render() {
 
         let {
             destination,
-            origin
+            origin,
+            waypoints,
+            markers
         } = this.state
 
         return (
@@ -162,17 +183,24 @@ export default class GoogleMapsScreen extends React.Component {
                         <MapViewDirections
                             origin={origin}
                             destination={destination}
+                            waypoints={markers}
                             apikey={GOOGLE_MAPS_APIKEY}
                             strokeWidth={2.5}
                             strokeColor="#4d99e6"
                             mode="WALKING"
                         />
 
+                      {destination && waypoints.map((waypoint, index) =>
 
-                        {destination && <MapView.Marker
-                            coordinate={destination}
-                            icon={require('../../assets/PointOfInterestIcon.png')}
-                        />}
+                        <Marker
+                          coordinate={waypoint.location}
+                          title={waypoint.title}
+                          description={waypoint.description}
+                          styles={styles.marker}
+                        >
+                        </Marker>
+                      )}
+
 
                     </MapView>
 
@@ -200,17 +228,12 @@ export default class GoogleMapsScreen extends React.Component {
                         />
                     </View>
 
-                    {/* ReCenter Button  */}
-
-                    
-
-                    {/* Start Tour Button  */}
-                    <UserInterface 
-                    CallStartTour={this.toStart.bind(this)} 
-                    CallReCenter={this.recenter.bind(this)} 
+                    <UserInterface
+                    CallStartTour={this.toStart.bind(this)}
+                    CallReCenter={this.recenter.bind(this)}
                     status={this.state.uiState}
                     />
-                    
+
                 </View >
                 :
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} data-test="Alt_View">
@@ -232,6 +255,12 @@ const styles = StyleSheet.create({
         width: Dimensions.get("window").width,
         height: Dimensions.get("window").height
     },
+    marker: {
+      backgroundColor: "#550bbc",
+      margin:20
+      padding: 5,
+      borderRadius: 5,
+  },
     overlayButton: {
         position: "absolute",
         bottom: 140,
