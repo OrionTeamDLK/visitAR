@@ -25,23 +25,33 @@ HideStartedTourReCenterButton = (props) => {
 }
 
 ShowEndTourButton = (props) => {
-    console.log(props.status)
     if (props.status == 1) {
         return (
-            <View data-test="ButtonView" style={{
-                position: "absolute",
-                top: 20,
-                left: 10
-            }}>
+            <TouchableOpacity
+                onPress={props.endTour}
+                style={{ position: "absolute", left: 10, top: 10 }}>
 
-                <Button
-                    title="End Tour"
+                <View
                     style={{
-                        height: 50
-                    }}
-                />
+                        height: 80,
+                        width: 80,
+                        backgroundColor: '#4c6294',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderColor: '#e4d9c0',
+                        borderRadius: 15,
+                        padding: 10,
+                        borderWidth: 3
+                    }}>
+                    <Text style={{
+                        color: "white",
+                        fontSize: 25,
+                        textAlign: "center"
+                    }}>End Tour
+                </Text>
+                </View>
 
-            </View>
+            </TouchableOpacity>
         )
     } else {
         return null
@@ -82,8 +92,8 @@ class UserInterface extends Component {
     render() {
         return (
             <>
-                <HideStartedTourReCenterButton status={this.props.status} CallReCenter={this.props.CallReCenter}/>
-                <ShowEndTourButton status={this.props.status} />
+                <HideStartedTourReCenterButton status={this.props.status} CallReCenter={this.props.CallReCenter} />
+                <ShowEndTourButton status={this.props.status} endTour={this.props.endTour} />
                 <TouchableOpacity style={{
                     position: "absolute",
                     bottom: 20,

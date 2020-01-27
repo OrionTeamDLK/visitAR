@@ -101,6 +101,10 @@ export default class GoogleMapsScreen extends React.Component {
         }, 1000)
     }
 
+    endTour = () => {
+        this.setState({uiState: 0, origin: null, destination: null,})
+    }
+
     toStart = () => {
 
         console.log("Setting the start point")
@@ -209,6 +213,7 @@ export default class GoogleMapsScreen extends React.Component {
                     CallStartTour={this.toStart.bind(this)} 
                     CallReCenter={this.recenter.bind(this)} 
                     status={this.state.uiState}
+                    endTour={this.endTour.bind(this)}
                     />
                     
                 </View >
