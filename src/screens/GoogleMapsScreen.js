@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     },
     marker: {
       backgroundColor: "#550bbc",
-      margin:20
+      margin:20,
       padding: 5,
       borderRadius: 5,
   },
