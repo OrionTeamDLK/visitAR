@@ -1,34 +1,34 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity, Text } from "react-native";
 import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { withNavigation } from 'react-navigation';
 
 
 
-const NavigationButton =(props) => {
+const NavigationButton = (props) => {
     return (
-
-        <Button
-        icon={<Icon name={props.icon} size={30} color="white" style={styles.iconStyle} />}
-        raised
-        color="white"
-        buttonStyle={styles.button}
-        title={props.title}onPress={() => props.navigation.navigate(props.navName)}
-
-
-    />
-
+        <TouchableOpacity
+            onPress={() => props.navigation.navigate(props.navName)}
+            style={{
+                flex: 2,
+                overflow: 'hidden',
+                backgroundColor: '#4c6294',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderWidth: 2
+            }}>
+            <Text style={{ color: "white", fontSize: 30}}>{props.title}</Text>
+        </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
-	button: {
-        minWidth:150,
-        alignSelf:'center',
+    button: {
+        //height: (Dimensions.get('window').height/ 3),
     },
-    iconStyle:{
-        marginHorizontal:10
+    iconStyle: {
+        marginHorizontal: 10
     }
 });
 

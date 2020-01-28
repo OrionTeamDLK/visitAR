@@ -28,9 +28,8 @@ export default class MenuScreen extends React.Component{
 
 	render() {
 		return(
-			<View data-test = "MenuScreen_view">
-				<Text data-test = "MenuScreen_text">VisitAR</Text>
-				<Text data-test = "MenuScreen_text">Menu Screen!</Text>
+			<View data-test = "MenuScreen_view" style={{flex: 1}}>
+
 				{ this.state.loggedIn ?
 					<NavigationButton
 						data-test = "MenuScreen_button"
@@ -61,7 +60,7 @@ export default class MenuScreen extends React.Component{
 				data-test = "ArTest_button"
 				title="ArTest"
 				icon = "cog"
-				navName = "ArTest"/>
+				navName = "ArTest" />
 
 			</View>
 		)
