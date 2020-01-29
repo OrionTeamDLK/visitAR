@@ -15,7 +15,7 @@ import NavigationButton from "../Components/NavigationButton";
 import AnimatedLoadingBar from "../Components/AnimatedLoadingBar"
 import Spinner from "react-native-loading-spinner-overlay";
 import MapView, {
-    Marker
+    Marker, Callout
 } from "react-native-maps";
 import * as Permissions from 'expo-permissions';
 import MapViewDirections from 'react-native-maps-directions'
@@ -153,7 +153,6 @@ export default class GoogleMapsScreen extends React.Component {
                 waypoints: waypointArr,
                 markers: markerArr
             })
-            console.log("To Start Call Finished: Fn toStart: ", this.state)
             this.hideLoader();
         })
     }
@@ -196,13 +195,29 @@ export default class GoogleMapsScreen extends React.Component {
 
                       {destination && waypoints.map((waypoint, index) =>
 
-                        <Marker
-                          coordinate={waypoint.location}
-                          title={waypoint.title}
-                          description={waypoint.description}
-                          styles={styles.marker}
-                        >
+                        // <Marker
+                        //   coordinate={waypoint.location}
+                        //   title={waypoint.title}
+                        //   description={waypoint.description}
+                        //   styles={styles.marker}
+                        // >
+                        // </Marker>
+
+
+                        <Marker coordinate={waypoint.location}>
+                          <Callout
+                            onPress={ e => {
+                              this.props.navigation.navigate('Login');
+                            }
+                           }>
+                            <View>
+                              <Text>{waypoint.title}</Text>
+                              <Text>{waypoint.description}</Text>
+                              <Text>Click For More Information...</Text>
+                            </View>
+                          </Callout>
                         </Marker>
+
                       )}
 
 
@@ -233,10 +248,10 @@ export default class GoogleMapsScreen extends React.Component {
                     </View>
 
                     <UserInterface
-                    CallStartTour={this.toStart.bind(this)}
-                    CallReCenter={this.recenter.bind(this)}
-                    status={this.state.uiState}
-                    endTour={this.endTour.bind(this)}
+                      CallStartTour={this.toStart.bind(this)}
+                      CallReCenter={this.recenter.bind(this)}
+                      status={this.state.uiState}
+                      endTour={this.endTour.bind(this)}
                     />
 
                 </View >
