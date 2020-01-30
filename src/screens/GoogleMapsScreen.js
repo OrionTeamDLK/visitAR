@@ -196,16 +196,6 @@ export default class GoogleMapsScreen extends React.Component {
 
                         {destination && waypoints.map((waypoint, index) =>
 
-<<<<<<< HEAD
-                            <Marker
-                                coordinate={waypoint.location}
-                                title={waypoint.title}
-                                description={waypoint.description}
-                                styles={styles.marker}
-                            >
-                            </Marker>
-                        )}
-=======
                         // <Marker
                         //   coordinate={waypoint.location}
                         //   title={waypoint.title}
@@ -230,7 +220,6 @@ export default class GoogleMapsScreen extends React.Component {
                         </Marker>
 
                       )}
->>>>>>> a5889cc2bd241d2ffb5f5a1cd716ecd88536b7d1
 
 
                     </MapView>
@@ -279,17 +268,10 @@ export default class GoogleMapsScreen extends React.Component {
                     </View>
 
                     <UserInterface
-<<<<<<< HEAD
-                        CallStartTour={this.toStart.bind(this)}
-                        CallReCenter={this.recenter.bind(this)}
-                        status={this.state.uiState}
-                        endTour={this.endTour.bind(this)}
-=======
                       CallStartTour={this.toStart.bind(this)}
                       CallReCenter={this.recenter.bind(this)}
                       status={this.state.uiState}
                       endTour={this.endTour.bind(this)}
->>>>>>> a5889cc2bd241d2ffb5f5a1cd716ecd88536b7d1
                     />
 
                 </View >
