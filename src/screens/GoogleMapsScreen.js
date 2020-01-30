@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { GOOGLE_MAPS_APIKEY, JWT_SECRET } from "../../config/config.js"
 import NavigationButton from "../Components/NavigationButton";
+import SwitchModeButton from "../Components/SwitchModeButton"
 import AnimatedLoadingBar from "../Components/AnimatedLoadingBar"
 import Spinner from "react-native-loading-spinner-overlay";
 import MapView, {
@@ -103,14 +104,14 @@ export default class GoogleMapsScreen extends React.Component {
     }
 
     endTour = () => {
-        this.setState({uiState: 0, origin: null, destination: null,})
+        this.setState({ uiState: 0, origin: null, destination: null, })
     }
 
     toStart = () => {
 
         console.log("Setting the start point")
 
-        this.setState({uiState: 1})
+        this.setState({ uiState: 1 })
 
         this.showLoader();
 
@@ -125,20 +126,20 @@ export default class GoogleMapsScreen extends React.Component {
             let waypointArr = [];
             let markerArr = [];
 
-            for(let waypoint of results.data.tourStops){
-              waypointArr.push({
-                "title": waypoint.name,
-                "description": waypoint.history,
-                "location": {
-                  "latitude": waypoint.location._latitude,
-                  "longitude": waypoint.location._longitude
-                }
-              })
+            for (let waypoint of results.data.tourStops) {
+                waypointArr.push({
+                    "title": waypoint.name,
+                    "description": waypoint.history,
+                    "location": {
+                        "latitude": waypoint.location._latitude,
+                        "longitude": waypoint.location._longitude
+                    }
+                })
 
-              markerArr.push({
-                "latitude": waypoint.location._latitude,
-                "longitude": waypoint.location._longitude
-              })
+                markerArr.push({
+                    "latitude": waypoint.location._latitude,
+                    "longitude": waypoint.location._longitude
+                })
             }
 
             this.setState({
@@ -194,16 +195,16 @@ export default class GoogleMapsScreen extends React.Component {
                             mode="WALKING"
                         />
 
-                      {destination && waypoints.map((waypoint, index) =>
+                        {destination && waypoints.map((waypoint, index) =>
 
-                        <Marker
-                          coordinate={waypoint.location}
-                          title={waypoint.title}
-                          description={waypoint.description}
-                          styles={styles.marker}
-                        >
-                        </Marker>
-                      )}
+                            <Marker
+                                coordinate={waypoint.location}
+                                title={waypoint.title}
+                                description={waypoint.description}
+                                styles={styles.marker}
+                            >
+                            </Marker>
+                        )}
 
 
                     </MapView>
@@ -223,20 +224,39 @@ export default class GoogleMapsScreen extends React.Component {
                         alignSelf: 'center'
                     }}>
 
-                        <NavigationButton
+                        {/* <NavigationButton
                             data-test="Screen_Nav_Button"
                             title="AR View"
                             icon="globe"
                             navName="Index"
                             style={styles.ovewrlayView}
+                            styleText={{
+                                color: "white",
+                                fontSize: 20,
+                            }}
+                        /> */}
+
+                        
+                        <SwitchModeButton
+                            data-test="Screen_Nav_Button"
+                            title="AR View"
+                            icon="globe"
+                            navName="Index"
+                            style={styles.ovewrlayView}
+                            styleText={{
+                                color: "white",
+                                fontSize: 20,
+                            }}
                         />
+
+                    
                     </View>
 
                     <UserInterface
-                    CallStartTour={this.toStart.bind(this)}
-                    CallReCenter={this.recenter.bind(this)}
-                    status={this.state.uiState}
-                    endTour={this.endTour.bind(this)}
+                        CallStartTour={this.toStart.bind(this)}
+                        CallReCenter={this.recenter.bind(this)}
+                        status={this.state.uiState}
+                        endTour={this.endTour.bind(this)}
                     />
 
                 </View >
@@ -261,11 +281,11 @@ const styles = StyleSheet.create({
         height: Dimensions.get("window").height
     },
     marker: {
-      backgroundColor: "#550bbc",
-      margin:20,
-      padding: 5,
-      borderRadius: 5,
-  },
+        backgroundColor: "#550bbc",
+        margin: 20,
+        padding: 5,
+        borderRadius: 5,
+    },
     overlayButton: {
         position: "absolute",
         bottom: 140,
@@ -273,8 +293,10 @@ const styles = StyleSheet.create({
     },
     ovewrlayView: {
         position: "absolute", //use absolute position to show button on top of the map
-        top: "0%", //for center align
-        alignSelf: 'center'
+        top: 100, //for center align
+        alignSelf: 'center',
+        width: 20
+
     }
 });
 

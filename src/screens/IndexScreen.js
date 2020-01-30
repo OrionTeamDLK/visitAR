@@ -15,16 +15,19 @@ const IndexScreen = ({ navigation }) => {
 			title="Maps View"
 			icon = "map-o"
 			navName = "GMaps"
+			styleText={{ padding: 10, color: "white", fontSize: 30 }}
 			/>
 			<NavigationButton data-test = "index_nav_button"
 			title="Menu View"
 			icon = "cogs"
 			navName = "Menu"
+			styleText={{ padding: 10, color: "white", fontSize: 30 }}
 			/>
 			<NavigationButton data-test = "index_nav_button"
 			title="Help"
 			icon = "question-circle"
 			navName = "Help"
+			styleText={{ padding: 10, color: "white", fontSize: 30 }}
 			/>
 		</View>
 	);

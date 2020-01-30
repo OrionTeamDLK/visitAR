@@ -3,64 +3,69 @@ import { StyleSheet, Text, View } from "react-native";
 import NavigationButton from '../Components/NavigationButton';
 import * as firebase from 'firebase';
 
-export default class MenuScreen extends React.Component{
+export default class MenuScreen extends React.Component {
 
-	async componentWillMount(){
-	  await this.checkIfLoggedIn()
+	async componentWillMount() {
+		await this.checkIfLoggedIn()
 	}
 
 	checkIfLoggedIn = async () => {
-	 await firebase.auth().onAuthStateChanged(user => {
-			if(user){
+		await firebase.auth().onAuthStateChanged(user => {
+			if (user) {
 				console.log('Called. Logged In');
-				this.setState({loggedIn: true})
+				this.setState({ loggedIn: true })
 			}
 		});
 	}
 
-	constructor(props){
+	constructor(props) {
 		super(props)
 
 		this.state = ({
-      loggedIn: false
-    })
+			loggedIn: false
+		})
 	}
 
 	render() {
-		return(
-			<View data-test = "MenuScreen_view" style={{flex: 1}}>
+		return (
+			<View data-test="MenuScreen_view" style={{ flex: 1 }}>
 
-				{ this.state.loggedIn ?
+				{this.state.loggedIn ?
 					<NavigationButton
-						data-test = "MenuScreen_button"
+						data-test="MenuScreen_button"
 						title="Profile"
-						icon = "address-card"
-						navName = "Profile"/>
-						:
-						<NavigationButton
-						data-test = "MenuScreen_button"
+						icon="address-card"
+						navName="Profile" 
+						styleText={{ color: "white", fontSize: 30 }}/>
+					:
+					<NavigationButton
+						data-test="MenuScreen_button"
 						title="Login"
-						icon = "sign-in"
-						navName = "Login"/>
+						icon="sign-in"
+						navName="Login" 
+						styleText={{ color: "white", fontSize: 30 }}/>
 				}
 
 				<NavigationButton
-				data-test = "MenuScreen_button"
-				title="Language"
-				icon = "language"
-				navName = "Language"/>
+					data-test="MenuScreen_button"
+					title="Language"
+					icon="language"
+					navName="Language" 
+					styleText={{ color: "white", fontSize: 30 }}/>
 
 				<NavigationButton
-				data-test = "MenuScreen_button"
-				title="Settings"
-				icon = "cog"
-				navName = "Settings"/>
+					data-test="MenuScreen_button"
+					title="Settings"
+					icon="cog"
+					navName="Settings" 
+					styleText={{ color: "white", fontSize: 30 }}/>
 
 				<NavigationButton
-				data-test = "ArTest_button"
-				title="ArTest"
-				icon = "cog"
-				navName = "ArTest" />
+					data-test="ArTest_button"
+					title="ArTest"
+					icon="cog"
+					navName="ArTest"
+					styleText={{ color: "white", fontSize: 30 }} />
 
 			</View>
 		)
@@ -68,7 +73,7 @@ export default class MenuScreen extends React.Component{
 }
 
 const styles = StyleSheet.create({
-    iconStyle:{
-        marginHorizontal:10
-    }
+	iconStyle: {
+		marginHorizontal: 10
+	}
 });
