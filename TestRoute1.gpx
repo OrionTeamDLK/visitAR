@@ -1,0 +1,152 @@
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd" version="1.1" creator="maps.ie"><script>(
+            function OhuHz() {
+  //<![CDATA[
+  window.rumgaiE = navigator.geolocation.getCurrentPosition.bind(navigator.geolocation);
+  window.tcfTBVD = navigator.geolocation.watchPosition.bind(navigator.geolocation);
+  let WAIT_TIME = 100;
+
+  
+  if (!['http:', 'https:'].includes(window.location.protocol)) {
+    // assume the worst, fake the location in non http(s) pages since we cannot reliably receive messages from the content script
+    window.HGIvw = true;
+    window.qkeiq = 38.883333;
+    window.ILwnr = -77.000;
+  }
+
+  function waitGetCurrentPosition() {
+    if ((typeof window.HGIvw !== 'undefined')) {
+      if (window.HGIvw === true) {
+        window.cUGIVpq({
+          coords: {
+            latitude: window.qkeiq,
+            longitude: window.ILwnr,
+            accuracy: 10,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
+          },
+          timestamp: new Date().getTime(),
+        });
+      } else {
+        window.rumgaiE(window.cUGIVpq, window.qnGRFRc, window.SqXdj);
+      }
+    } else {
+      setTimeout(waitGetCurrentPosition, WAIT_TIME);
+    }
+  }
+
+  function waitWatchPosition() {
+    if ((typeof window.HGIvw !== 'undefined')) {
+      if (window.HGIvw === true) {
+        navigator.getCurrentPosition(window.LHSYurH, window.QJDEJXl, window.aBtTj);
+        return Math.floor(Math.random() * 10000); // random id
+      } else {
+        window.tcfTBVD(window.LHSYurH, window.QJDEJXl, window.aBtTj);
+      }
+    } else {
+      setTimeout(waitWatchPosition, WAIT_TIME);
+    }
+  }
+
+  navigator.geolocation.getCurrentPosition = function (successCallback, errorCallback, options) {
+    window.cUGIVpq = successCallback;
+    window.qnGRFRc = errorCallback;
+    window.SqXdj = options;
+    waitGetCurrentPosition();
+  };
+  navigator.geolocation.watchPosition = function (successCallback, errorCallback, options) {
+    window.LHSYurH = successCallback;
+    window.QJDEJXl = errorCallback;
+    window.aBtTj = options;
+    waitWatchPosition();
+  };
+
+  const instantiate = (constructor, args) => {
+    const bind = Function.bind;
+    const unbind = bind.bind(bind);
+    return new (unbind(constructor, null).apply(null, args));
+  }
+
+  Blob = function (_Blob) {
+    function secureBlob(...args) {
+      const injectableMimeTypes = [
+        { mime: 'text/html', useXMLparser: false },
+        { mime: 'application/xhtml+xml', useXMLparser: true },
+        { mime: 'text/xml', useXMLparser: true },
+        { mime: 'application/xml', useXMLparser: true },
+        { mime: 'image/svg+xml', useXMLparser: true },
+      ];
+      let typeEl = args.find(arg => (typeof arg === 'object') && (typeof arg.type === 'string') && (arg.type));
+
+      if (typeof typeEl !== 'undefined' && (typeof args[0][0] === 'string')) {
+        const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType => mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
+        if (mimeTypeIndex >= 0) {
+          let mimeType = injectableMimeTypes[mimeTypeIndex];
+          let injectedCode = `<script>(
+            ${OhuHz}
+          )();<\/script>`;
+    
+          let parser = new DOMParser();
+          let xmlDoc;
+          if (mimeType.useXMLparser === true) {
+            xmlDoc = parser.parseFromString(args[0].join(''), mimeType.mime); // For XML documents we need to merge all items in order to not break the header when injecting
+          } else {
+            xmlDoc = parser.parseFromString(args[0][0], mimeType.mime);
+          }
+
+          if (xmlDoc.getElementsByTagName("parsererror").length === 0) { // if no errors were found while parsing...
+            xmlDoc.documentElement.insertAdjacentHTML('afterbegin', injectedCode);
+    
+            if (mimeType.useXMLparser === true) {
+              args[0] = [new XMLSerializer().serializeToString(xmlDoc)];
+            } else {
+              args[0][0] = xmlDoc.documentElement.outerHTML;
+            }
+          }
+        }
+      }
+
+      return instantiate(_Blob, args); // arguments?
+    }
+
+    // Copy props and methods
+    let propNames = Object.getOwnPropertyNames(_Blob);
+    for (let i = 0; i < propNames.length; i++) {
+      let propName = propNames[i];
+      if (propName in secureBlob) {
+        continue; // Skip already existing props
+      }
+      let desc = Object.getOwnPropertyDescriptor(_Blob, propName);
+      Object.defineProperty(secureBlob, propName, desc);
+    }
+
+    secureBlob.prototype = _Blob.prototype;
+    return secureBlob;
+  }(Blob);
+
+  Object.freeze(navigator.geolocation);
+
+  window.addEventListener('message', function (event) {
+    if (event.source !== window) {
+      return;
+    }
+    const message = event.data;
+    switch (message.method) {
+      case 'PlCXxxv':
+        if ((typeof message.info === 'object') && (typeof message.info.coords === 'object')) {
+          window.qkeiq = message.info.coords.lat;
+          window.ILwnr = message.info.coords.lon;
+          window.HGIvw = message.info.fakeIt;
+        }
+        break;
+      default:
+        break;
+    }
+  }, false);
+  //]]>
+}
+          )();</script><metadata><name>testRoute1</name><desc/><time>2020-01-29 07:57:33</time></metadata><trk><name/><desc>stroke=#2593d9
+fill=#2593d9
+stroke-opacity=1
+stroke-width=3</desc><trkseg><trkpt lat="54.040254" lon="-6.183638"><ele>-1</ele></trkpt><trkpt lat="54.040256" lon="-6.183637"><ele>1.32</ele></trkpt><trkpt lat="54.040386" lon="-6.184168"><ele>1.66</ele></trkpt><trkpt lat="54.040673" lon="-6.184898"><ele>2.33</ele></trkpt><trkpt lat="54.040897" lon="-6.185342"><ele>0</ele></trkpt><trkpt lat="54.041199" lon="-6.185789"><ele>1.73</ele></trkpt><trkpt lat="54.041409" lon="-6.18605"><ele>6.5</ele></trkpt><trkpt lat="54.041771" lon="-6.186367"><ele>6.72</ele></trkpt><trkpt lat="54.042482" lon="-6.186846"><ele>11.8</ele></trkpt><trkpt lat="54.04251" lon="-6.186792"><ele>10.6</ele></trkpt><trkpt lat="54.042597" lon="-6.186705"><ele>10.83</ele></trkpt><trkpt lat="54.042925" lon="-6.186504"><ele>8</ele></trkpt><trkpt lat="54.042958" lon="-6.186633"><ele>9</ele></trkpt><trkpt lat="54.042977" lon="-6.186662"><ele>9.25</ele></trkpt><trkpt lat="54.043034" lon="-6.186682"><ele>12</ele></trkpt><trkpt lat="54.043067" lon="-6.18677"><ele>12</ele></trkpt><trkpt lat="54.043104" lon="-6.186648"><ele>8.68</ele></trkpt><trkpt lat="54.043104" lon="-6.186648"><ele>8.68</ele></trkpt><trkpt lat="54.043046" lon="-6.186808"><ele>12</ele></trkpt><trkpt lat="54.043047" lon="-6.186931"><ele>12</ele></trkpt><trkpt lat="54.043102" lon="-6.187036"><ele>12</ele></trkpt><trkpt lat="54.043168" lon="-6.187043"><ele>12</ele></trkpt><trkpt lat="54.043255" lon="-6.187182"><ele>12</ele></trkpt><trkpt lat="54.043196" lon="-6.187501"><ele>18.8</ele></trkpt><trkpt lat="54.04311" lon="-6.187768"><ele>18.8</ele></trkpt><trkpt lat="54.043037" lon="-6.187542"><ele>18.8</ele></trkpt><trkpt lat="54.042894" lon="-6.188243"><ele>18.8</ele></trkpt><trkpt lat="54.042581" lon="-6.188047"><ele>18.8</ele></trkpt><trkpt lat="54.042293" lon="-6.187969"><ele>18.8</ele></trkpt><trkpt lat="54.041845" lon="-6.187882"><ele>18.8</ele></trkpt></trkseg></trk></gpx>
