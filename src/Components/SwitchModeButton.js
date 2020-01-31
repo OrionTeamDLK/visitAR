@@ -4,7 +4,7 @@ import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { withNavigation } from 'react-navigation';
 
-const SwitchModeButton = () => {
+const SwitchModeButton = (props) => {
 
     return (
         <TouchableOpacity
@@ -19,7 +19,7 @@ const SwitchModeButton = () => {
             }}>
             <View>
                 <Text style={props.styleText}>
-                    <Icon name={props.icon} size={30} color="white" style={styles.iconStyle} />
+                    <Icon name={props.icon} size={30} color="white" />
                     {props.title}
                 </Text>
             </View>
