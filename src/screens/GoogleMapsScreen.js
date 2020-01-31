@@ -16,7 +16,7 @@ import SwitchModeButton from "../Components/SwitchModeButton"
 import AnimatedLoadingBar from "../Components/AnimatedLoadingBar"
 import Spinner from "react-native-loading-spinner-overlay";
 import MapView, {
-    Marker, Callout
+    Marker
 } from "react-native-maps";
 import * as Permissions from 'expo-permissions';
 import MapViewDirections from 'react-native-maps-directions'
@@ -154,6 +154,7 @@ export default class GoogleMapsScreen extends React.Component {
                 waypoints: waypointArr,
                 markers: markerArr
             })
+            console.log("To Start Call Finished: Fn toStart: ", this.state)
             this.hideLoader();
         })
     }
@@ -196,19 +197,10 @@ export default class GoogleMapsScreen extends React.Component {
 
                         {destination && waypoints.map((waypoint, index) =>
 
-                        // <Marker
-                        //   coordinate={waypoint.location}
-                        //   title={waypoint.title}
-                        //   description={waypoint.description}
-                        //   styles={styles.marker}
-                        // >
-                        // </Marker>
-
-
                         <Marker coordinate={waypoint.location}>
                           <Callout
                             onPress={ e => {
-                              this.props.navigation.navigate('Login');
+                              this.props.navigation.navigate('Landmark', {landmark: waypoint} );
                             }
                            }>
                             <View>
@@ -251,7 +243,7 @@ export default class GoogleMapsScreen extends React.Component {
                             }}
                         /> */}
 
-                        
+
                         <SwitchModeButton
                             data-test="Screen_Nav_Button"
                             title="AR View"
@@ -264,14 +256,14 @@ export default class GoogleMapsScreen extends React.Component {
                             }}
                         />
 
-                    
+
                     </View>
 
                     <UserInterface
-                      CallStartTour={this.toStart.bind(this)}
-                      CallReCenter={this.recenter.bind(this)}
-                      status={this.state.uiState}
-                      endTour={this.endTour.bind(this)}
+                        CallStartTour={this.toStart.bind(this)}
+                        CallReCenter={this.recenter.bind(this)}
+                        status={this.state.uiState}
+                        endTour={this.endTour.bind(this)}
                     />
 
                 </View >
