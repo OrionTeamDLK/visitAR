@@ -16,7 +16,8 @@ import SwitchModeButton from "../Components/SwitchModeButton"
 import AnimatedLoadingBar from "../Components/AnimatedLoadingBar"
 import Spinner from "react-native-loading-spinner-overlay";
 import MapView, {
-    Marker
+    Marker,
+    Callout
 } from "react-native-maps";
 import * as Permissions from 'expo-permissions';
 import MapViewDirections from 'react-native-maps-directions'
@@ -154,7 +155,7 @@ export default class GoogleMapsScreen extends React.Component {
                 waypoints: waypointArr,
                 markers: markerArr
             })
-            console.log("To Start Call Finished: Fn toStart: ", this.state)
+            console.log("To Start Call Finished: Fn toStart: ")
             this.hideLoader();
         })
     }
@@ -195,23 +196,25 @@ export default class GoogleMapsScreen extends React.Component {
                             mode="WALKING"
                         />
 
-                        {destination && waypoints.map((waypoint, index) =>
 
-                        <Marker coordinate={waypoint.location}>
-                          <Callout
-                            onPress={ e => {
-                              this.props.navigation.navigate('Landmark', {landmark: waypoint} );
-                            }
-                           }>
-                            <View>
-                              <Text>{waypoint.title}</Text>
-                              <Text>{waypoint.description}</Text>
-                              <Text>Click For More Information...</Text>
-                            </View>
-                          </Callout>
-                        </Marker>
 
-                      )}
+                        {destination && waypoints.map((waypoint, index) => {
+
+                            <Marker coordinate={waypoint.location}>
+                              <Callout
+                                onPress={ e => {
+                                  this.props.navigation.navigate('Landmark', {landmark: waypoint} );
+                                }
+                               }>
+                                <View>
+                                  <Text>{waypoint.title}</Text>
+                                  <Text>{waypoint.description}</Text>
+                                  <Text>Click For More Information...</Text>
+                                </View>
+                              </Callout>
+                            </Marker>
+
+                          })}
 
 
                     </MapView>
@@ -230,19 +233,6 @@ export default class GoogleMapsScreen extends React.Component {
                         top: "0%", //for center align
                         alignSelf: 'center'
                     }}>
-
-                        {/* <NavigationButton
-                            data-test="Screen_Nav_Button"
-                            title="AR View"
-                            icon="globe"
-                            navName="Index"
-                            style={styles.ovewrlayView}
-                            styleText={{
-                                color: "white",
-                                fontSize: 20,
-                            }}
-                        /> */}
-
 
                         <SwitchModeButton
                             data-test="Screen_Nav_Button"
