@@ -196,9 +196,10 @@ export default class GoogleMapsScreen extends React.Component {
                             mode="WALKING"
                         />
 
+                        {destination && waypoints.map((waypoint, index) =>
 
 
-                        {destination && waypoints.map((waypoint, index) => {
+
 
                             <Marker coordinate={waypoint.location}>
                               <Callout
@@ -214,7 +215,10 @@ export default class GoogleMapsScreen extends React.Component {
                               </Callout>
                             </Marker>
 
-                          })}
+                          )}
+
+
+
 
 
                     </MapView>
