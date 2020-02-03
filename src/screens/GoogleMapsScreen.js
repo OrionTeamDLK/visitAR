@@ -243,6 +243,7 @@ export default class GoogleMapsScreen extends React.Component {
                             styleText={{
                                 color: "white",
                                 fontSize: 20,
+                                padding: 10
                             }}
                         />
 

@@ -23,12 +23,6 @@ const IndexScreen = ({ navigation }) => {
 			navName = "Menu"
 			styleText={{ padding: 10, color: "white", fontSize: 30 }}
 			/>
-			<NavigationButton data-test = "index_nav_button"
-			title="Help"
-			icon = "question-circle"
-			navName = "Help"
-			styleText={{ padding: 10, color: "white", fontSize: 30 }}
-			/>
 		</View>
 	);
 };

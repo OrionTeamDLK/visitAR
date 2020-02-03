@@ -4,30 +4,38 @@ import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { withNavigation } from 'react-navigation';
 
-const SwitchModeButton = (props) => {
+
+const HelpInfoButton = (props) => {
 
     return (
+
         <TouchableOpacity
             onPress={() => props.navigation.navigate(props.navName)}
             style={{
+                position: "absolute",
+                right: 20,
+                alignSelf: 'center',
+                top: 5,
+
+            }}>
+            <View style={{
                 overflow: 'hidden',
-                backgroundColor: '#4c6294',
+                backgroundColor: 'none',
                 justifyContent: 'center',
                 alignItems: 'center',
-                top: 0,
-                borderRadius: 5,
-                borderWidth: 0.1,
-                borderBottomWidth: 3,
-                borderColor: "black"
+                borderRadius: 120,
+                borderWidth: 5,
+                borderColor: "#4c6294",
+                height: 60,
+                width: 60
             }}>
-            <View>
-                <Text style={props.styleText}>
-                    <Icon name={props.icon} size={30} color="white" />
-                    {props.title}
+                <Text style={{ color: "#4c6294", fontSize: 40, fontWeight: "bold"}}>
+                    ?
                 </Text>
             </View>
         </TouchableOpacity>
+
     );
 }
 
-export default withNavigation(SwitchModeButton);
+export default withNavigation(HelpInfoButton);

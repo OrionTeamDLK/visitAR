@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { TouchableOpacity, View, Text, Button } from 'react-native'
+import HelpInfoButton from "../Components/HelpInfoButton"
 
 HideStartedTourReCenterButton = (props) => {
     if (props.status == 0) {
@@ -38,10 +39,11 @@ ShowEndTourButton = (props) => {
                         backgroundColor: '#4c6294',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        borderColor: '#e4d9c0',
                         borderRadius: 15,
                         padding: 10,
-                        borderWidth: 3
+                        borderWidth: 0.1,
+                        borderBottomWidth: 3,
+                        borderColor: "black"
                     }}>
                     <Text style={{
                         color: "white",
@@ -92,6 +94,12 @@ class UserInterface extends Component {
     render() {
         return (
             <>
+
+                <HelpInfoButton style={{
+                    position: "absolute",
+                    top: 0,
+                    alignSelf: 'right'
+                }} navName="Help" />
                 <HideStartedTourReCenterButton status={this.props.status} CallReCenter={this.props.CallReCenter} />
                 <ShowEndTourButton status={this.props.status} endTour={this.props.endTour} />
                 <TouchableOpacity style={{
@@ -104,7 +112,7 @@ class UserInterface extends Component {
 
                     <View data-test="Screen_Recenter_Button"
                         style={{
-                            borderWidth: 7,
+                            borderWidth: 0.1,
                             borderColor: '#e4d9c0',
                             borderRadius: 75,
                             overflow: 'hidden',
@@ -112,7 +120,9 @@ class UserInterface extends Component {
                             width: this.state.uiState[this.props.status].width,
                             backgroundColor: '#4c6294',
                             justifyContent: 'center',
-                            alignItems: 'center'
+                            alignItems: 'center',
+                            borderBottomWidth: 3,
+                            borderColor: "black"
                         }}>
                         {/* Global Text props should be used here!! */}
                         <Text style={{
