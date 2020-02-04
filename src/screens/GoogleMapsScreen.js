@@ -126,11 +126,13 @@ export default class GoogleMapsScreen extends React.Component {
 
             let waypointArr = [];
             let markerArr = [];
-
+            let i = 0;
             for (let waypoint of results.data.tourStops) {
                 waypointArr.push({
+                    "key": i,
                     "title": waypoint.name,
                     "description": waypoint.history,
+                    "image": waypoint.image,
                     "location": {
                         "latitude": waypoint.location._latitude,
                         "longitude": waypoint.location._longitude
@@ -141,6 +143,7 @@ export default class GoogleMapsScreen extends React.Component {
                     "latitude": waypoint.location._latitude,
                     "longitude": waypoint.location._longitude
                 })
+                i++;
             }
 
             this.setState({
@@ -197,17 +200,16 @@ export default class GoogleMapsScreen extends React.Component {
                         />
 
                         {destination && waypoints.map((waypoint, index) =>
-
-
-
-
-                            <Marker coordinate={waypoint.location}>
+                            <Marker
+                              coordinate={waypoint.location}
+                              key={waypoint.title}
+                            >
                               <Callout
                                 onPress={ e => {
                                   this.props.navigation.navigate('Landmark', {landmark: waypoint} );
                                 }
                                }>
-                                <View>
+                                <View >
                                   <Text>{waypoint.title}</Text>
                                   <Text>{waypoint.description}</Text>
                                   <Text>Click For More Information...</Text>
