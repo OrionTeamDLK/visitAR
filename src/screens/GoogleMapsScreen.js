@@ -8,7 +8,10 @@ import {
     Animated,
     Image,
     Easing,
-    TouchableOpacity
+    requireNativeComponent,
+    Alert,
+    TouchableOpacity,
+    TouchableHighlight
 } from "react-native";
 import { GOOGLE_MAPS_APIKEY, JWT_SECRET } from "../../config/config.js"
 import NavigationButton from "../Components/NavigationButton";
@@ -24,8 +27,23 @@ import Axios from "axios";
 import { withTheme } from "react-native-elements";
 import UserInterface from "../Components/UserInterface"
 import { HitTestResultTypes } from "expo/build/AR";
+import { getDistance, getPreciseDistance, geolib } from "geolib";
+import * as Location from 'expo-location';
+import * as Speech from 'expo-speech';
+import Constants from 'expo-constants';
+import * as Progress from 'react-native-progress';
 
-export default class GoogleMapsScreen extends React.Component {
+
+var closestToken;
+var num_of_tokens=0;
+var token1=0;
+var token2=0;
+var token3=0;
+var token4=0;
+
+var tokens=[token1, token2,token3,token4];
+  
+export default class GoogleMapsScreen extends React.Component {    
 
     constructor(props) {
         super(props)
@@ -68,6 +86,9 @@ export default class GoogleMapsScreen extends React.Component {
                 proximity: "yes"
             })
         }
+
+
+        this.setTokens();
     }
 
     setCurrentLocation = () => {
@@ -140,6 +161,133 @@ export default class GoogleMapsScreen extends React.Component {
         this.setState({ showLoader: false });
     };
 
+    setTokens = ()  => 
+    {
+        navigator.geolocation.getCurrentPosition(
+            position => { 	
+                //comparring my current geo location with the location of the tokens in Carlingford.
+              if(tokens[0]!=99999999){
+                tokens[0] = getPreciseDistance(
+      
+                { latitude: position.coords.latitude, longitude: position.coords.longitude },
+                { latitude: 54.041875, longitude: -6.18777778 }
+              );    			 
+              this.setState({token1});
+            
+               }
+      
+               if(tokens[1]!=99999999){
+                tokens[1] = getPreciseDistance(
+      
+                { latitude: position.coords.latitude, longitude: position.coords.longitude },
+                { latitude: 54.04219, longitude: -6.187161 }
+              );      
+               this.setState({token2});
+            
+               }
+  
+               if(tokens[2]!=99999999){
+                tokens[2] = getPreciseDistance(
+      
+                  { latitude: position.coords.latitude, longitude: position.coords.longitude },
+                  { latitude: 54.03935278, longitude: -6.18638889 }
+                );      
+              this.setState({token3});
+           
+               }
+  
+               if(tokens[3]!=99999999){
+                tokens[3] = getPreciseDistance(
+      
+                  { latitude: position.coords.latitude, longitude: position.coords.longitude },
+                  { latitude: 54.03803889, longitude: -6.185 }
+                );      
+              this.setState({token4});
+         
+               }
+
+
+
+               error => Alert.alert(error.message),
+            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+            }
+        )
+        
+    }
+
+
+    distnaceBetweenLocationAndTokens = () => {
+             
+this.setTokens();
+console.log(tokens);
+console.log(this.state.longitude);
+console.log(this.state.latitude);
+             
+			//calculating what the closts token is
+			 closestToken = Math.min(...tokens) // 1
+            this.setState({closestToken});
+            
+			 //num_of_tokens=0;	
+
+			 //for each token , check that the closest token is less than 5 meters( for testing i use a larger number)
+             if(closestToken <5 && num_of_tokens<=4 )                    
+             {
+             //for loop to run through all of the tokens, to see if there is a token that matches the closest token            
+				for( var i=0; i<tokens.length; i++)
+				{
+					
+						//match the closest distance with the relevant token  
+						if(tokens[i]==closestToken)
+						{
+							//add a token to the count of tokens
+							num_of_tokens++;
+                            this.setState({num_of_tokens});
+                            
+                            var token_number=tokens.indexOf(closestToken);
+                            if(num_of_tokens<4){
+                            Speech.speak('congratulations! you have found ' + num_of_tokens +' of 4 tokens');
+                            }
+                            else if(num_of_tokens==4)
+                            {
+                                Speech.speak('congratulations! you have found all 4 tokens!');
+                            }
+							
+							//reset the token distance to 9999999 (a number that should always be bigger than the rest)and so that it will never be the minimum as above
+							const index = tokens.indexOf(tokens[i]);
+							if (index !== -1) 
+							{
+   							 tokens[index] = 99999999;
+							}	
+							
+                            this.setState({tokens})	;
+                            console.log("tokens modified")
+                            this.setTokens();
+                            console.log(tokens);
+						}
+                    }                  
+                    
+                }
+
+                else{
+                    if(num_of_tokens<4){
+                    //nearest_token=("you are " + closestToken + " from the closest token!")
+                    alert("you are " + closestToken + " from the closest token!");
+                    }
+                    else{
+                        alert("you have found all 4 tokens!");
+
+                    }
+                    
+       // this.setState({nearest_token});
+                }
+            
+           
+                
+		
+		
+	  }
+
+
     render() {
 
         let {
@@ -198,6 +346,23 @@ export default class GoogleMapsScreen extends React.Component {
                             navName="Index"
                             style={styles.ovewrlayView}
                         />
+
+<TouchableHighlight
+                style={styles.buttonStyle}
+                onPress={() => {
+                  this.distnaceBetweenLocationAndTokens();
+                }}>
+		<Text>Pick up token</Text>
+				
+        </TouchableHighlight>
+
+       
+
+        <Progress.Bar  progress={num_of_tokens/4} width={200} />
+
+        
+
+        
                     </View>
 
                     {/* ReCenter Button  */}
@@ -211,11 +376,19 @@ export default class GoogleMapsScreen extends React.Component {
                     status={this.state.uiState}
                     />
                     
+
+
+
+                    
                 </View >
                 :
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} data-test="Alt_View">
+                <View style={{ flex: 1, justifyContent: 'left', alignItems: 'center' }} data-test="Alt_View">
                     <AnimatedLoadingBar data-test="Loading_Bar" />
                 </View>
+
+
+
+
         );
     }
 }
@@ -241,7 +414,15 @@ const styles = StyleSheet.create({
         position: "absolute", //use absolute position to show button on top of the map
         top: "0%", //for center align
         alignSelf: 'center'
-    }
+    },
+    buttonStyle: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		height: 50,
+		backgroundColor: 'blue',
+		margin: 10,
+	  }
+
 });
 
 const mapStyle = [{
@@ -408,5 +589,7 @@ const mapStyle = [{
     stylers: [{
         color: "#92998d"
     }]
-}
+},
+
+
 ];
