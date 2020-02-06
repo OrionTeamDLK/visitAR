@@ -10,23 +10,18 @@ const theme = {
 
 const IndexScreen = ({ navigation }) => {
 	return (
-		<View data-test = "index_view">
-			<Text data-test = "index_text">VisitAR</Text>
-			<Text data-test = "index_text">Index Screen!</Text>
+		<View data-test = "index_view" style={{flex: 1}} >
 			<NavigationButton data-test = "index_nav_button"
 			title="Maps View"
 			icon = "map-o"
 			navName = "GMaps"
+			styleText={{ padding: 10, color: "white", fontSize: 30 }}
 			/>
 			<NavigationButton data-test = "index_nav_button"
 			title="Menu View"
 			icon = "cogs"
 			navName = "Menu"
-			/>
-			<NavigationButton data-test = "index_nav_button"
-			title="Help"
-			icon = "question-circle"
-			navName = "Help"
+			styleText={{ padding: 10, color: "white", fontSize: 30 }}
 			/>
 		</View>
 	);
@@ -36,9 +31,8 @@ const styles = StyleSheet.create({
 	text: {
 		fontSize: 30
 	},
-	button: {
-        maxWidth:300,
-        marginHorizontal:100,
+	NavigationButton: {
+        flex: 2
 
     },
     iconStyle:{

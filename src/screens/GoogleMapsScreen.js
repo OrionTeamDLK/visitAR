@@ -220,8 +220,7 @@ export default class GoogleMapsScreen extends React.Component {
              
 this.setTokens();
 console.log(tokens);
-console.log(this.state.longitude);
-console.log(this.state.latitude);
+
              
 			//calculating what the closts token is
 			 closestToken = Math.min(...tokens) // 1
