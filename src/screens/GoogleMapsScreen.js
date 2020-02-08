@@ -51,7 +51,7 @@ export default class GoogleMapsScreen extends React.Component {
               origin: null,
               destination: null,
               waypoints: null,
-              nextLocation: null
+              nextLocation: 1
             }
         }
     }
@@ -81,7 +81,21 @@ export default class GoogleMapsScreen extends React.Component {
 
           //console.log(`User position : ${Date.now()} - [${location.coords.latitude},${location.coords.longitude}]`)
           //let {waypoints} = this.state;
-          let distance = Geolib.getDistance(location.coords, this.state.tour.waypoints[0].location)
+          // this.setState({
+          //  latitude: location.coords.latitude,
+          //  longitude: location.coords.longitude
+          // })
+
+          let tour = {...this.state.tour}
+          if(tour.tourStarted){
+            tour.origin = {
+              latitude: location.coords.latitude,
+              longitude: location.coords.longitude
+            };
+          }
+          this.setState({tour})
+
+          let distance = Geolib.getDistance(location.coords, tour.waypoints[0].location)
           console.log(distance);
 
           //console.log(waypoints)
@@ -114,8 +128,10 @@ export default class GoogleMapsScreen extends React.Component {
           console.log("Tour Data Request Response: Fn toStart")
 
           let waypointArr = [];
+
           for (let waypoint of results.data.tourStops) {
               waypointArr.push({
+                  "id": waypoint.id,
                   "title": waypoint.name,
                   "description": waypoint.history,
                   "image": waypoint.image,
@@ -223,12 +239,12 @@ export default class GoogleMapsScreen extends React.Component {
                         data-test="MapView"
                         style={styles.mapStyle}
                         customMapStyle={mapStyle}
-                        region={this.state}
+                        initialRegion={this.state}
                     >
                         <MapViewDirections
                             origin={origin}
                             destination={destination}
-                            resetOnChang={false}
+                            resetOnChange={false}
                             apikey={GOOGLE_MAPS_APIKEY}
                             strokeWidth={2.5}
                             strokeColor="#4d99e6"
