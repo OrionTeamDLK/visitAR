@@ -20,12 +20,20 @@ import MapView, {
     Callout
 } from "react-native-maps";
 import * as Permissions from 'expo-permissions';
+import * as Location from 'expo-location';
 import MapViewDirections from 'react-native-maps-directions'
 import JWT from "expo-jwt";
 import Axios from "axios";
 import { withTheme } from "react-native-elements";
 import UserInterface from "../Components/UserInterface"
-import { HitTestResultTypes } from "expo/build/AR";
+import { HitTestResultTypes } from "expo/build/AR"
+import * as Geolib from 'geolib';
+
+const LOCATION_SETTINGS = {
+  accuracy: Location.Accuracy.Balanced,
+  timeInterval: 200,
+  distanceInterval: 0,
+};
 
 export default class GoogleMapsScreen extends React.Component {
 
@@ -36,12 +44,15 @@ export default class GoogleMapsScreen extends React.Component {
             longitude: null,
             latitudeDelta: 0.004,
             longitudeDelta: 0.004,
-            coords: [],
-            origin: null,
-            destination: null,
-            waypoints: null,
             showLoader: false,
-            uiState: 0
+            uiState: 0,
+            tour: {
+              tourStarted: false,
+              origin: null,
+              destination: null,
+              waypoints: null,
+              nextLocation: null
+            }
         }
     }
 
@@ -62,33 +73,73 @@ export default class GoogleMapsScreen extends React.Component {
             });
         }
 
-        //Takes two arguments, both callbacks, one for sucess, one for error
         this.setCurrentLocation();
 
-        //Comparing Current psoition with passable objects, set to 0 for now
-        if (this.state.latitude == 0 && this.state.longitude == 0) {
-            this.setState({
-                proximity: "yes"
-            })
-        }
+        this.getWaypoints();
+
+        Location.watchPositionAsync(LOCATION_SETTINGS, location => {
+
+          //console.log(`User position : ${Date.now()} - [${location.coords.latitude},${location.coords.longitude}]`)
+          //let {waypoints} = this.state;
+          let distance = Geolib.getDistance(location.coords, this.state.tour.waypoints[0].location)
+          console.log(distance);
+
+          //console.log(waypoints)
+          //if(waypoints[0].location == ), xz
+          //this.setState(location.coords)
+
+        });
     }
 
-    setCurrentLocation = () => {
-        navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
-            this.setState({
-                latitude,
-                longitude
-            })
-        },
-            (error) => console.log('Error:', error), {
-            timeout: 2000
-        }
-        )
+    setCurrentLocation = async () => {
+
+      let location = await Location.getCurrentPositionAsync({});
+      this.setState({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      })
+      console.log(`User position Lat,Long : ${this.state.latitude},${this.state.longitude}`)
+    };
+
+    getWaypoints = async () => {
+
+      this.showLoader();
+
+      const tourId = 1;
+
+      Axios({
+          method: "get",
+          url: `https://orion-visitar.herokuapp.com/tourData?id=${tourId}`
+      }).then((results) => {
+          console.log("Tour Data Request Response: Fn toStart")
+
+          let waypointArr = [];
+          for (let waypoint of results.data.tourStops) {
+              waypointArr.push({
+                  "title": waypoint.name,
+                  "description": waypoint.history,
+                  "image": waypoint.image,
+                  "fact": waypoint.fact,
+                  "location": {
+                      "latitude": waypoint.location._latitude,
+                      "longitude": waypoint.location._longitude
+                  },
+                  "visited":false
+              })
+          }
+
+          let tour = {...this.state.tour}
+          tour.waypoints = waypointArr;
+          this.setState({tour})
+
+          this.hideLoader();
+      })
+
     }
 
     recenter = () => {
         console.log("Re Centering the User")
-
+        this.setCurrentLocation();
         const {
             latitude,
             longitude,
@@ -105,62 +156,42 @@ export default class GoogleMapsScreen extends React.Component {
     }
 
     endTour = () => {
-        this.setState({ uiState: 0, origin: null, destination: null, })
+        this.showLoader();
+
+
+        let tour = {...this.state.tour}
+        tour.origin = null;
+        tour.destination = null;
+        tour.tourStarted = null;
+
+        this.setState({
+          tour,
+          uiState: 0
+        })
+
+        this.hideLoader();
     }
 
     toStart = () => {
-
+        this.showLoader();
         console.log("Setting the start point")
 
-        this.setState({ uiState: 1 })
+        let tour = {...this.state.tour}
+        tour.origin = {
+            "latitude": this.state.latitude,
+            "longitude": this.state.longitude
+        }
+        tour.destination = tour.waypoints[0].location;
+        tour.tourStarted = true;
 
-        this.showLoader();
-
-        const tourId = 1;
-
-        Axios({
-            method: "get",
-            url: `https://orion-visitar.herokuapp.com/tourData?id=${tourId}`
-        }).then((results) => {
-            console.log("Tour Data Request Response: Fn toStart")
-
-            let waypointArr = [];
-            let markerArr = [];
-            let i = 0;
-            for (let waypoint of results.data.tourStops) {
-                waypointArr.push({
-                    "key": i,
-                    "title": waypoint.name,
-                    "description": waypoint.history,
-                    "image": waypoint.image,
-                    "location": {
-                        "latitude": waypoint.location._latitude,
-                        "longitude": waypoint.location._longitude
-                    }
-                })
-
-                markerArr.push({
-                    "latitude": waypoint.location._latitude,
-                    "longitude": waypoint.location._longitude
-                })
-                i++;
-            }
-
-            this.setState({
-                origin: {
-                    "latitude": this.state.latitude,
-                    "longitude": this.state.longitude
-                },
-                destination: {
-                    "latitude": results.data.starting_point._latitude,
-                    "longitude": results.data.starting_point._longitude
-                },
-                waypoints: waypointArr,
-                markers: markerArr
-            })
-            console.log("To Start Call Finished: Fn toStart: ")
-            this.hideLoader();
+        this.setState({
+          tour,
+          uiState: 1
         })
+
+
+        this.hideLoader();
+
     }
 
     showLoader = () => this.setState({ showLoader: true });
@@ -171,11 +202,16 @@ export default class GoogleMapsScreen extends React.Component {
     render() {
 
         let {
-            destination,
-            origin,
-            waypoints,
-            markers
+            latitude,
+            longitude
         } = this.state
+
+        let {
+          origin,
+          destination,
+          tourStarted,
+          waypoints
+        } = this.state.tour
 
         return (
             this.state.latitude ?
@@ -192,14 +228,15 @@ export default class GoogleMapsScreen extends React.Component {
                         <MapViewDirections
                             origin={origin}
                             destination={destination}
-                            waypoints={markers}
+                            resetOnChang={false}
                             apikey={GOOGLE_MAPS_APIKEY}
                             strokeWidth={2.5}
                             strokeColor="#4d99e6"
                             mode="WALKING"
+                            precision="low"
                         />
 
-                        {destination && waypoints.map((waypoint, index) =>
+                      {destination && waypoints.map((waypoint, index) =>
                             <Marker
                               coordinate={waypoint.location}
                               key={waypoint.title}
@@ -218,10 +255,6 @@ export default class GoogleMapsScreen extends React.Component {
                             </Marker>
 
                           )}
-
-
-
-
 
                     </MapView>
 

@@ -25,6 +25,10 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "android": {
+     "package": "com.orion.visitar",
+     "versionCode": 1
+   }
   }
 }
