@@ -95,8 +95,8 @@ export default class GoogleMapsScreen extends React.Component {
           }
           this.setState({tour})
 
-          let distance = Geolib.getDistance(location.coords, tour.waypoints[0].location)
-          console.log(distance);
+        //   let distance = Geolib.getDistance(location.coords, tour.waypoints[0].location)
+        //   console.log(distance);
 
           //console.log(waypoints)
           //if(waypoints[0].location == ), xz

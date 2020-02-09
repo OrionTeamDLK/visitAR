@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import NavigationButton from '../Components/NavigationButton';
+import RegisterButton from '../Components/RegisterButton';
 import * as Google from 'expo-google-app-auth';
 import { Container, Content, Header, Form, Input, Item, Button, Label } from 'native-base';
 import * as firebase from 'firebase';
@@ -134,26 +135,35 @@ export default class Login extends React.Component {
             info
             onPress={()=>this.loginUser(this.state.email, this.state.password)}
           >
-          <Text style={{ color: '#fff' }}>Email Login</Text>
+          <Text style={{ color: '#fff' }}>Login</Text>
           </Button>
         </Form>
 
-        <Form>
-          <Button style={ styles.Button }
+        <Form style={{borderTopColor: "#d9d9d9",
+    borderTopWidth: 2}}>
+          <Button style={ styles.GoogleButton }
             full
             rounded
             success
             onPress={()=>this.signInWithGoogleAsync()}
           >
-          <Text style={{ color: '#fff' }}>Google Login</Text>
+          <Text style={{ color: '#fff' }}>Log in with Google</Text>
           </Button>
         </Form>
+        
+        <View style={{borderTopColor: "#d9d9d9",
+    borderTopWidth: 2}} />
 
-        <NavigationButton
+        <RegisterButton
         data-test = "LoginScreen_button"
         title="Register"
         icon = "pencil-square-o"
-        navName = "Register"/>
+        navName = "Register"
+        styleText={{
+          color: "white",
+          fontSize: 20,
+          padding: 10
+        }}/>
       </Container>
 
     );
@@ -162,12 +172,17 @@ export default class Login extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    paddingTop: 30,
     backgroundColor: '#fff',
     justifyContent: 'center',
+    marginHorizontal: 10
   },
   Button: {
-    marginTop: 10,
+    marginTop: 25,
+    marginBottom: 15
+  },
+  GoogleButton: {
+    marginTop: 20,
     marginBottom: 15
   },
   FacebookButton: {

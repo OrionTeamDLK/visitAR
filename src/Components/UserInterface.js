@@ -75,16 +75,18 @@ class UserInterface extends Component {
                     color: "white",
                     text: "Start Tour",
                     fontsize: 25,
-                    showView: true
+                    showView: true,
+                    right: null
                 },
                 {
                     onPress: this.props.CallReCenter,
-                    height: 120,
-                    width: 120,
+                    height: 70,
+                    width: 70,
                     color: "white",
-                    text: "Recenter",
+                    text: "",
                     fontsize: 22,
-                    showView: false
+                    showView: false,
+                    right: 15
                 }]
         }
     }
@@ -100,12 +102,13 @@ class UserInterface extends Component {
                     top: 0,
                     alignSelf: 'right'
                 }} navName="Help" />
-                <HideStartedTourReCenterButton status={this.props.status} CallReCenter={this.props.CallReCenter} />
+                <HideStartedTourReCenterButton status={this.props.status} CallStartTour={this.props.CallStartTour} />
                 <ShowEndTourButton status={this.props.status} endTour={this.props.endTour} />
                 <TouchableOpacity style={{
                     position: "absolute",
-                    bottom: 20,
-                    alignSelf: 'center'
+                    bottom: 30,
+                    alignSelf: 'center',
+                    right: this.state.uiState[this.props.status].right
                 }}
                     onPress={this.state.uiState[this.props.status].onPress}
                 >
