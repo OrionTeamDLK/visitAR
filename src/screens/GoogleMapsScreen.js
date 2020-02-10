@@ -45,6 +45,7 @@ import {
 import * as Speech from 'expo-speech';
 import Constants from 'expo-constants';
 import * as Progress from 'react-native-progress';
+import InfoPopUp from "../Components/InfoPopUp"
 
 const LOCATION_SETTINGS = {
   accuracy: Location.Accuracy.Balanced,
@@ -140,6 +141,13 @@ export default class GoogleMapsScreen extends React.Component {
 
         });
 
+    }
+
+    setCurrentLocToCarlingford = () => {
+        // this.setState({
+        //     latitude: "54.0469",
+        //     longitude: "6.1902"
+        //   })
     }
 
     setCurrentLocation = async () => {
@@ -448,11 +456,7 @@ export default class GoogleMapsScreen extends React.Component {
                               this.props.navigation.navigate('Landmark', {landmark: waypoint} );
                             }
                            }>
-                            <View >
-                              <Text>{waypoint.title}</Text>
-                              <Text>{waypoint.description}</Text>
-                              <Text>Click For More Information...</Text>
-                            </View>
+                            <InfoPopUp title={waypoint.title} description={waypoint.description} />
                           </Callout>
                         </Marker>)}
                   </MapView>
@@ -468,6 +472,7 @@ export default class GoogleMapsScreen extends React.Component {
                   <UserInterface
                     CallStartTour={this.toStart.bind(this)}
                     CallReCenter={this.recenter.bind(this)}
+                    setCurrentLocToCarlingford={this.setCurrentLocToCarlingford.bind(this)}
                     status={this.state.uiState}
                   />
                 </View >
