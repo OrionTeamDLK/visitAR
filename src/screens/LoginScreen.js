@@ -161,7 +161,7 @@ export default class Login extends React.Component {
         navName = "Register"
         styleText={{
           color: "white",
-          fontSize: 20,
+          fontSize: 15,
           padding: 10
         }}/>
       </Container>

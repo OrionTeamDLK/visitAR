@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TouchableOpacity, View, Text, Button } from 'react-native'
+import { TouchableOpacity, View, Text, Button, Image } from 'react-native'
 import HelpInfoButton from "../Components/HelpInfoButton"
 
 HideStartedTourReCenterButton = (props) => {
@@ -102,7 +102,7 @@ class UserInterface extends Component {
                     top: 0,
                     alignSelf: 'right'
                 }} navName="Help" />
-                <HideStartedTourReCenterButton status={this.props.status} CallStartTour={this.props.CallStartTour} />
+                {/* <HideStartedTourReCenterButton status={this.props.status} CallStartTour={this.props.CallStartTour} /> */}
                 <ShowEndTourButton status={this.props.status} endTour={this.props.endTour} />
                 <TouchableOpacity style={{
                     position: "absolute",
@@ -128,10 +128,15 @@ class UserInterface extends Component {
                             borderColor: "black"
                         }}>
                         {/* Global Text props should be used here!! */}
+                        {this.props.status == 0 ?
                         <Text style={{
                             color: this.state.uiState[this.props.status].color,
                             fontSize: this.state.uiState[this.props.status].fontsize
-                        }}>{this.state.uiState[this.props.status].text}</Text>
+                        }}>{this.state.uiState[this.props.status].text}</Text> :
+                        <Image
+                            style={{ width: 40, height: 40, alignItems: "center", justifyContent:"center"}}
+                            source={require('../../assets/recenter.png')}
+                        />}
                     </View>
                 </TouchableOpacity>
             </>

@@ -11,11 +11,11 @@ const RegisterButton = (props) => {
         <TouchableOpacity
             onPress={() => props.navigation.navigate(props.navName)}
             style={{
-                backgroundColor: '#4c6294',
-                marginTop: 30,
+                backgroundColor: '#808080',
+                marginTop: 50,
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderWidth: 2,
+                borderBottomWidth: 2,
                 borderTopColor: "#d9d9d9",
                 borderTopWidth: 2
             }}>
