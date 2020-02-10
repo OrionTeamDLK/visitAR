@@ -426,8 +426,6 @@ export default class GoogleMapsScreen extends React.Component {
                           precision="low"
                       />
 
-                      
-
                     {//destination && <MapView.Marker
                       //    coordinate={destination}
                         //  icon={require('../../assets/PointOfInterestIcon.png')}/>
@@ -455,8 +453,6 @@ export default class GoogleMapsScreen extends React.Component {
                             </View>
                           </Callout>
                         </Marker>)}
-
-                        
                   </MapView>
 
                   {this.state.showLoader && (
