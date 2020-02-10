@@ -242,7 +242,7 @@ console.log(tokens);
 							num_of_tokens++;
                             this.setState({num_of_tokens});
                             
-                            var token_number=tokens.indexOf(closestToken);
+                            var token_number=tokens.indexOf(closefnstToken);
                             if(num_of_tokens<4){
                             Speech.speak('congratulations! you have found ' + num_of_tokens +' of 4 tokens');
                             }
@@ -418,7 +418,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		height: 50,
-		backgroundColor: 'blue',
+		backgroundColor: '#4B6296',
 		margin: 10,
 	  }
 
