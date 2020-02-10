@@ -143,6 +143,13 @@ export default class GoogleMapsScreen extends React.Component {
 
     }
 
+    setCurrentLocToCarlingford = () => {
+        // this.setState({
+        //     latitude: "54.0469",
+        //     longitude: "6.1902"
+        //   })
+    }
+
     setCurrentLocation = async () => {
 
       let location = await Location.getCurrentPositionAsync({});
@@ -463,6 +470,7 @@ export default class GoogleMapsScreen extends React.Component {
                   <UserInterface
                     CallStartTour={this.toStart.bind(this)}
                     CallReCenter={this.recenter.bind(this)}
+                    setCurrentLocToCarlingford={this.setCurrentLocToCarlingford.bind(this)}
                     status={this.state.uiState}
                   />
                 </View >

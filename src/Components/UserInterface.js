@@ -90,7 +90,7 @@ class UserInterface extends Component {
                     text: "",
                     fontsize: 22,
                     showView: false,
-                    right: 15
+                    right: 20
                 }]
         }
     }
@@ -106,13 +106,44 @@ class UserInterface extends Component {
                     top: 0,
                     alignSelf: 'right'
                 }} navName="Help" />
-                 <MenuButton style={{
+                <MenuButton style={{
                     position: "absolute",
                     top: 0,
                     alignSelf: 'left'
                 }} navName="Menu" />
                 {/* <HideStartedTourReCenterButton status={this.props.status} CallStartTour={this.props.CallStartTour} /> */}
                 <ShowEndTourButton status={this.props.status} endTour={this.props.endTour} />
+
+                <TouchableOpacity style={{
+                    position: "absolute",
+                    bottom: 30,
+                    alignSelf: 'center',
+                    left: 20
+                }}
+                    onPress={this.props.setCurrentLocToCarlingford}
+                >
+                    <View data-test="Screen_Recenter_Button"
+                        style={{
+                            borderWidth: 0.1,
+                            borderColor: '#e4d9c0',
+                            borderRadius: 75,
+                            overflow: 'hidden',
+                            height: 70,
+                            width: 70,
+                            backgroundColor: '#4c6294',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderBottomWidth: 3,
+                            borderColor: "black"
+                        }}>
+                            <Image
+                                style={{ width: 40, height: 40, alignItems: "center", justifyContent: "center" }}
+                                source={require('../../assets/recenter.png')}
+                            />
+                    </View>
+                </TouchableOpacity>
+
+
                 <TouchableOpacity style={{
                     position: "absolute",
                     bottom: 30,
