@@ -21,17 +21,29 @@ import MapView, {
     Marker
 } from "react-native-maps";
 import * as Permissions from 'expo-permissions';
+import * as Location from 'expo-location';
 import MapViewDirections from 'react-native-maps-directions'
 import JWT from "expo-jwt";
 import Axios from "axios";
 import { withTheme } from "react-native-elements";
 import UserInterface from "../Components/UserInterface"
+<<<<<<< HEAD
 import { HitTestResultTypes } from "expo/build/AR";
 import { getDistance, getPreciseDistance, geolib } from "geolib";
 import * as Location from 'expo-location';
 import * as Speech from 'expo-speech';
 import Constants from 'expo-constants';
 import * as Progress from 'react-native-progress';
+=======
+import { HitTestResultTypes } from "expo/build/AR"
+import * as Geolib from 'geolib';
+
+const LOCATION_SETTINGS = {
+  accuracy: Location.Accuracy.Balanced,
+  timeInterval: 200,
+  distanceInterval: 0,
+};
+>>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
 
 
 var closestToken;
@@ -52,11 +64,21 @@ export default class GoogleMapsScreen extends React.Component {
             longitude: null,
             latitudeDelta: 0.004,
             longitudeDelta: 0.004,
+<<<<<<< HEAD
             coords: [],
             origin: null,
             destination: null,
+=======
+>>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
             showLoader: false,
-            uiState: 0
+            uiState: 0,
+            tour: {
+              tourStarted: false,
+              origin: null,
+              destination: null,
+              waypoints: null,
+              nextLocation: 1
+            }
         }
     }
 
@@ -77,9 +99,9 @@ export default class GoogleMapsScreen extends React.Component {
             });
         }
 
-        //Takes two arguments, both callbacks, one for sucess, one for error
         this.setCurrentLocation();
 
+<<<<<<< HEAD
         //Comparing Current psoition with passable objects, set to 0 for now
         if (this.state.latitude == 0 && this.state.longitude == 0) {
             this.setState({
@@ -89,24 +111,89 @@ export default class GoogleMapsScreen extends React.Component {
 
 
         this.setTokens();
+=======
+        this.getWaypoints();
+
+        Location.watchPositionAsync(LOCATION_SETTINGS, location => {
+
+          //console.log(`User position : ${Date.now()} - [${location.coords.latitude},${location.coords.longitude}]`)
+          //let {waypoints} = this.state;
+          // this.setState({
+          //  latitude: location.coords.latitude,
+          //  longitude: location.coords.longitude
+          // })
+
+          let tour = {...this.state.tour}
+          if(tour.tourStarted){
+            tour.origin = {
+              latitude: location.coords.latitude,
+              longitude: location.coords.longitude
+            };
+          }
+          this.setState({tour})
+
+        //   let distance = Geolib.getDistance(location.coords, tour.waypoints[0].location)
+        //   console.log(distance);
+
+          //console.log(waypoints)
+          //if(waypoints[0].location == ), xz
+          //this.setState(location.coords)
+
+        });
+>>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
     }
 
-    setCurrentLocation = () => {
-        navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
-            this.setState({
-                latitude,
-                longitude
-            })
-        },
-            (error) => console.log('Error:', error), {
-            timeout: 2000
-        }
-        )
+    setCurrentLocation = async () => {
+
+      let location = await Location.getCurrentPositionAsync({});
+      this.setState({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      })
+      console.log(`User position Lat,Long : ${this.state.latitude},${this.state.longitude}`)
+    };
+
+    getWaypoints = async () => {
+
+      this.showLoader();
+
+      const tourId = 1;
+
+      Axios({
+          method: "get",
+          url: `https://orion-visitar.herokuapp.com/tourData?id=${tourId}`
+      }).then((results) => {
+          console.log("Tour Data Request Response: Fn toStart")
+
+          let waypointArr = [];
+
+          for (let waypoint of results.data.tourStops) {
+              waypointArr.push({
+                  "id": waypoint.id,
+                  "title": waypoint.name,
+                  "description": waypoint.history,
+                  "image": waypoint.image,
+                  "fact": waypoint.fact,
+                  "location": {
+                      "latitude": waypoint.location._latitude,
+                      "longitude": waypoint.location._longitude
+                  },
+                  "visited":false
+              })
+          }
+
+          let tour = {...this.state.tour}
+          tour.waypoints = waypointArr;
+          this.setState({tour})
+
+          this.hideLoader();
+      })
+
     }
 
     recenter = () => {
         console.log("Re Centering the User")
-
+        this.setCurrentLocation();
         const {
             latitude,
             longitude,
@@ -122,13 +209,34 @@ export default class GoogleMapsScreen extends React.Component {
         }, 1000)
     }
 
+<<<<<<< HEAD
     toStart = () => {
-
-        console.log("Setting the start point")
-
-        this.setState({uiState: 1})
-
+=======
+    endTour = () => {
         this.showLoader();
+
+>>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
+
+        let tour = {...this.state.tour}
+        tour.origin = null;
+        tour.destination = null;
+        tour.tourStarted = null;
+
+        this.setState({
+          tour,
+          uiState: 0
+        })
+
+<<<<<<< HEAD
+        this.setState({uiState: 1})
+=======
+        this.hideLoader();
+    }
+>>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
+
+    toStart = () => {
+        this.showLoader();
+<<<<<<< HEAD
         const tourId = 1;
 
         Axios({
@@ -150,7 +258,26 @@ export default class GoogleMapsScreen extends React.Component {
             })
             console.log("To Start Call Finished: Fn toStart: ", this.state)
             this.hideLoader();
+=======
+        console.log("Setting the start point")
+
+        let tour = {...this.state.tour}
+        tour.origin = {
+            "latitude": this.state.latitude,
+            "longitude": this.state.longitude
+        }
+        tour.destination = tour.waypoints[0].location;
+        tour.tourStarted = true;
+
+        this.setState({
+          tour,
+          uiState: 1
+>>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
         })
+
+
+        this.hideLoader();
+
     }
 
     showLoader = () => {
@@ -290,9 +417,21 @@ console.log(tokens);
     render() {
 
         let {
+<<<<<<< HEAD
             destination,
             origin
+=======
+            latitude,
+            longitude
+>>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
         } = this.state
+
+        let {
+          origin,
+          destination,
+          tourStarted,
+          waypoints
+        } = this.state.tour
 
         return (
             this.state.latitude ?
@@ -304,22 +443,49 @@ console.log(tokens);
                         data-test="MapView"
                         style={styles.mapStyle}
                         customMapStyle={mapStyle}
-                        region={this.state}
+                        initialRegion={this.state}
                     >
                         <MapViewDirections
                             origin={origin}
                             destination={destination}
+<<<<<<< HEAD
+=======
+                            resetOnChange={false}
+>>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
                             apikey={GOOGLE_MAPS_APIKEY}
                             strokeWidth={2.5}
                             strokeColor="#4d99e6"
                             mode="WALKING"
+                            precision="low"
                         />
 
+<<<<<<< HEAD
 
                         {destination && <MapView.Marker
                             coordinate={destination}
                             icon={require('../../assets/PointOfInterestIcon.png')}
                         />}
+=======
+                      {destination && waypoints.map((waypoint, index) =>
+                            <Marker
+                              coordinate={waypoint.location}
+                              key={waypoint.title}
+                            >
+                              <Callout
+                                onPress={ e => {
+                                  this.props.navigation.navigate('Landmark', {landmark: waypoint} );
+                                }
+                               }>
+                                <View >
+                                  <Text>{waypoint.title}</Text>
+                                  <Text>{waypoint.description}</Text>
+                                  <Text>Click For More Information...</Text>
+                                </View>
+                              </Callout>
+                            </Marker>
+
+                          )}
+>>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
 
                     </MapView>
 
@@ -332,7 +498,7 @@ console.log(tokens);
                     )}
 
                     {/* AR View Button  */}
-                    <View data-test="ButtonView" style={{
+                    {/* <View data-test="ButtonView" style={{
                         position: "absolute", //use absolute position to show button on top of the map
                         top: "0%", //for center align
                         alignSelf: 'center'
@@ -357,12 +523,16 @@ console.log(tokens);
 
        
 
+<<<<<<< HEAD
         <Progress.Bar  progress={num_of_tokens/4} width={200} />
 
         
 
         
                     </View>
+=======
+                    </View> */}
+>>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
 
                     {/* ReCenter Button  */}
 

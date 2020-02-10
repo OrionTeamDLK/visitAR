@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { TouchableOpacity, View, Text, Button } from 'react-native'
+import { TouchableOpacity, View, Text, Button, Image } from 'react-native'
 import HelpInfoButton from "../Components/HelpInfoButton"
+import MenuButton from "../Components/MenuButton"
 
 HideStartedTourReCenterButton = (props) => {
     if (props.status == 0) {
@@ -30,24 +31,27 @@ ShowEndTourButton = (props) => {
         return (
             <TouchableOpacity
                 onPress={props.endTour}
-                style={{ position: "absolute", left: 10, top: 10 }}>
+                style={{
+                    position: "absolute", //use absolute position to show button on top of the map
+                    top: "0%", //for center align
+                    alignSelf: 'center',
+                }}>
 
                 <View
                     style={{
-                        height: 80,
-                        width: 80,
+                        height: 50,
+                        width: 100,
                         backgroundColor: '#4c6294',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        borderRadius: 15,
-                        padding: 10,
+                        borderRadius: 1,
                         borderWidth: 0.1,
                         borderBottomWidth: 3,
                         borderColor: "black"
                     }}>
                     <Text style={{
                         color: "white",
-                        fontSize: 25,
+                        fontSize: 20,
                         textAlign: "center"
                     }}>End Tour
                 </Text>
@@ -75,16 +79,18 @@ class UserInterface extends Component {
                     color: "white",
                     text: "Start Tour",
                     fontsize: 25,
-                    showView: true
+                    showView: true,
+                    right: null
                 },
                 {
                     onPress: this.props.CallReCenter,
-                    height: 120,
-                    width: 120,
+                    height: 70,
+                    width: 70,
                     color: "white",
-                    text: "Recenter",
+                    text: "",
                     fontsize: 22,
-                    showView: false
+                    showView: false,
+                    right: 15
                 }]
         }
     }
@@ -100,12 +106,18 @@ class UserInterface extends Component {
                     top: 0,
                     alignSelf: 'right'
                 }} navName="Help" />
-                <HideStartedTourReCenterButton status={this.props.status} CallReCenter={this.props.CallReCenter} />
+                 <MenuButton style={{
+                    position: "absolute",
+                    top: 0,
+                    alignSelf: 'left'
+                }} navName="Menu" />
+                {/* <HideStartedTourReCenterButton status={this.props.status} CallStartTour={this.props.CallStartTour} /> */}
                 <ShowEndTourButton status={this.props.status} endTour={this.props.endTour} />
                 <TouchableOpacity style={{
                     position: "absolute",
-                    bottom: 20,
-                    alignSelf: 'center'
+                    bottom: 30,
+                    alignSelf: 'center',
+                    right: this.state.uiState[this.props.status].right
                 }}
                     onPress={this.state.uiState[this.props.status].onPress}
                 >
@@ -125,10 +137,15 @@ class UserInterface extends Component {
                             borderColor: "black"
                         }}>
                         {/* Global Text props should be used here!! */}
-                        <Text style={{
-                            color: this.state.uiState[this.props.status].color,
-                            fontSize: this.state.uiState[this.props.status].fontsize
-                        }}>{this.state.uiState[this.props.status].text}</Text>
+                        {this.props.status == 0 ?
+                            <Text style={{
+                                color: this.state.uiState[this.props.status].color,
+                                fontSize: this.state.uiState[this.props.status].fontsize
+                            }}>{this.state.uiState[this.props.status].text}</Text> :
+                            <Image
+                                style={{ width: 40, height: 40, alignItems: "center", justifyContent: "center" }}
+                                source={require('../../assets/recenter.png')}
+                            />}
                     </View>
                 </TouchableOpacity>
             </>
