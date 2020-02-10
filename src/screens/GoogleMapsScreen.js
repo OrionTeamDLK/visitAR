@@ -283,7 +283,7 @@ export default class GoogleMapsScreen extends React.Component {
                     )}
 
                     {/* AR View Button  */}
-                    <View data-test="ButtonView" style={{
+                    {/* <View data-test="ButtonView" style={{
                         position: "absolute", //use absolute position to show button on top of the map
                         top: "0%", //for center align
                         alignSelf: 'center'
@@ -303,7 +303,7 @@ export default class GoogleMapsScreen extends React.Component {
                         />
 
 
-                    </View>
+                    </View> */}
 
                     <UserInterface
                         CallStartTour={this.toStart.bind(this)}
