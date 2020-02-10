@@ -44,9 +44,10 @@ const navigator = createStackNavigator({
   ArTest: ArTestScreen,
   Landmark: LandmarkScreen
 },{
-  initialRouteName: 'Index',
+  initialRouteName: 'GMaps',
   defaultNavigationOptions:{
     title:'VisitAR  ',
+    header:null,
     headerTitleStyle: {
       textAlign:"center",
       flex:1 ,

@@ -11,7 +11,8 @@ import {
     requireNativeComponent,
     Alert,
     TouchableOpacity,
-    TouchableHighlight
+    TouchableHighlight,
+    StatusBar
 } from "react-native";
 import {
     GOOGLE_MAPS_APIKEY,
@@ -402,7 +403,9 @@ export default class GoogleMapsScreen extends React.Component {
       return (
           this.state.latitude ?
               <View data-test="GoogleMaps_ScreenView" style={styles.container}>
-
+                    <View>
+                        <StatusBar hidden={true}/>
+                    </View>
                   <MapView
                       ref={(ref) => this.mapView = ref}
                       showsUserLocation
@@ -422,6 +425,8 @@ export default class GoogleMapsScreen extends React.Component {
                           mode="WALKING"
                           precision="low"
                       />
+
+                      
 
                     {//destination && <MapView.Marker
                       //    coordinate={destination}
@@ -450,6 +455,8 @@ export default class GoogleMapsScreen extends React.Component {
                             </View>
                           </Callout>
                         </Marker>)}
+
+                        
                   </MapView>
 
                   {this.state.showLoader && (
