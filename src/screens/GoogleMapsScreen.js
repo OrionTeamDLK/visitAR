@@ -13,38 +13,43 @@ import {
     TouchableOpacity,
     TouchableHighlight
 } from "react-native";
-import { GOOGLE_MAPS_APIKEY, JWT_SECRET } from "../../config/config.js"
+import {
+    GOOGLE_MAPS_APIKEY,
+    JWT_SECRET
+} from "../../config/config.js"
 import NavigationButton from "../Components/NavigationButton";
 import AnimatedLoadingBar from "../Components/AnimatedLoadingBar"
 import Spinner from "react-native-loading-spinner-overlay";
 import MapView, {
-    Marker
+    Marker,
+    Callout
 } from "react-native-maps";
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 import MapViewDirections from 'react-native-maps-directions'
 import JWT from "expo-jwt";
 import Axios from "axios";
-import { withTheme } from "react-native-elements";
-import UserInterface from "../Components/UserInterface"
-<<<<<<< HEAD
-import { HitTestResultTypes } from "expo/build/AR";
-import { getDistance, getPreciseDistance, geolib } from "geolib";
-import * as Location from 'expo-location';
+import {
+    withTheme
+} from "react-native-elements";
+import UserInterface from "../Components/UserInterface";
+import {
+    HitTestResultTypes
+} from "expo/build/AR";
+import {
+    getDistance,
+    getPreciseDistance,
+    geolib
+} from "geolib";
 import * as Speech from 'expo-speech';
 import Constants from 'expo-constants';
 import * as Progress from 'react-native-progress';
-=======
-import { HitTestResultTypes } from "expo/build/AR"
-import * as Geolib from 'geolib';
 
 const LOCATION_SETTINGS = {
   accuracy: Location.Accuracy.Balanced,
   timeInterval: 200,
   distanceInterval: 0,
 };
->>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
-
 
 var closestToken;
 var num_of_tokens=0;
@@ -54,33 +59,30 @@ var token3=0;
 var token4=0;
 
 var tokens=[token1, token2,token3,token4];
-  
-export default class GoogleMapsScreen extends React.Component {    
+
+export default class GoogleMapsScreen extends React.Component {
 
     constructor(props) {
-        super(props)
-        this.state = {
-            latitude: null,
-            longitude: null,
-            latitudeDelta: 0.004,
-            longitudeDelta: 0.004,
-<<<<<<< HEAD
-            coords: [],
+    super(props)
+    this.state = {
+        latitude: null,
+        longitude: null,
+        latitudeDelta: 0.004,
+        longitudeDelta: 0.004,
+        coords: [],
+        origin: null,
+        destination: null,
+        showLoader: false,
+        uiState: 0,
+        tour: {
+            tourStarted: false,
             origin: null,
             destination: null,
-=======
->>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
-            showLoader: false,
-            uiState: 0,
-            tour: {
-              tourStarted: false,
-              origin: null,
-              destination: null,
-              waypoints: null,
-              nextLocation: 1
-            }
+            waypoints: null,
+            nextLocation: 1
         }
     }
+  }
 
     async componentDidMount() {
         //set Axios Request Auth Header with JWT Token
@@ -88,9 +90,7 @@ export default class GoogleMapsScreen extends React.Component {
         Axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
 
         //Declaring a variable, status. to ask for permission for location services.
-        let {
-            status
-        } = await Permissions.askAsync(Permissions.LOCATION);
+        let { status } = await Permissions.askAsync(Permissions.LOCATION);
 
         //If Permissions were not given, error message to display.
         if (status !== 'granted') {
@@ -101,7 +101,6 @@ export default class GoogleMapsScreen extends React.Component {
 
         this.setCurrentLocation();
 
-<<<<<<< HEAD
         //Comparing Current psoition with passable objects, set to 0 for now
         if (this.state.latitude == 0 && this.state.longitude == 0) {
             this.setState({
@@ -109,9 +108,8 @@ export default class GoogleMapsScreen extends React.Component {
             })
         }
 
-
         this.setTokens();
-=======
+
         this.getWaypoints();
 
         Location.watchPositionAsync(LOCATION_SETTINGS, location => {
@@ -140,12 +138,13 @@ export default class GoogleMapsScreen extends React.Component {
           //this.setState(location.coords)
 
         });
->>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
+
     }
 
     setCurrentLocation = async () => {
 
       let location = await Location.getCurrentPositionAsync({});
+
       this.setState({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude
@@ -178,17 +177,20 @@ export default class GoogleMapsScreen extends React.Component {
                       "latitude": waypoint.location._latitude,
                       "longitude": waypoint.location._longitude
                   },
-                  "visited":false
+                  "visited": true
               })
           }
 
-          let tour = {...this.state.tour}
+          let tour = {
+              ...this.state.tour
+          }
           tour.waypoints = waypointArr;
-          this.setState({tour})
+          this.setState({
+              tour
+          })
 
           this.hideLoader();
       })
-
     }
 
     recenter = () => {
@@ -209,56 +211,30 @@ export default class GoogleMapsScreen extends React.Component {
         }, 1000)
     }
 
-<<<<<<< HEAD
-    toStart = () => {
-=======
     endTour = () => {
-        this.showLoader();
 
->>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
+      this.showLoader();
+      let tour = {
+          ...this.state.tour
+      }
+      tour.origin = null;
+      tour.destination = null;
+      tour.tourStarted = null;
 
-        let tour = {...this.state.tour}
-        tour.origin = null;
-        tour.destination = null;
-        tour.tourStarted = null;
-
-        this.setState({
+      this.setState({
           tour,
           uiState: 0
-        })
+      })
 
-<<<<<<< HEAD
-        this.setState({uiState: 1})
-=======
-        this.hideLoader();
+      this.setState({
+          uiState: 1
+      })
+
+      this.hideLoader();
     }
->>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
 
     toStart = () => {
         this.showLoader();
-<<<<<<< HEAD
-        const tourId = 1;
-
-        Axios({
-            method: "get",
-            url: `https://orion-visitar.herokuapp.com/tourData?id=${tourId}`
-        }).then((results) => {
-            console.log("Tour Data Request Response: Fn toStart")
-            console.log(results.data.starting_point)
-
-            this.setState({
-                origin: {
-                    "latitude": this.state.latitude,
-                    "longitude": this.state.longitude
-                },
-                destination: {
-                    "latitude": results.data.starting_point._latitude,
-                    "longitude": results.data.starting_point._longitude
-                }
-            })
-            console.log("To Start Call Finished: Fn toStart: ", this.state)
-            this.hideLoader();
-=======
         console.log("Setting the start point")
 
         let tour = {...this.state.tour}
@@ -272,292 +248,228 @@ export default class GoogleMapsScreen extends React.Component {
         this.setState({
           tour,
           uiState: 1
->>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
         })
-
-
         this.hideLoader();
-
     }
 
-    showLoader = () => {
-        this.setState({ showLoader: true });
-    };
+    showLoader = () => this.setState({ showLoader: true });
 
-    hideLoader = () => {
-        this.setState({ showLoader: false });
-    };
+    hideLoader = () => this.setState({ showLoader: false });
 
-    setTokens = ()  => 
-    {
-        navigator.geolocation.getCurrentPosition(
-            position => { 	
-                //comparring my current geo location with the location of the tokens in Carlingford.
-              if(tokens[0]!=99999999){
-                tokens[0] = getPreciseDistance(
-      
-                { latitude: position.coords.latitude, longitude: position.coords.longitude },
-                { latitude: 54.041875, longitude: -6.18777778 }
-              );    			 
-              this.setState({token1});
-            
-               }
-      
-               if(tokens[1]!=99999999){
-                tokens[1] = getPreciseDistance(
-      
-                { latitude: position.coords.latitude, longitude: position.coords.longitude },
-                { latitude: 54.04219, longitude: -6.187161 }
-              );      
-               this.setState({token2});
-            
-               }
-  
-               if(tokens[2]!=99999999){
-                tokens[2] = getPreciseDistance(
-      
-                  { latitude: position.coords.latitude, longitude: position.coords.longitude },
-                  { latitude: 54.03935278, longitude: -6.18638889 }
-                );      
-              this.setState({token3});
-           
-               }
-  
-               if(tokens[3]!=99999999){
-                tokens[3] = getPreciseDistance(
-      
-                  { latitude: position.coords.latitude, longitude: position.coords.longitude },
-                  { latitude: 54.03803889, longitude: -6.185 }
-                );      
-              this.setState({token4});
-         
-               }
-
-
-
-               error => Alert.alert(error.message),
-            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-            }
-        )
-        
+    setTokens = () => {
+      navigator.geolocation.getCurrentPosition(
+          position => {
+              //comparring my current geo location with the location of the tokens in Carlingford.
+              if (tokens[0] != 99999999) {
+                  tokens[0] = getPreciseDistance(
+                      {
+                          latitude: position.coords.latitude,
+                          longitude: position.coords.longitude
+                      }, {
+                          latitude: 54.041875,
+                          longitude: -6.18777778
+                      }
+                  );
+                  this.setState({
+                      token1
+                  });
+              }
+              if (tokens[1] != 99999999) {
+                  tokens[1] = getPreciseDistance(
+                      {
+                          latitude: position.coords.latitude,
+                          longitude: position.coords.longitude
+                      }, {
+                          latitude: 54.04219,
+                          longitude: -6.187161
+                      }
+                  );
+                  this.setState({
+                      token2
+                  });
+              }
+              if (tokens[2] != 99999999) {
+                  tokens[2] = getPreciseDistance(
+                      {
+                          latitude: position.coords.latitude,
+                          longitude: position.coords.longitude
+                      }, {
+                          latitude: 54.03935278,
+                          longitude: -6.18638889
+                      }
+                  );
+                  this.setState({
+                      token3
+                  });
+              }
+              if (tokens[3] != 99999999) {
+                  tokens[3] = getPreciseDistance(
+                      {
+                          latitude: position.coords.latitude,
+                          longitude: position.coords.longitude
+                      }, {
+                          latitude: 54.03803889,
+                          longitude: -6.185
+                      }
+                  );
+                  this.setState({
+                      token4
+                  });
+              }
+              error => Alert.alert(error.message), {
+                  enableHighAccuracy: true,
+                  timeout: 20000,
+                  maximumAge: 1000
+              }
+          }
+      )
     }
-
 
     distnaceBetweenLocationAndTokens = () => {
-             
-this.setTokens();
-console.log(tokens);
 
-             
-			//calculating what the closts token is
-			 closestToken = Math.min(...tokens) // 1
-            this.setState({closestToken});
-            
-			 //num_of_tokens=0;	
+      this.setTokens();
+      console.log(tokens);
 
-			 //for each token , check that the closest token is less than 5 meters( for testing i use a larger number)
-             if(closestToken <5 && num_of_tokens<=4 )                    
-             {
-             //for loop to run through all of the tokens, to see if there is a token that matches the closest token            
-				for( var i=0; i<tokens.length; i++)
-				{
-					
-						//match the closest distance with the relevant token  
-						if(tokens[i]==closestToken)
-						{
-							//add a token to the count of tokens
-							num_of_tokens++;
-                            this.setState({num_of_tokens});
-                            
-                            var token_number=tokens.indexOf(closefnstToken);
-                            if(num_of_tokens<4){
-                            Speech.speak('congratulations! you have found ' + num_of_tokens +' of 4 tokens');
-                            }
-                            else if(num_of_tokens==4)
-                            {
-                                Speech.speak('congratulations! you have found all 4 tokens!');
-                            }
-							
-							//reset the token distance to 9999999 (a number that should always be bigger than the rest)and so that it will never be the minimum as above
-							const index = tokens.indexOf(tokens[i]);
-							if (index !== -1) 
-							{
-   							 tokens[index] = 99999999;
-							}	
-							
-                            this.setState({tokens})	;
-                            console.log("tokens modified")
-                            this.setTokens();
-                            console.log(tokens);
-						}
-                    }                  
-                    
-                }
+      //calculating what the closts token is
+      closestToken = Math.min(...tokens) // 1
+      this.setState({
+          closestToken
+      });
 
-                else{
-                    if(num_of_tokens<4){
-                    //nearest_token=("you are " + closestToken + " from the closest token!")
-                    alert("you are " + closestToken + " from the closest token!");
-                    }
-                    else{
-                        alert("you have found all 4 tokens!");
+      //num_of_tokens=0;
 
-                    }
-                    
-       // this.setState({nearest_token});
-                }
-            
-           
-                
-		
-		
-	  }
+      //for each token , check that the closest token is less than 5 meters( for testing i use a larger number)
+      if (closestToken < 5 && num_of_tokens <= 4) {
+          //for loop to run through all of the tokens, to see if there is a token that matches the closest token
+          for (var i = 0; i < tokens.length; i++) {
 
+              //match the closest distance with the relevant token
+              if (tokens[i] == closestToken) {
+                  //add a token to the count of tokens
+                  num_of_tokens++;
+                  this.setState({
+                      num_of_tokens
+                  });
+
+                  var token_number = tokens.indexOf(closefnstToken);
+                  if (num_of_tokens < 4) {
+                      Speech.speak('congratulations! you have found ' + num_of_tokens + ' of 4 tokens');
+                  } else if (num_of_tokens == 4) {
+                      Speech.speak('congratulations! you have found all 4 tokens!');
+                  }
+
+                  //reset the token distance to 9999999 (a number that should always be bigger than the rest)and so that it will never be the minimum as above
+                  const index = tokens.indexOf(tokens[i]);
+                  if (index !== -1) {
+                      tokens[index] = 99999999;
+                  }
+
+                  this.setState({
+                      tokens
+                  });
+                  console.log("tokens modified")
+                  this.setTokens();
+                  console.log(tokens);
+              }
+          }
+
+      } else {
+          if (num_of_tokens < 4) {
+              //nearest_token=("you are " + closestToken + " from the closest token!")
+              alert("you are " + closestToken + " from the closest token!");
+          } else {
+              alert("you have found all 4 tokens!");
+
+          }
+
+          // this.setState({nearest_token});
+      }
+    }
 
     render() {
+      let {
+        latitude,
+        longitude
+      } = this.state
 
-        let {
-<<<<<<< HEAD
-            destination,
-            origin
-=======
-            latitude,
-            longitude
->>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
-        } = this.state
-
-        let {
+      let {
           origin,
           destination,
           tourStarted,
           waypoints
-        } = this.state.tour
+      } = this.state.tour
 
-        return (
-            this.state.latitude ?
-                <View data-test="GoogleMaps_ScreenView" style={styles.container}>
+      return (
+          this.state.latitude ?
+              <View data-test="GoogleMaps_ScreenView" style={styles.container}>
 
-                    <MapView
-                        ref={(ref) => this.mapView = ref}
-                        showsUserLocation
-                        data-test="MapView"
-                        style={styles.mapStyle}
-                        customMapStyle={mapStyle}
-                        initialRegion={this.state}
-                    >
-                        <MapViewDirections
-                            origin={origin}
-                            destination={destination}
-<<<<<<< HEAD
-=======
-                            resetOnChange={false}
->>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
-                            apikey={GOOGLE_MAPS_APIKEY}
-                            strokeWidth={2.5}
-                            strokeColor="#4d99e6"
-                            mode="WALKING"
-                            precision="low"
-                        />
+                  <MapView
+                      ref={(ref) => this.mapView = ref}
+                      showsUserLocation
+                      data-test="MapView"
+                      style={styles.mapStyle}
+                      customMapStyle={mapStyle}
+                      initialRegion={this.state}
+                  >
+                      <MapViewDirections
+                          origin={origin}
+                          destination={destination}
 
-<<<<<<< HEAD
+                          resetOnChange={false}
+                          apikey={GOOGLE_MAPS_APIKEY}
+                          strokeWidth={2.5}
+                          strokeColor="#4d99e6"
+                          mode="WALKING"
+                          precision="low"
+                      />
 
-                        {destination && <MapView.Marker
-                            coordinate={destination}
-                            icon={require('../../assets/PointOfInterestIcon.png')}
-                        />}
-=======
-                      {destination && waypoints.map((waypoint, index) =>
-                            <Marker
-                              coordinate={waypoint.location}
-                              key={waypoint.title}
-                            >
-                              <Callout
-                                onPress={ e => {
-                                  this.props.navigation.navigate('Landmark', {landmark: waypoint} );
-                                }
-                               }>
-                                <View >
-                                  <Text>{waypoint.title}</Text>
-                                  <Text>{waypoint.description}</Text>
-                                  <Text>Click For More Information...</Text>
-                                </View>
-                              </Callout>
-                            </Marker>
+                    {//destination && <MapView.Marker
+                      //    coordinate={destination}
+                        //  icon={require('../../assets/PointOfInterestIcon.png')}/>
+                      }
 
-                          )}
->>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
+                      {tourStarted && waypoints.map((waypoint, index) =>
+                        <Marker
+                          coordinate={waypoint.location}
+                          key={waypoint.title}
+                          icon={waypoint.visited ?
+                            require('../../assets/PointOfInterestIconVisited.png')
+                            :
+                            require('../../assets/PointOfInterestIcon.png')
+                          }
+                        >
+                          <Callout
+                            onPress={ e => {
+                              this.props.navigation.navigate('Landmark', {landmark: waypoint} );
+                            }
+                           }>
+                            <View >
+                              <Text>{waypoint.title}</Text>
+                              <Text>{waypoint.description}</Text>
+                              <Text>Click For More Information...</Text>
+                            </View>
+                          </Callout>
+                        </Marker>)}
+                  </MapView>
 
-                    </MapView>
+                  {this.state.showLoader && (
+                      <Spinner
+                          visible={true}
+                          textContent={"Getting Route..."}
+                          textStyle={styles.spinnerTextStyle}
+                      />
+                  )}
 
-                    {this.state.showLoader && (
-                        <Spinner
-                            visible={true}
-                            textContent={"Getting Route..."}
-                            textStyle={styles.spinnerTextStyle}
-                        />
-                    )}
-
-                    {/* AR View Button  */}
-                    {/* <View data-test="ButtonView" style={{
-                        position: "absolute", //use absolute position to show button on top of the map
-                        top: "0%", //for center align
-                        alignSelf: 'center'
-                    }}>
-
-                        <NavigationButton
-                            data-test="Screen_Nav_Button"
-                            title="AR View"
-                            icon="globe"
-                            navName="Index"
-                            style={styles.ovewrlayView}
-                        />
-
-<TouchableHighlight
-                style={styles.buttonStyle}
-                onPress={() => {
-                  this.distnaceBetweenLocationAndTokens();
-                }}>
-		<Text>Pick up token</Text>
-				
-        </TouchableHighlight>
-
-       
-
-<<<<<<< HEAD
-        <Progress.Bar  progress={num_of_tokens/4} width={200} />
-
-        
-
-        
-                    </View>
-=======
-                    </View> */}
->>>>>>> bb83783f10bd405e0e4f36eaec2c8542fdd30fae
-
-                    {/* ReCenter Button  */}
-
-                    
-
-                    {/* Start Tour Button  */}
-                    <UserInterface 
-                    CallStartTour={this.toStart.bind(this)} 
-                    CallReCenter={this.recenter.bind(this)} 
+                  <UserInterface
+                    CallStartTour={this.toStart.bind(this)}
+                    CallReCenter={this.recenter.bind(this)}
                     status={this.state.uiState}
-                    />
-                    
-
-
-
-                    
+                  />
                 </View >
                 :
-                <View style={{ flex: 1, justifyContent: 'left', alignItems: 'center' }} data-test="Alt_View">
+                <View style={{ flex: 1, alignItems: 'center' }} data-test="Alt_View">
                     <AnimatedLoadingBar data-test="Loading_Bar" />
                 </View>
-
-
-
-
         );
     }
 }
