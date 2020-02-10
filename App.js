@@ -31,8 +31,14 @@ firebase.initializeApp(firebaseConfig);
 
 
 const navigator = createStackNavigator({
+  GMaps: {
+    screen: GoogleMapsScreen,
+    navigationOptions: {
+      header: null,
+    },
+  },
   Index: IndexScreen,
-  GMaps: GoogleMapsScreen,
+  //GMaps: GoogleMapsScreen,
   Menu: MenuScreen,
   Login: LoginScreen,
   Help: HelpScreen,
@@ -47,6 +53,7 @@ const navigator = createStackNavigator({
   initialRouteName: 'Index',
   defaultNavigationOptions:{
     title:'VisitAR  ',
+    //header:null,
     headerTitleStyle: {
       textAlign:"center",
       flex:1 ,
