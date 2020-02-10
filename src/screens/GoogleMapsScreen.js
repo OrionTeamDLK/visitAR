@@ -406,6 +406,7 @@ export default class GoogleMapsScreen extends React.Component {
                     <View>
                         <StatusBar hidden={true}/>
                     </View>
+
                   <MapView
                       ref={(ref) => this.mapView = ref}
                       showsUserLocation
@@ -414,6 +415,7 @@ export default class GoogleMapsScreen extends React.Component {
                       customMapStyle={mapStyle}
                       initialRegion={this.state}
                   >
+
                       <MapViewDirections
                           origin={origin}
                           destination={destination}

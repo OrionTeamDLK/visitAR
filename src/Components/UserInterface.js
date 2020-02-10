@@ -35,7 +35,10 @@ ShowEndTourButton = (props) => {
                     position: "absolute", //use absolute position to show button on top of the map
                     top: "0%", //for center align
                     alignSelf: 'center',
-                }}>
+                }}
+                //onPress={()=>{alert("this is the end screen")}}
+                >
+                
 
                 <View
                     style={{

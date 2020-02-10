@@ -13,6 +13,7 @@ import RegisterScreen from './src/screens/RegisterScreen';
 import EditProfileScreen from './src/screens/EditProfileScreen';
 import ArTestScreen from './src/screens/ArTestScreen';
 import LandmarkScreen from './src/screens/LandmarkScreen';
+import EndTourScreen from './src/screens/TourEndScreen';
 import * as firebase from 'firebase';
 
 
@@ -48,7 +49,8 @@ const navigator = createStackNavigator({
   Register: RegisterScreen,
   EditProfile: EditProfileScreen,
   ArTest: ArTestScreen,
-  Landmark: LandmarkScreen
+  Landmark: LandmarkScreen,
+  EndTour: EndTourScreen
 },{
   initialRouteName: 'Index',
   defaultNavigationOptions:{
