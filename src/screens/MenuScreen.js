@@ -61,10 +61,10 @@ export default class MenuScreen extends React.Component {
 					styleText={{ color: "white", fontSize: 30 }}/>
 
 				<NavigationButton
-					data-test="ArTest_button"
-					title="ArTest"
-					icon="cog"
-					navName="ArTest"
+					data-test="Tour_screen_button"
+					title="TourScreen"
+					icon="globe"
+					navName="GMaps"
 					styleText={{ color: "white", fontSize: 30 }} />
 
 			</View>
