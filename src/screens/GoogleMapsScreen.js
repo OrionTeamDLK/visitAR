@@ -14,6 +14,7 @@ import {
     TouchableHighlight,
     StatusBar
 } from "react-native";
+
 import {
     GOOGLE_MAPS_APIKEY,
     JWT_SECRET
@@ -450,15 +451,31 @@ export default class GoogleMapsScreen extends React.Component {
       return (
           this.state.latitude ?
               <View data-test="GoogleMaps_ScreenView" style={styles.container}>
+
+                  
                     <View>
                         <StatusBar hidden={true}/>
                     </View>
-                    {/*<NavigationButton
-                    title="Menu"
-                    icon="globe"
-                    navName="EndTour"
-                    style={{position:"absolyte",top:"1%"}}
-                    />*/}
+                    
+
+<TouchableHighlight
+                style={styles.buttonStyle}
+                onPress={() => {
+                  this.distnaceBetweenLocationAndTokens();
+                }}>
+		<Text>Pick up token</Text>
+				
+        </TouchableHighlight>  
+        <Progress.Bar  progress={num_of_tokens/4} width={200} />
+
+        
+
+                    
+
+       
+
+        
+
                   <MapView
                       ref={(ref) => this.mapView = ref}
                       showsUserLocation
