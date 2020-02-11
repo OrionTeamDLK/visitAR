@@ -1,15 +1,33 @@
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React from "react";
+import { View, Text, StyleSheet, Image, FlatList } from "react-native";
 
-const LanguageScreen = () => {
+
+export default class EndTourScreen extends React.Component {
+
+  componentWillMount() {
+
+  }
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
     return (
-        <View data-test = "LanguageScreen_view">
-        <Text data-test = "LanguageScreen_text">VisitAR</Text>
-        <Text data-test = "LanguageScreen_text">end tour screen</Text>
-        </View>
+      <View>
+        <Text>tour end page Page</Text>
+      </View>
     );
-};
+  }
+}
 
-const styles = StyleSheet.create({});
-
-export default EndTourScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    justifyContent: "center"
+  },
+  Button: {
+    marginTop: 10
+  }
+});

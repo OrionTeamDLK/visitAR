@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View,TouchableOpacity } from "react-native";
 import NavigationButton from '../Components/NavigationButton';
 
 const theme = {
@@ -23,6 +23,12 @@ const IndexScreen = ({ navigation }) => {
 			navName = "Menu"
 			styleText={{ padding: 10, color: "white", fontSize: 30 }}
 			/>
+			{/*<NavigationButton data-test = "index_nav_button"
+			title="End Tour"
+			icon = "cogs"
+			navName = "EndTour"
+			styleText={{ padding: 10, color: "white", fontSize: 30 }}
+	/>*/}
 		</View>
 	);
 };
