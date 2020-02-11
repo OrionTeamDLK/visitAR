@@ -14,6 +14,7 @@ import EditProfileScreen from './src/screens/EditProfileScreen';
 import ArTestScreen from './src/screens/ArTestScreen';
 import LandmarkScreen from './src/screens/LandmarkScreen';
 import * as firebase from 'firebase';
+//import EndTourScreen from './src/screens/TourEndScreen';
 
 
 const firebaseConfig = {
@@ -48,16 +49,18 @@ const navigator = createStackNavigator({
   Register: RegisterScreen,
   EditProfile: EditProfileScreen,
   ArTest: ArTestScreen,
-  Landmark: LandmarkScreen
+  Landmark: LandmarkScreen,
+  //EndTour: EndTourScreen
 },{
-  initialRouteName: 'Index',
+  initialRouteName: 'GMaps',
   defaultNavigationOptions:{
     title:'VisitAR  ',
     //header:null,
     headerTitleStyle: {
       textAlign:"center",
       flex:1 ,
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      fontSize:50,
   },
   headerStyle: {
     backgroundColor: '#f4511e',

@@ -7,16 +7,16 @@ import { withNavigation } from 'react-navigation';
 
 const HelpInfoButton = (props) => {
 
+    const radius = 80;
     return (
 
         <TouchableOpacity
             onPress={() => props.navigation.navigate(props.navName)}
             style={{
                 position: "absolute",
-                right: 20,
+                right: 10,
                 alignSelf: 'center',
-                top: 5,
-
+                top: 10,
             }}>
             <View style={{
                 overflow: 'hidden',
@@ -26,10 +26,10 @@ const HelpInfoButton = (props) => {
                 borderRadius: 120,
                 borderWidth: 5,
                 borderColor: "#4c6294",
-                height: 60,
-                width: 60
+                height: radius,
+                width: radius
             }}>
-                <Text style={{ color: "#4c6294", fontSize: 40, fontWeight: "bold"}}>
+                <Text style={{ color: "#4c6294", fontSize: 70, fontWeight: "bold"}}>
                     ?
                 </Text>
             </View>

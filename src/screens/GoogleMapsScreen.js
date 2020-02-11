@@ -406,6 +406,12 @@ export default class GoogleMapsScreen extends React.Component {
                     <View>
                         <StatusBar hidden={true}/>
                     </View>
+                    {/*<NavigationButton
+                    title="Menu"
+                    icon="globe"
+                    navName="EndTour"
+                    style={{position:"absolyte",top:"1%"}}
+                    />*/}
                   <MapView
                       ref={(ref) => this.mapView = ref}
                       showsUserLocation
