@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, FlatList, Button, Alert, SafeAreaView } from "react-native";
+import { TouchableHighlight,View, Text, StyleSheet, Image, FlatList, Button, Alert, SafeAreaView } from "react-native";
 import * as Speech from 'expo-speech';
 
 
@@ -37,7 +37,7 @@ export default class LandmarkScreen extends React.Component {
             title="speech"
             onPress={() => Speech.speak(title + ". " + description)}
         />
-       
+
 
 
 
