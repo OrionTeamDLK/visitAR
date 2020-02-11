@@ -11,15 +11,22 @@ const MenuButton = (props) => {
         <TouchableOpacity
             onPress={() => props.navigation.navigate(props.navName)}
             style={{
-                backgroundColor: "#4c6294",
+                /*backgroundColor: "#4c6294",
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderBottomWidth: 2,
                 borderTopColor: "#d9d9d9",
                 borderTopWidth: 2,
-                left: 10
+                left: 10*/
+                position: "absolute",
+                left: 10,
+                alignSelf: 'center',
+                top: 10,
             }}>
-            <View style={{
+            <Text>
+            <Icon name="bars" size={80} color="#4c6294" style="bars" />
+            </Text>
+           {/*} <View style={{
                 height: 10,
                 width: 30,
                 backgroundColor: "#4c6294",
@@ -36,7 +43,7 @@ const MenuButton = (props) => {
                 width: 30,
                 backgroundColor: "#4c6294",
                 borderRadius: 20
-            }}/>
+            }}/>*/}
         </TouchableOpacity>
     );
 };
