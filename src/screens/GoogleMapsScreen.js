@@ -14,6 +14,7 @@ import {
     TouchableHighlight,
     StatusBar
 } from "react-native";
+
 import {
     GOOGLE_MAPS_APIKEY,
     JWT_SECRET
