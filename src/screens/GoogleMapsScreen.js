@@ -76,11 +76,11 @@ export default class GoogleMapsScreen extends React.Component {
         destination: null,
         showLoader: false,
         uiState: 0,
+        waypoints: null,
         tour: {
             tourStarted: false,
             origin: null,
             destination: null,
-            waypoints: null,
             nextLocation: 1
         }
     }
@@ -110,7 +110,7 @@ export default class GoogleMapsScreen extends React.Component {
             })
         }
 
-        this.setTokens();
+        //this.setTokens();
 
         this.getWaypoints();
 
@@ -139,6 +139,45 @@ export default class GoogleMapsScreen extends React.Component {
           //if(waypoints[0].location == ), xz
           //this.setState(location.coords)
 
+
+          if(this.state.waypoints != null && this.state.tour.tourStarted){
+            //console.log(this.state.tour.waypoints)
+            let distance = getDistance(location.coords, this.state.waypoints[0].location);
+            console.log(distance);
+
+            // let waypoints = [... this.state.tour.waypoints];
+            // console.log(waypoints)
+            //
+            if( (distance < 20) && ( this.state.waypoints[0].id ==  this.state.tour.nextLocation) && (!this.state.waypoints[0].visited) ) {
+              alert('Landmark Event Called');
+
+              // let waypointsCopy = [... this.state.waypoints];
+              // waypointsCopy[0].visited = true;
+              // this.setState({tour: {
+              //   waypoints: waypointsCopy
+              // }})
+
+
+
+
+
+
+              const newWaypoints = JSON.parse(JSON.stringify(this.state.waypoints));
+              newWaypoints[0].visited = true;
+              this.setState({waypoints:newWaypoints});
+
+            }
+          }
+
+          let tourCopy = {...this.state.tour}
+          if(tourCopy.tourStarted){
+            tourCopy.origin = {
+              latitude: location.coords.latitude,
+              longitude: location.coords.longitude
+            };
+            this.setState({ tour: tourCopy })
+          }
+
         });
 
     }
@@ -151,9 +190,9 @@ export default class GoogleMapsScreen extends React.Component {
     }
 
     setCurrentLocation = async () => {
-
+      console.log('alert')
       let location = await Location.getCurrentPositionAsync({});
-
+      console.log(location)
       this.setState({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude
@@ -171,13 +210,14 @@ export default class GoogleMapsScreen extends React.Component {
           method: "get",
           url: `https://orion-visitar.herokuapp.com/tourData?id=${tourId}`
       }).then((results) => {
-          console.log("Tour Data Request Response: Fn toStart")
+          console.log("Tour Data Request Response: Fn getWaypoints")
 
           let waypointArr = [];
 
           for (let waypoint of results.data.tourStops) {
               waypointArr.push({
                   "id": waypoint.id,
+                  "visited": false,
                   "title": waypoint.name,
                   "description": waypoint.history,
                   "image": waypoint.image,
@@ -185,17 +225,16 @@ export default class GoogleMapsScreen extends React.Component {
                   "location": {
                       "latitude": waypoint.location._latitude,
                       "longitude": waypoint.location._longitude
-                  },
-                  "visited": true
+                  }
               })
           }
 
-          let tour = {
-              ...this.state.tour
-          }
-          tour.waypoints = waypointArr;
+          // let tour = {
+          //     ...this.state
+          // }
+          // tour.waypoints = waypointArr;
           this.setState({
-              tour
+              waypoints: waypointArr
           })
 
           this.hideLoader();
@@ -251,7 +290,7 @@ export default class GoogleMapsScreen extends React.Component {
             "latitude": this.state.latitude,
             "longitude": this.state.longitude
         }
-        tour.destination = tour.waypoints[0].location;
+        tour.destination = this.state.waypoints[0].location;
         tour.tourStarted = true;
 
         this.setState({
@@ -398,14 +437,14 @@ export default class GoogleMapsScreen extends React.Component {
     render() {
       let {
         latitude,
-        longitude
+        longitude,
+        waypoints
       } = this.state
 
       let {
           origin,
           destination,
-          tourStarted,
-          waypoints
+          tourStarted
       } = this.state.tour
 
       return (
