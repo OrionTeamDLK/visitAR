@@ -73,8 +73,6 @@ export default class GoogleMapsScreen extends React.Component {
         latitudeDelta: 0.004,
         longitudeDelta: 0.004,
         coords: [],
-        origin: null,
-        destination: null,
         showLoader: false,
         uiState: 0,
         waypoints: null,
@@ -117,56 +115,40 @@ export default class GoogleMapsScreen extends React.Component {
 
         Location.watchPositionAsync(LOCATION_SETTINGS, location => {
 
-          //console.log(`User position : ${Date.now()} - [${location.coords.latitude},${location.coords.longitude}]`)
-          //let {waypoints} = this.state;
-          // this.setState({
-          //  latitude: location.coords.latitude,
-          //  longitude: location.coords.longitude
-          // })
+          let {
+            waypoints
+          } = this.state;
 
-          let tour = {...this.state.tour}
-          if(tour.tourStarted){
-            tour.origin = {
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude
-            };
-          }
-          this.setState({tour})
-
-        //   let distance = Geolib.getDistance(location.coords, tour.waypoints[0].location)
-        //   console.log(distance);
-
-          //console.log(waypoints)
-          //if(waypoints[0].location == ), xz
-          //this.setState(location.coords)
+          let {
+              origin,
+              destination,
+              tourStarted,
+              nextLocation
+          } = this.state.tour
 
 
-          if(this.state.waypoints != null && this.state.tour.tourStarted){
-            //console.log(this.state.tour.waypoints)
-            let distance = getDistance(location.coords, this.state.waypoints[0].location);
+          if(waypoints != null && tourStarted){
+
+            let distance = getDistance(location.coords, waypoints[ nextLocation - 1 ].location);
             console.log(distance);
 
-            // let waypoints = [... this.state.tour.waypoints];
-            // console.log(waypoints)
-            //
-            if( (distance < 20) && ( this.state.waypoints[0].id ==  this.state.tour.nextLocation) && (!this.state.waypoints[0].visited) ) {
-              alert('Landmark Event Called');
+            if( ( distance < 20 ) && ( waypoints[ nextLocation - 1 ].id == nextLocation ) && ( !waypoints[ nextLocation - 1 ].visited ) ) {
 
-              // let waypointsCopy = [... this.state.waypoints];
-              // waypointsCopy[0].visited = true;
-              // this.setState({tour: {
-              //   waypoints: waypointsCopy
-              // }})
+              const newState = JSON.parse(JSON.stringify(this.state));
 
+              if(nextLocation != waypoints.length){
+                alert(`${waypoints[nextLocation - 1].title} Landmark Triggered`);
 
+                newState.waypoints[nextLocation-1].visited = true;
+                newState.tour.nextLocation++;
+                newState.tour.destination = newState.waypoints[newState.tour.nextLocation - 1].location;
+                this.setState(newState);
 
-
-
-
-              const newWaypoints = JSON.parse(JSON.stringify(this.state.waypoints));
-              newWaypoints[0].visited = true;
-              this.setState({waypoints:newWaypoints});
-
+              } else {
+                alert(`${waypoints[nextLocation-1].title} Landmark Triggered`);
+                newState.waypoints[nextLocation-1].visited = true;
+                this.setState(newState);
+              }
             }
           }
 
@@ -452,11 +434,11 @@ export default class GoogleMapsScreen extends React.Component {
           this.state.latitude ?
               <View data-test="GoogleMaps_ScreenView" style={styles.container}>
 
-                  
+
                     <View>
                         <StatusBar hidden={true}/>
                     </View>
-                    
+
 
 <TouchableHighlight
                 style={styles.buttonStyle}
@@ -464,17 +446,17 @@ export default class GoogleMapsScreen extends React.Component {
                   this.distnaceBetweenLocationAndTokens();
                 }}>
 		<Text>Pick up token</Text>
-				
-        </TouchableHighlight>  
+
+        </TouchableHighlight>
         <Progress.Bar  progress={num_of_tokens/4} width={200} />
 
-        
 
-                    
 
-       
 
-        
+
+
+
+
 
                   <MapView
                       ref={(ref) => this.mapView = ref}
