@@ -296,6 +296,7 @@ export default class GoogleMapsScreen extends React.Component {
         })*/}
 
         this.hideLoader();
+        this.props.navigation.navigate("EndTour");
     
     }
 
