@@ -277,7 +277,7 @@ export default class GoogleMapsScreen extends React.Component {
     }
 
     endTour = () => {
-
+        alert("This is the end tour screen");
         this.showLoader();
         let tour = {
             ...this.state.tour
@@ -291,15 +291,17 @@ export default class GoogleMapsScreen extends React.Component {
             uiState: 0
         })
 
-        this.setState({
+        {/*this.setState({
             uiState: 1
-        })
+        })*/}
 
         this.hideLoader();
+    
     }
 
     toStart = () => {
         this.showLoader();
+        //alert("start tour stuff and things");
         console.log("Setting the start point")
 
         let tour = { ...this.state.tour }
@@ -559,6 +561,7 @@ export default class GoogleMapsScreen extends React.Component {
                     <UserInterface
                         CallStartTour={this.toStart.bind(this)}
                         CallReCenter={this.recenter.bind(this)}
+                        endTour = {this.endTour.bind(this)}
                         setCurrentLocToCarlingford={this.setCurrentLocToCarlingford.bind(this)}
                         status={this.state.uiState}
                     />

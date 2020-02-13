@@ -39,7 +39,7 @@ ShowEndTourButton = (props) => {
                     top: "0%", //for center align
                     alignSelf: 'center',
                 }}
-                onPress={()=>{alert("this is the end screen")}}
+               // onPress={()=>{alert("this is the end screen")}}
                 //      || props.navigation.navigate("EndTourScreen")
                 >                
 
