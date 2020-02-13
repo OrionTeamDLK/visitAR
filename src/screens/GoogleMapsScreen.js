@@ -441,7 +441,7 @@ export default class GoogleMapsScreen extends React.Component {
         } else {
             if (num_of_tokens < 4) {
                 //nearest_token=("you are " + closestToken + " from the closest token!")
-                alert("you are " + closestToken + " from the closest token!");
+                alert("you are " + closestToken + "meters from the closest token!");
             } else {
                 alert("you have found all 4 tokens!");
 
@@ -475,11 +475,17 @@ export default class GoogleMapsScreen extends React.Component {
 
 
                     <TouchableHighlight
-                        style={styles.buttonStyle}
+                        style={{   
+                                 justifyContent: 'center',
+                        alignItems: 'center',
+                        height: 60,
+                        backgroundColor: '#4B6296',
+                        margin: 10,
+                        top:10,}}
                         onPress={() => {
                             this.distnaceBetweenLocationAndTokens();
                         }}>
-                        <Text>Pick up token</Text>
+                        <Text style={{top:5, color:"white"}}>Pick up token</Text>
 
                     </TouchableHighlight>
                     <Progress.Bar progress={num_of_tokens / 4} width={200} />
