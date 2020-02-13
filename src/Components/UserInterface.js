@@ -140,8 +140,8 @@ class UserInterface extends Component {
                             borderColor: "black"
                         }}>
                             <Image
-                                style={{ width: 40, height: 40, alignItems: "center", justifyContent: "center" }}
-                                source={require('../../assets/recenter.png')}
+                                style={{ width: 35, height: 35, alignItems: "center", justifyContent: "center" }}
+                                source={require('../../assets/home.png')}
                             />
                     </View>
                 </TouchableOpacity>
