@@ -70,8 +70,8 @@ export default class GoogleMapsScreen extends React.Component {
         this.state = {
             latitude: null,
             longitude: null,
-            latitudeDelta: 0.004,
-            longitudeDelta: 0.004,
+            latitudeDelta: 0.007,
+            longitudeDelta: 0.007,
             coords: [],
             showLoader: false,
             uiState: 0,
@@ -284,7 +284,7 @@ export default class GoogleMapsScreen extends React.Component {
         }
         tour.origin = null;
         tour.destination = null;
-        tour.tourStarted = null;
+        tour.tourStarted = false;
 
         this.setState({
             tour,
@@ -498,7 +498,11 @@ export default class GoogleMapsScreen extends React.Component {
                         data-test="MapView"
                         style={styles.mapStyle}
                         customMapStyle={mapStyle}
-                        initialRegion={this.state}
+                        initialRegion={{
+                            latitude: 54.041000,
+                            longitude: -6.185922,
+                            latitudeDelta: this.state.latitudeDelta,
+                            longitudeDelta: this.state.longitudeDelta}}
                     >
 
                         <MapViewDirections

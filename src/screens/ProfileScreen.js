@@ -131,7 +131,7 @@ export default class ProfileScreen extends React.Component {
             data-test="ProfileScreen_button"
             title="Home"
             icon="home"
-            navName="Index"
+            navName="GMaps"
           />
 
           <NavigationButton

@@ -31,7 +31,7 @@ ShowEndTourButton = (props) => {
     if (props.status == 1) {
         return (
             <TouchableOpacity
-                //onPress={props.endTour}
+                onPress={props.endTour}
                 //onPress={props.navigation.navigate("EndTourScreen")}
                // onPress={() => props.navigation.navigate("EndTourScreen")}
                 style={{
@@ -117,6 +117,7 @@ class UserInterface extends Component {
                     top: 0,
                     alignSelf: 'left'
                 }} navName="Menu" />
+                {/*}
                 <TouchableOpacity 
                 style={{
                     position: "absolute",
@@ -125,12 +126,12 @@ class UserInterface extends Component {
                     left: 20
                 }}
                 onPress={ ()=>{alert("this is the end screen")}}>
-                        
+        
                 
                 <View>
                 <Text>touch me</Text>
                 </View>
-                </TouchableOpacity>
+            </TouchableOpacity>*/}
                 {/* <HideStartedTourReCenterButton status={this.props.status} CallStartTour={this.props.CallStartTour} /> */}
                 <ShowEndTourButton status={this.props.status} endTour={this.props.endTour} />
 
