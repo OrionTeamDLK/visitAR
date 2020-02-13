@@ -277,7 +277,7 @@ export default class GoogleMapsScreen extends React.Component {
     }
 
     endTour = () => {
-        alert("This is the end tour screen");
+        //alert("This is the end tour screen");
         this.showLoader();
         let tour = {
             ...this.state.tour
