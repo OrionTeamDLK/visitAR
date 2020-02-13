@@ -240,6 +240,8 @@ export default class GoogleMapsScreen extends React.Component {
       })
 
       this.hideLoader();
+
+
     }
 
     toStart = () => {

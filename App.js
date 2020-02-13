@@ -51,7 +51,7 @@ const navigator = createStackNavigator({
   EditProfile: EditProfileScreen,
   ArTest: ArTestScreen,
   Landmark: LandmarkScreen,
-  //EndTour: EndTourScreen
+  EndTour: EndTourScreen
 },{
   initialRouteName: 'GMaps',
   defaultNavigationOptions:{

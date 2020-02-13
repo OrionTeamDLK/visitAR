@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { TouchableOpacity, View, Text, Button, Image } from 'react-native'
 import HelpInfoButton from "../Components/HelpInfoButton"
 import MenuButton from "../Components/MenuButton"
+import { withNavigation } from 'react-navigation';
 
 HideStartedTourReCenterButton = (props) => {
     if (props.status == 0) {
@@ -30,15 +31,17 @@ ShowEndTourButton = (props) => {
     if (props.status == 1) {
         return (
             <TouchableOpacity
-                onPress={props.endTour}
+                //onPress={props.endTour}
+                //onPress={props.navigation.navigate("EndTourScreen")}
+               // onPress={() => props.navigation.navigate("EndTourScreen")}
                 style={{
                     position: "absolute", //use absolute position to show button on top of the map
                     top: "0%", //for center align
                     alignSelf: 'center',
                 }}
-                //onPress={()=>{alert("this is the end screen")}}
-                >
-                
+                onPress={()=>{alert("this is the end screen")}}
+                //      || props.navigation.navigate("EndTourScreen")
+                >                
 
                 <View
                     style={{
@@ -100,7 +103,7 @@ class UserInterface extends Component {
 
 
 
-    render() {
+    render(props) {
         return (
             <>
 
@@ -114,6 +117,20 @@ class UserInterface extends Component {
                     top: 0,
                     alignSelf: 'left'
                 }} navName="Menu" />
+                <TouchableOpacity 
+                style={{
+                    position: "absolute",
+                    top: 150,
+                    alignSelf: 'center',
+                    left: 20
+                }}
+                onPress={ ()=>{alert("this is the end screen")}}>
+                        
+                
+                <View>
+                <Text>touch me</Text>
+                </View>
+                </TouchableOpacity>
                 {/* <HideStartedTourReCenterButton status={this.props.status} CallStartTour={this.props.CallStartTour} /> */}
                 <ShowEndTourButton status={this.props.status} endTour={this.props.endTour} />
 
@@ -186,4 +203,4 @@ class UserInterface extends Component {
         )
     }
 }
-export default UserInterface
+export default withNavigation(UserInterface)
