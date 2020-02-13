@@ -1,8 +1,14 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, FlatList } from "react-native";
+import { TouchableHighlight,View, Text, StyleSheet, Image, FlatList, Button, Alert, SafeAreaView } from "react-native";
+import * as Speech from 'expo-speech';
+
 
 
 export default class LandmarkScreen extends React.Component {
+  
+  state = {
+    volume: 0
+  }
 
   componentWillMount() {
 
@@ -17,6 +23,8 @@ export default class LandmarkScreen extends React.Component {
     let { title, description, location, image} = this.props.navigation.state.params.landmark;
 
 
+
+
     return (
       <View>
         <Image source={ {uri: image } } style={{width: 500, height: 300}}/>
@@ -24,8 +32,22 @@ export default class LandmarkScreen extends React.Component {
         <Text>{title}</Text>
         <Text>{description}</Text>
         <Text>{location.latitude}</Text>
-        <Text>{location.longitude}</Text>
+        <Text>{location.longitude}</Text>      
+        <Button
+            title="speech"
+            onPress={() => Speech.speak(title + ". " + description)}
+        />
+
+
+
+
+
       </View>
+
+
+
+
+      
     );
   }
 }

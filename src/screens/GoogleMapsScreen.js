@@ -14,6 +14,7 @@ import {
     TouchableHighlight,
     StatusBar
 } from "react-native";
+
 import {
     GOOGLE_MAPS_APIKEY,
     JWT_SECRET
@@ -48,43 +49,41 @@ import * as Progress from 'react-native-progress';
 import InfoPopUp from "../Components/InfoPopUp"
 
 const LOCATION_SETTINGS = {
-  accuracy: Location.Accuracy.Balanced,
-  timeInterval: 200,
-  distanceInterval: 0,
+    accuracy: Location.Accuracy.Balanced,
+    timeInterval: 200,
+    distanceInterval: 0,
 };
 
 var closestToken;
-var num_of_tokens=0;
-var token1=0;
-var token2=0;
-var token3=0;
-var token4=0;
+var num_of_tokens = 0;
+var token1 = 0;
+var token2 = 0;
+var token3 = 0;
+var token4 = 0;
 
-var tokens=[token1, token2,token3,token4];
+var tokens = [token1, token2, token3, token4];
 
 export default class GoogleMapsScreen extends React.Component {
 
     constructor(props) {
-    super(props)
-    this.state = {
-        latitude: null,
-        longitude: null,
-        latitudeDelta: 0.004,
-        longitudeDelta: 0.004,
-        coords: [],
-        origin: null,
-        destination: null,
-        showLoader: false,
-        uiState: 0,
-        tour: {
-            tourStarted: false,
-            origin: null,
-            destination: null,
+        super(props)
+        this.state = {
+            latitude: null,
+            longitude: null,
+            latitudeDelta: 0.004,
+            longitudeDelta: 0.004,
+            coords: [],
+            showLoader: false,
+            uiState: 0,
             waypoints: null,
-            nextLocation: 1
+            tour: {
+                tourStarted: false,
+                origin: null,
+                destination: null,
+                nextLocation: 1
+            }
         }
     }
-  }
 
     async componentDidMount() {
         //set Axios Request Auth Header with JWT Token
@@ -110,108 +109,90 @@ export default class GoogleMapsScreen extends React.Component {
             })
         }
 
-        this.setTokens();
+        //this.setTokens();
 
         this.getWaypoints();
 
         Location.watchPositionAsync(LOCATION_SETTINGS, location => {
 
-          //console.log(`User position : ${Date.now()} - [${location.coords.latitude},${location.coords.longitude}]`)
-          //let {waypoints} = this.state;
-          // this.setState({
-          //  latitude: location.coords.latitude,
-          //  longitude: location.coords.longitude
-          // })
+            let {
+                waypoints
+            } = this.state;
 
-          let tour = {...this.state.tour}
-          if(tour.tourStarted){
-            tour.origin = {
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude
-            };
-          }
-          this.setState({tour})
+            let {
+                origin,
+                destination,
+                tourStarted,
+                nextLocation
+            } = this.state.tour
 
-        //   let distance = Geolib.getDistance(location.coords, tour.waypoints[0].location)
-        //   console.log(distance);
 
-          //console.log(waypoints)
-          //if(waypoints[0].location == ), xz
-          //this.setState(location.coords)
+            if (waypoints != null && tourStarted) {
+
+                let distance = getDistance(location.coords, waypoints[nextLocation - 1].location);
+                console.log(distance);
+
+                if ((distance < 20) && (waypoints[nextLocation - 1].id == nextLocation) && (!waypoints[nextLocation - 1].visited)) {
+
+                    const newState = JSON.parse(JSON.stringify(this.state));
+
+                    if (nextLocation != waypoints.length) {
+                        alert(`${waypoints[nextLocation - 1].title} Landmark Triggered`);
+
+                        newState.waypoints[nextLocation - 1].visited = true;
+                        newState.tour.nextLocation++;
+                        newState.tour.destination = newState.waypoints[newState.tour.nextLocation - 1].location;
+                        this.setState(newState);
+
+                    } else {
+                        alert(`${waypoints[nextLocation - 1].title} Landmark Triggered`);
+                        newState.waypoints[nextLocation - 1].visited = true;
+                        this.setState(newState);
+                    }
+                }
+            }
+
+            let tourCopy = { ...this.state.tour }
+            if (tourCopy.tourStarted) {
+                tourCopy.origin = {
+                    latitude: location.coords.latitude,
+                    longitude: location.coords.longitude
+                };
+                this.setState({ tour: tourCopy })
+            }
 
         });
 
     }
 
     setCurrentLocToCarlingford = () => {
-        // this.setState({
-        //     latitude: "54.0469",
-        //     longitude: "6.1902"
-        //   })
-    }
 
-    setCurrentLocation = async () => {
+        const latitudeCarlingford= 54.041000
+        const longitudeCarlingford= -6.185922
+        let timer= null
 
-      let location = await Location.getCurrentPositionAsync({});
+        let coordCheck = false;
+        if (latitudeCarlingford != this.state.latitude) {
+            timer = setTimeout(() => this.showLoader, 1000);
+            coordCheck == true;
+        }
 
-      this.setState({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude
-      })
-      console.log(`User position Lat,Long : ${this.state.latitude},${this.state.longitude}`)
-    };
 
-    getWaypoints = async () => {
+        console.log("Continuing")
 
-      this.showLoader();
-
-      const tourId = 1;
-
-      Axios({
-          method: "get",
-          url: `https://orion-visitar.herokuapp.com/tourData?id=${tourId}`
-      }).then((results) => {
-          console.log("Tour Data Request Response: Fn toStart")
-
-          let waypointArr = [];
-
-          for (let waypoint of results.data.tourStops) {
-              waypointArr.push({
-                  "id": waypoint.id,
-                  "title": waypoint.name,
-                  "description": waypoint.history,
-                  "image": waypoint.image,
-                  "fact": waypoint.fact,
-                  "location": {
-                      "latitude": waypoint.location._latitude,
-                      "longitude": waypoint.location._longitude
-                  },
-                  "visited": true
-              })
-          }
-
-          let tour = {
-              ...this.state.tour
-          }
-          tour.waypoints = waypointArr;
-          this.setState({
-              tour
-          })
-
-          this.hideLoader();
-      })
-    }
-
-    recenter = () => {
-        console.log("Re Centering the User")
-        this.setCurrentLocation();
+        this.setState({
+            latitude: latitudeCarlingford,
+            longitude: longitudeCarlingford
+        });
+        clearTimeout(timer);
+        this.hideLoader();
+        //wait timer
         const {
             latitude,
             longitude,
             latitudeDelta,
             longitudeDelta
         } = this.state;
-
         this.mapView.animateToRegion({
             latitude,
             longitude,
@@ -220,45 +201,118 @@ export default class GoogleMapsScreen extends React.Component {
         }, 1000)
     }
 
+    setCurrentLocation = async () => {
+        console.log('alert')
+        let location = await Location.getCurrentPositionAsync({});
+        console.log(location)
+        this.setState({
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude
+        })
+        console.log(`User position Lat,Long : ${this.state.latitude},${this.state.longitude}`)
+    };
+
+    getWaypoints = async () => {
+
+        this.showLoader();
+
+        const tourId = 1;
+
+        Axios({
+            method: "get",
+            url: `https://orion-visitar.herokuapp.com/tourData?id=${tourId}`
+        }).then((results) => {
+            console.log("Tour Data Request Response: Fn getWaypoints")
+
+            let waypointArr = [];
+
+            for (let waypoint of results.data.tourStops) {
+                waypointArr.push({
+                    "id": waypoint.id,
+                    "visited": false,
+                    "title": waypoint.name,
+                    "description": waypoint.history,
+                    "image": waypoint.image,
+                    "fact": waypoint.fact,
+                    "location": {
+                        "latitude": waypoint.location._latitude,
+                        "longitude": waypoint.location._longitude
+                    }
+                })
+            }
+
+            // let tour = {
+            //     ...this.state
+            // }
+            // tour.waypoints = waypointArr;
+            this.setState({
+                waypoints: waypointArr
+            })
+
+            this.hideLoader();
+        })
+    }
+
+    recenter = () => {
+        console.log("Re Centering the User")
+        this.setCurrentLocation();
+        let coordCheck = false;
+        if (latitude == this.state.latitude) {
+            this.showLoader();
+            coordCheck == true;
+        }
+        const {
+            latitude,
+            longitude,
+            latitudeDelta,
+            longitudeDelta
+        } = this.state;
+        this.mapView.animateToRegion({
+            latitude,
+            longitude,
+            latitudeDelta,
+            longitudeDelta
+        }, 1000)
+        if (coordCheck == true) {setTimeout(this.hideLoader, 2000);}
+    }
+
     endTour = () => {
 
-      this.showLoader();
-      let tour = {
-          ...this.state.tour
-      }
-      tour.origin = null;
-      tour.destination = null;
-      tour.tourStarted = null;
+        this.showLoader();
+        let tour = {
+            ...this.state.tour
+        }
+        tour.origin = null;
+        tour.destination = null;
+        tour.tourStarted = null;
 
-      this.setState({
-          tour,
-          uiState: 0
-      })
+        this.setState({
+            tour,
+            uiState: 0
+        })
 
-      this.setState({
-          uiState: 1
-      })
+        this.setState({
+            uiState: 1
+        })
 
-      this.hideLoader();
-
-
+        this.hideLoader();
     }
 
     toStart = () => {
         this.showLoader();
         console.log("Setting the start point")
 
-        let tour = {...this.state.tour}
+        let tour = { ...this.state.tour }
         tour.origin = {
             "latitude": this.state.latitude,
             "longitude": this.state.longitude
         }
-        tour.destination = tour.waypoints[0].location;
+        tour.destination = this.state.waypoints[0].location;
         tour.tourStarted = true;
 
         this.setState({
-          tour,
-          uiState: 1
+            tour,
+            uiState: 1
         })
         this.hideLoader();
     }
@@ -268,220 +322,236 @@ export default class GoogleMapsScreen extends React.Component {
     hideLoader = () => this.setState({ showLoader: false });
 
     setTokens = () => {
-      navigator.geolocation.getCurrentPosition(
-          position => {
-              //comparring my current geo location with the location of the tokens in Carlingford.
-              if (tokens[0] != 99999999) {
-                  tokens[0] = getPreciseDistance(
-                      {
-                          latitude: position.coords.latitude,
-                          longitude: position.coords.longitude
-                      }, {
-                          latitude: 54.041875,
-                          longitude: -6.18777778
-                      }
-                  );
-                  this.setState({
-                      token1
-                  });
-              }
-              if (tokens[1] != 99999999) {
-                  tokens[1] = getPreciseDistance(
-                      {
-                          latitude: position.coords.latitude,
-                          longitude: position.coords.longitude
-                      }, {
-                          latitude: 54.04219,
-                          longitude: -6.187161
-                      }
-                  );
-                  this.setState({
-                      token2
-                  });
-              }
-              if (tokens[2] != 99999999) {
-                  tokens[2] = getPreciseDistance(
-                      {
-                          latitude: position.coords.latitude,
-                          longitude: position.coords.longitude
-                      }, {
-                          latitude: 54.03935278,
-                          longitude: -6.18638889
-                      }
-                  );
-                  this.setState({
-                      token3
-                  });
-              }
-              if (tokens[3] != 99999999) {
-                  tokens[3] = getPreciseDistance(
-                      {
-                          latitude: position.coords.latitude,
-                          longitude: position.coords.longitude
-                      }, {
-                          latitude: 54.03803889,
-                          longitude: -6.185
-                      }
-                  );
-                  this.setState({
-                      token4
-                  });
-              }
-              error => Alert.alert(error.message), {
-                  enableHighAccuracy: true,
-                  timeout: 20000,
-                  maximumAge: 1000
-              }
-          }
-      )
+        navigator.geolocation.getCurrentPosition(
+            position => {
+                //comparring my current geo location with the location of the tokens in Carlingford.
+                if (tokens[0] != 99999999) {
+                    tokens[0] = getPreciseDistance(
+                        {
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude
+                        }, {
+                        latitude: 54.041875,
+                        longitude: -6.18777778
+                    }
+                    );
+                    this.setState({
+                        token1
+                    });
+                }
+                if (tokens[1] != 99999999) {
+                    tokens[1] = getPreciseDistance(
+                        {
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude
+                        }, {
+                        latitude: 54.04219,
+                        longitude: -6.187161
+                    }
+                    );
+                    this.setState({
+                        token2
+                    });
+                }
+                if (tokens[2] != 99999999) {
+                    tokens[2] = getPreciseDistance(
+                        {
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude
+                        }, {
+                        latitude: 54.03935278,
+                        longitude: -6.18638889
+                    }
+                    );
+                    this.setState({
+                        token3
+                    });
+                }
+                if (tokens[3] != 99999999) {
+                    tokens[3] = getPreciseDistance(
+                        {
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude
+                        }, {
+                        latitude: 54.03803889,
+                        longitude: -6.185
+                    }
+                    );
+                    this.setState({
+                        token4
+                    });
+                }
+                error => Alert.alert(error.message), {
+                    enableHighAccuracy: true,
+                    timeout: 20000,
+                    maximumAge: 1000
+                }
+            }
+        )
     }
 
     distnaceBetweenLocationAndTokens = () => {
 
-      this.setTokens();
-      console.log(tokens);
+        this.setTokens();
+        console.log(tokens);
 
-      //calculating what the closts token is
-      closestToken = Math.min(...tokens) // 1
-      this.setState({
-          closestToken
-      });
+        //calculating what the closts token is
+        closestToken = Math.min(...tokens) // 1
+        this.setState({
+            closestToken
+        });
 
-      //num_of_tokens=0;
+        //num_of_tokens=0;
 
-      //for each token , check that the closest token is less than 5 meters( for testing i use a larger number)
-      if (closestToken < 5 && num_of_tokens <= 4) {
-          //for loop to run through all of the tokens, to see if there is a token that matches the closest token
-          for (var i = 0; i < tokens.length; i++) {
+        //for each token , check that the closest token is less than 5 meters( for testing i use a larger number)
+        if (closestToken < 5 && num_of_tokens <= 4) {
+            //for loop to run through all of the tokens, to see if there is a token that matches the closest token
+            for (var i = 0; i < tokens.length; i++) {
 
-              //match the closest distance with the relevant token
-              if (tokens[i] == closestToken) {
-                  //add a token to the count of tokens
-                  num_of_tokens++;
-                  this.setState({
-                      num_of_tokens
-                  });
+                //match the closest distance with the relevant token
+                if (tokens[i] == closestToken) {
+                    //add a token to the count of tokens
+                    num_of_tokens++;
+                    this.setState({
+                        num_of_tokens
+                    });
 
-                  var token_number = tokens.indexOf(closefnstToken);
-                  if (num_of_tokens < 4) {
-                      Speech.speak('congratulations! you have found ' + num_of_tokens + ' of 4 tokens');
-                  } else if (num_of_tokens == 4) {
-                      Speech.speak('congratulations! you have found all 4 tokens!');
-                  }
+                    var token_number = tokens.indexOf(closefnstToken);
+                    if (num_of_tokens < 4) {
+                        Speech.speak('congratulations! you have found ' + num_of_tokens + ' of 4 tokens');
+                    } else if (num_of_tokens == 4) {
+                        Speech.speak('congratulations! you have found all 4 tokens!');
+                    }
 
-                  //reset the token distance to 9999999 (a number that should always be bigger than the rest)and so that it will never be the minimum as above
-                  const index = tokens.indexOf(tokens[i]);
-                  if (index !== -1) {
-                      tokens[index] = 99999999;
-                  }
+                    //reset the token distance to 9999999 (a number that should always be bigger than the rest)and so that it will never be the minimum as above
+                    const index = tokens.indexOf(tokens[i]);
+                    if (index !== -1) {
+                        tokens[index] = 99999999;
+                    }
 
-                  this.setState({
-                      tokens
-                  });
-                  console.log("tokens modified")
-                  this.setTokens();
-                  console.log(tokens);
-              }
-          }
+                    this.setState({
+                        tokens
+                    });
+                    console.log("tokens modified")
+                    this.setTokens();
+                    console.log(tokens);
+                }
+            }
 
-      } else {
-          if (num_of_tokens < 4) {
-              //nearest_token=("you are " + closestToken + " from the closest token!")
-              alert("you are " + closestToken + " from the closest token!");
-          } else {
-              alert("you have found all 4 tokens!");
+        } else {
+            if (num_of_tokens < 4) {
+                //nearest_token=("you are " + closestToken + " from the closest token!")
+                alert("you are " + closestToken + " from the closest token!");
+            } else {
+                alert("you have found all 4 tokens!");
 
-          }
+            }
 
-          // this.setState({nearest_token});
-      }
+            // this.setState({nearest_token});
+        }
     }
 
     render() {
-      let {
-        latitude,
-        longitude
-      } = this.state
+        let {
+            latitude,
+            longitude,
+            waypoints
+        } = this.state
 
-      let {
-          origin,
-          destination,
-          tourStarted,
-          waypoints
-      } = this.state.tour
+        let {
+            origin,
+            destination,
+            tourStarted
+        } = this.state.tour
 
-      return (
-          this.state.latitude ?
-              <View data-test="GoogleMaps_ScreenView" style={styles.container}>
+        return (
+            this.state.latitude ?
+                <View data-test="GoogleMaps_ScreenView" style={styles.container}>
+
+
                     <View>
-                        <StatusBar hidden={true}/>
+                        <StatusBar hidden={true} />
                     </View>
-                    {/*<NavigationButton
-                    title="Menu"
-                    icon="globe"
-                    navName="EndTour"
-                    style={{position:"absolyte",top:"1%"}}
-                    />*/}
-                  <MapView
-                      ref={(ref) => this.mapView = ref}
-                      showsUserLocation
-                      data-test="MapView"
-                      style={styles.mapStyle}
-                      customMapStyle={mapStyle}
-                      initialRegion={this.state}
-                  >
 
-                      <MapViewDirections
-                          origin={origin}
-                          destination={destination}
 
-                          resetOnChange={false}
-                          apikey={GOOGLE_MAPS_APIKEY}
-                          strokeWidth={2.5}
-                          strokeColor="#4d99e6"
-                          mode="WALKING"
-                          precision="low"
-                      />
+                    <TouchableHighlight
+                        style={styles.buttonStyle}
+                        onPress={() => {
+                            this.distnaceBetweenLocationAndTokens();
+                        }}>
+                        <Text>Pick up token</Text>
 
-                    {//destination && <MapView.Marker
-                      //    coordinate={destination}
-                        //  icon={require('../../assets/PointOfInterestIcon.png')}/>
-                      }
+                    </TouchableHighlight>
+                    <Progress.Bar progress={num_of_tokens / 4} width={200} />
 
-                      {tourStarted && waypoints.map((waypoint, index) =>
-                        <Marker
-                          coordinate={waypoint.location}
-                          key={waypoint.title}
-                          icon={waypoint.visited ?
-                            require('../../assets/PointOfInterestIconVisited.png')
-                            :
-                            require('../../assets/PointOfInterestIcon.png')
-                          }
-                        >
-                          <Callout
-                            onPress={ e => {
-                              this.props.navigation.navigate('Landmark', {landmark: waypoint} );
-                            }
-                           }>
-                            <InfoPopUp title={waypoint.title} description={waypoint.description} />
-                          </Callout>
-                        </Marker>)}
-                  </MapView>
 
-                  {this.state.showLoader && (
-                      <Spinner
-                          visible={true}
-                          textContent={"Getting Route..."}
-                          textStyle={styles.spinnerTextStyle}
-                      />
-                  )}
 
-                  <UserInterface
-                    CallStartTour={this.toStart.bind(this)}
-                    CallReCenter={this.recenter.bind(this)}
-                    setCurrentLocToCarlingford={this.setCurrentLocToCarlingford.bind(this)}
-                    status={this.state.uiState}
-                  />
+
+
+
+
+
+
+                    <MapView
+                        ref={(ref) => this.mapView = ref}
+                        showsUserLocation
+                        data-test="MapView"
+                        style={styles.mapStyle}
+                        customMapStyle={mapStyle}
+                        initialRegion={this.state}
+                    >
+
+                        <MapViewDirections
+                            origin={origin}
+                            destination={destination}
+
+                            resetOnChange={false}
+                            apikey={GOOGLE_MAPS_APIKEY}
+                            strokeWidth={2.5}
+                            strokeColor="#4d99e6"
+                            mode="WALKING"
+                            precision="low"
+                        />
+
+                        {//destination && <MapView.Marker
+                            //    coordinate={destination}
+                            //  icon={require('../../assets/PointOfInterestIcon.png')}/>
+                        }
+
+                        {tourStarted && waypoints.map((waypoint, index) =>
+                            <Marker
+                                coordinate={waypoint.location}
+                                key={waypoint.title}
+                                icon={waypoint.visited ?
+                                    require('../../assets/PointOfInterestIconVisited.png')
+                                    :
+                                    require('../../assets/PointOfInterestIcon.png')
+                                }
+                            >
+                                <Callout
+                                    onPress={e => {
+                                        this.props.navigation.navigate('Landmark', { landmark: waypoint });
+                                    }
+                                    }>
+                                    <InfoPopUp title={waypoint.title} description={waypoint.description} />
+                                </Callout>
+                            </Marker>)}
+                    </MapView>
+
+                    {this.state.showLoader && (
+                        <Spinner
+                            visible={true}
+                            textContent={"Getting Route..."}
+                            textStyle={styles.spinnerTextStyle}
+                        />
+                    )}
+
+                    <UserInterface
+                        CallStartTour={this.toStart.bind(this)}
+                        CallReCenter={this.recenter.bind(this)}
+                        setCurrentLocToCarlingford={this.setCurrentLocToCarlingford.bind(this)}
+                        status={this.state.uiState}
+                    />
                 </View >
                 :
                 <View style={{ flex: 1, alignItems: 'center' }} data-test="Alt_View">
@@ -514,12 +584,12 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     buttonStyle: {
-		justifyContent: 'center',
-		alignItems: 'center',
-		height: 50,
-		backgroundColor: '#4B6296',
-		margin: 10,
-	  }
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 50,
+        backgroundColor: '#4B6296',
+        margin: 10,
+    }
 
 });
 
