@@ -395,6 +395,14 @@ export default class GoogleMapsScreen extends React.Component {
 
     distnaceBetweenLocationAndTokens = () => {
 
+        //num tokens need to be in state
+        alert("You have picked up a token!");
+        if(num_of_tokens <4){
+            num_of_tokens++;
+            //alert(num_of_tokens);
+        }
+        
+{/*
         this.setTokens();
         console.log(tokens);
 
@@ -452,6 +460,7 @@ export default class GoogleMapsScreen extends React.Component {
 
             // this.setState({nearest_token});
         }
+    */}
     }
 
     render() {
@@ -491,6 +500,7 @@ export default class GoogleMapsScreen extends React.Component {
                         <Text style={{top:5, color:"white"}}>Pick up token</Text>
 
                     </TouchableHighlight>
+                     
                     <Progress.Bar progress={num_of_tokens / 4} width={200} />
 
 

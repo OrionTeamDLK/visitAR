@@ -23,6 +23,11 @@ const EndTourScreen =(props)=>{
         style={{marginTop:20}} 
         onPress={()=> props.navigation.navigate("GMaps")}
         title="Go to map screen"
+        accessibilityLabel="Go to map screen"
+        />
+        <Button
+        style={{marginTop:20}} 
+        title="Add tour to favourites"
         />
         </View>
     );
