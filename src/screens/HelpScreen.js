@@ -27,10 +27,10 @@ export default class App extends React.Component {
 				autoplayDelay={3}
 				autoplayLoop
 			>
-				<HelpInfo num='1' />
-				<HelpInfo num='2' />
-				<HelpInfo num='3' />
-				<HelpInfo num='4' />
+				<HelpInfo num='1' text='Click start tour button, follow blue line for your suggested route' />
+				<HelpInfo num='2' text='click the markers for more information, text to speech is available too' />
+				<HelpInfo num='3' text='Collect tokens at various landmarks' />
+				<HelpInfo num='4' text='Click end tour to finish and view your stats' />
 
 			</Swiper>
 		);

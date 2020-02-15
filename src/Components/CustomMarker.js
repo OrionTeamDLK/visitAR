@@ -12,8 +12,8 @@ const CustomMarker = (props) => {
     return (
             <Marker
             coordinate={{
-                latitude:54.041000,
-                longitude:-6.185922
+                latitude:props.latitude,
+                longitude:props.longitude
             }}
             key={"current location"}
             title={props.title}

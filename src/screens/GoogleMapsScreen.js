@@ -48,6 +48,7 @@ import Constants from 'expo-constants';
 import * as Progress from 'react-native-progress';
 import InfoPopUp from "../Components/InfoPopUp";
 import CustomMarker from "../Components/CustomMarker";
+//import PickUpTokenButton from "../Components/PickUpTokenButton";
 
 const LOCATION_SETTINGS = {
     accuracy: Location.Accuracy.Balanced,
@@ -505,7 +506,7 @@ export default class GoogleMapsScreen extends React.Component {
                     </TouchableHighlight>
                      
                     <Progress.Bar progress={num_of_tokens / 4} width={200} />
-
+                   
                     <MapView
                         ref={(ref) => this.mapView = ref}
                         showsUserLocation
@@ -540,7 +541,11 @@ export default class GoogleMapsScreen extends React.Component {
                         {// start marker for before tour starts                              hide={this.state.tourStarted}                                          
                         }        
                         {
-                            this.state.tour.tourStarted ? null: <CustomMarker title={'Tour Start Location'} desc={'Start location for the Historic Carlingford tour!'}/>
+                            this.state.tour.tourStarted ? null: <CustomMarker 
+                                                                    title={'Tour Start Location'} 
+                                                                    desc={'Start location for the Historic Carlingford tour!'} 
+                                                                    latitude={54.041000}
+                                                                    longitude={-6.185922}/>
                         }              
                         
 
