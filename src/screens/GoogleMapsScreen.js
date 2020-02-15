@@ -46,7 +46,8 @@ import {
 import * as Speech from 'expo-speech';
 import Constants from 'expo-constants';
 import * as Progress from 'react-native-progress';
-import InfoPopUp from "../Components/InfoPopUp"
+import InfoPopUp from "../Components/InfoPopUp";
+import CustomMarker from "../Components/CustomMarker";
 
 const LOCATION_SETTINGS = {
     accuracy: Location.Accuracy.Balanced,
@@ -70,8 +71,8 @@ export default class GoogleMapsScreen extends React.Component {
         this.state = {
             latitude: null,
             longitude: null,
-            latitudeDelta: 0.007,
-            longitudeDelta: 0.007,
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.005,
             coords: [],
             showLoader: false,
             uiState: 0,
@@ -255,6 +256,7 @@ export default class GoogleMapsScreen extends React.Component {
 
     recenter = () => {
         console.log("Re Centering the User")
+        //alert("aaahhhhh")
         this.setCurrentLocation();
         let coordCheck = false;
         if (latitude == this.state.latitude) {
@@ -401,6 +403,7 @@ export default class GoogleMapsScreen extends React.Component {
             num_of_tokens++;
             //alert(num_of_tokens);
         }
+
         
 {/*
         this.setTokens();
@@ -503,14 +506,6 @@ export default class GoogleMapsScreen extends React.Component {
                      
                     <Progress.Bar progress={num_of_tokens / 4} width={200} />
 
-
-
-
-
-
-
-
-
                     <MapView
                         ref={(ref) => this.mapView = ref}
                         showsUserLocation
@@ -540,6 +535,17 @@ export default class GoogleMapsScreen extends React.Component {
                             //    coordinate={destination}
                             //  icon={require('../../assets/PointOfInterestIcon.png')}/>
                         }
+
+
+                        {// start marker for before tour starts                              hide={this.state.tourStarted}                                          
+                        }        
+                        {
+                            this.state.tour.tourStarted ? null: <CustomMarker title={'Tour Start Location'} desc={'Start location for the Historic Carlingford tour!'}/>
+                        }              
+                        
+
+
+
 
                         {tourStarted && waypoints.map((waypoint, index) =>
                             <Marker

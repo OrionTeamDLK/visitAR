@@ -27,8 +27,8 @@
       "supportsTablet": true
     },
     "android": {
-     "package": "com.orion.visitar",
-     "versionCode": 1
-   }
+      "package": "com.orion.visitar",
+      "versionCode": 1
+    }
   }
 }
