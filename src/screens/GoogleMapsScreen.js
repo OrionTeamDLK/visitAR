@@ -382,7 +382,7 @@ export default class GoogleMapsScreen extends React.Component {
     }
 
 
-    distnaceBetweenLocationAndTokens = () => {
+    TokenGame = () => {
              
 this.setTokens();
 console.log(tokens);
@@ -488,7 +488,7 @@ console.log(tokens);
                         margin: 10,
                         top:10,}}
                         onPress={() => {
-                            this.distnaceBetweenLocationAndTokens();
+                            this.TokenGame();
                         }}>
                         <Text style={{top:5, color:"white"}}>Pick up token</Text>
 
