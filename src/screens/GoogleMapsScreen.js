@@ -48,7 +48,8 @@ import Constants from 'expo-constants';
 import * as Progress from 'react-native-progress';
 import InfoPopUp from "../Components/InfoPopUp";
 import CustomMarker from "../Components/CustomMarker";
-//import PickUpTokenButton from "../Components/PickUpTokenButton";
+import PickUpTokenButton from "../Components/PickUpTokenButton";
+import { Notifications } from 'expo'
 
 const LOCATION_SETTINGS = {
     accuracy: Location.Accuracy.Balanced,
@@ -88,6 +89,7 @@ export default class GoogleMapsScreen extends React.Component {
     }
 
     async componentDidMount() {
+        this.registerForPushNotifications();
         //set Axios Request Auth Header with JWT Token
         let access_token = JWT.encode({ foo: "bar" }, JWT_SECRET);
         Axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
@@ -396,6 +398,8 @@ export default class GoogleMapsScreen extends React.Component {
         )
     }
 
+
+
     distnaceBetweenLocationAndTokens = () => {
 
         //num tokens need to be in state
@@ -467,6 +471,25 @@ export default class GoogleMapsScreen extends React.Component {
     */}
     }
 
+    registerForPushNotifications = async () =>{
+        //check for permissions...
+        const {status} = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+        let finalStatus = status;
+
+        //if no existing permissions, ask user for permissions...
+        if(status != 'granted'){
+            const {status} = await Permissions.askAsync.NOTIFICATIONS;
+            finalStatus = status;
+        }
+
+        //if no permissions, exit the function....
+        if(finalStatus != 'granted') {return}
+
+        //get push notification token...
+        let token = await Notifications.getExpoPushTokenAsync();
+        console.log(token);
+    }
+
     render() {
         let {
             latitude,
@@ -490,6 +513,7 @@ export default class GoogleMapsScreen extends React.Component {
                     </View>
 
 
+                    {/*
                     <TouchableHighlight
                         style={{   
                                  justifyContent: 'center',
@@ -506,7 +530,7 @@ export default class GoogleMapsScreen extends React.Component {
                     </TouchableHighlight>
                      
                     <Progress.Bar progress={num_of_tokens / 4} width={200} />
-                   
+                    */}
                     <MapView
                         ref={(ref) => this.mapView = ref}
                         showsUserLocation
@@ -586,6 +610,7 @@ export default class GoogleMapsScreen extends React.Component {
                         endTour = {this.endTour.bind(this)}
                         setCurrentLocToCarlingford={this.setCurrentLocToCarlingford.bind(this)}
                         status={this.state.uiState}
+                        //distnaceBetweenLocationAndTokens={this.distnaceBetweenLocationAndTokens.bind(this)}
                     />
                 </View >
                 :

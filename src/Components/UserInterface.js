@@ -3,6 +3,7 @@ import { TouchableOpacity, View, Text, Button, Image } from 'react-native'
 import HelpInfoButton from "../Components/HelpInfoButton"
 import MenuButton from "../Components/MenuButton"
 import { withNavigation } from 'react-navigation';
+import PickUpTokenButton from "../Components/PickUpTokenButton";
 
 HideStartedTourReCenterButton = (props) => {
     if (props.status == 0) {
@@ -35,9 +36,11 @@ ShowEndTourButton = (props) => {
                 //onPress={props.navigation.navigate("EndTourScreen")}
                // onPress={() => props.navigation.navigate("EndTourScreen")}
                 style={{
-                    position: "absolute", //use absolute position to show button on top of the map
-                    top: "0%", //for center align
-                    alignSelf: 'center',
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    top:0,
+                    alignItems: "center"
                 }}
                // onPress={()=>{alert("this is the end screen")}}
                 //      || props.navigation.navigate("EndTourScreen")
@@ -117,21 +120,12 @@ class UserInterface extends Component {
                     top: 0,
                     alignSelf: 'left'
                 }} navName="Menu" />
-                {/*}
-                <TouchableOpacity 
-                style={{
-                    position: "absolute",
-                    top: 150,
-                    alignSelf: 'center',
-                    left: 20
-                }}
-                onPress={ ()=>{alert("this is the end screen")}}>
-        
-                
-                <View>
-                <Text>touch me</Text>
-                </View>
-            </TouchableOpacity>*/}
+
+
+                <PickUpTokenButton 
+                top="5%"/>
+
+
                 {/* <HideStartedTourReCenterButton status={this.props.status} CallStartTour={this.props.CallStartTour} /> */}
                 <ShowEndTourButton status={this.props.status} endTour={this.props.endTour} />
 
