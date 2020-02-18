@@ -557,6 +557,15 @@ console.log(tokens);
                             //  icon={require('../../assets/PointOfInterestIcon.png')}/>
                         }
 
+                        {
+                            // start marker for before tour starts 
+                            this.state.tour.tourStarted ? null: <CustomMarker 
+                            title={'Tour Start Location'} 
+                            desc={'Start location for the Historic Carlingford tour!'} 
+                            latitude={54.041000}
+                            longitude={-6.185922}/>
+                        }        
+
                         {tourStarted && waypoints.map((waypoint, index) =>
                             <Marker
                                 coordinate={waypoint.location}
