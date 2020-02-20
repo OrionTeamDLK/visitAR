@@ -86,6 +86,9 @@ export default class GoogleMapsScreen extends React.Component {
                 origin: null,
                 destination: null,
                 nextLocation: 1
+            },
+            tokenGame:{
+                numTokens: 1
             }
         }
     }
@@ -517,19 +520,15 @@ console.log(tokens);
                         <Text style={{top:5, color:"white"}}>Pick up token</Text>
 
                     </TouchableHighlight>
-                    <Progress.Bar progress={num_of_tokens / 4} width={200} />
-
-
-
-
-
-
+                    <Progress.Bar progress={this.state.tokenGame.numTokens / 4} width={200} />
 
 
 
                     <MapView
                         ref={(ref) => this.mapView = ref}
                         showsUserLocation
+                        followsUserLocation
+                        showsScale
                         data-test="MapView"
                         style={styles.mapStyle}
                         customMapStyle={mapStyle}
