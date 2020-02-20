@@ -18,7 +18,7 @@ const PickUpTokenButton = (props) => {
             alignItems: "center"
         }}>
         <TouchableOpacity
-            onPress={console.log("Collect token pushed")}
+            onPress={() => console.log("Collect token pushed")}
             >
             <View style={{
                 //  backgroundColor: 'none',

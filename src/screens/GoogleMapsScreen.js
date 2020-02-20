@@ -392,9 +392,7 @@ export default class GoogleMapsScreen extends React.Component {
     TokenGame = () => {
              
 this.setTokens();
-console.log(tokens);
-
-             
+console.log(tokens);             
 			//calculating what the closts token is
 			 closestToken = Math.min(...tokens) // 1
             this.setState({closestToken});
