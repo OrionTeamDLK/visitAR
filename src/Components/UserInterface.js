@@ -125,6 +125,7 @@ class UserInterface extends Component {
                 <PickUpTokenButton 
                 top="5%" 
                 pickUpTokenGame = {this.props.tokenGame}
+                num_tokens = {this.props.num_tokens}
                 />
 
 
