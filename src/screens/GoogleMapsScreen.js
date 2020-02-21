@@ -399,6 +399,7 @@ console.log(tokens);
 			 //num_of_tokens=0;	
 
              //for each token , check that the closest token is less than 5 meters( for testing i use a larger number)
+            
              if(closestToken<800){
                  alert("You must be Carlingford town to pick up tokens.")
              }
