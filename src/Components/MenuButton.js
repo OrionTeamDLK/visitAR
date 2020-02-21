@@ -21,7 +21,7 @@ const MenuButton = (props) => {
                 position: "absolute",
                 left: 10,
                 alignSelf: 'center',
-                top: 10,
+                top: 15,
             }}>
             <Text>
             <Icon name="bars" size={80} color="#4c6294" style="bars" />

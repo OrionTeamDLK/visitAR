@@ -39,7 +39,7 @@ ShowEndTourButton = (props) => {
                     position: "absolute",
                     left: 0,
                     right: 0,
-                    top:0,
+                    top:"3%",
                     alignItems: "center"
                 }}
                // onPress={()=>{alert("this is the end screen")}}
@@ -48,8 +48,8 @@ ShowEndTourButton = (props) => {
 
                 <View
                     style={{
-                        height: 50,
-                        width: 100,
+                        height: 60,
+                        width: 150,
                         backgroundColor: '#4c6294',
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -60,7 +60,7 @@ ShowEndTourButton = (props) => {
                     }}>
                     <Text style={{
                         color: "white",
-                        fontSize: 20,
+                        fontSize: 30,
                         textAlign: "center"
                     }}>End Tour
                 </Text>
@@ -112,21 +112,22 @@ class UserInterface extends Component {
 
                 <HelpInfoButton style={{
                     position: "absolute",
-                    top: 0,
+                    top: 15,
                     alignSelf: 'right'
                 }} navName="Help" />
                 <MenuButton style={{
                     position: "absolute",
-                    top: 0,
+                    top: 10,
                     alignSelf: 'left'
                 }} navName="Menu" />
 
-
-                <PickUpTokenButton 
+                
+                {this.props.status == 0 ? <PickUpTokenButton top="5%" pickUpTokenGame = {this.props.tokenGame} num_tokens = {this.props.num_tokens}/> : <PickUpTokenButton top="85%" pickUpTokenGame = {this.props.tokenGame} num_tokens = {this.props.num_tokens}/>}
+                {/*<PickUpTokenButton 
                 top="5%" 
                 pickUpTokenGame = {this.props.tokenGame}
                 num_tokens = {this.props.num_tokens}
-                />
+                />*/}
 
 
                 {/* <HideStartedTourReCenterButton status={this.props.status} CallStartTour={this.props.CallStartTour} /> */}
