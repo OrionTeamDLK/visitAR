@@ -86,7 +86,8 @@ export default class GoogleMapsScreen extends React.Component {
                 origin: null,
                 destination: null,
                 nextLocation: 1
-            }
+            },
+            num_of_tokens:0
         }
     }
 
@@ -388,8 +389,8 @@ export default class GoogleMapsScreen extends React.Component {
 
     TokenGame = () => {
              
-this.setTokens();
-console.log(tokens);
+            this.setTokens();
+        console.log(tokens);
 
              
 			//calculating what the closts token is
@@ -403,7 +404,7 @@ console.log(tokens);
              if(closestToken<800){
                  alert("You must be Carlingford town to pick up tokens.")
              }
-             else if (closestToken <200000 && num_of_tokens<=4 )                    
+             else if (closestToken <200000 && this.state.num_of_tokens<=4 )                    
              {
              //for loop to run through all of the tokens, to see if there is a token that matches the closest token            
 				for( var i=0; i<tokens.length; i++)
@@ -412,17 +413,19 @@ console.log(tokens);
 						//match the closest distance with the relevant token  
 						if(tokens[i]==closestToken)
 						{
-							//add a token to the count of tokens
-							num_of_tokens++;
-                            this.setState({num_of_tokens});
+                            //add a token to the count of tokens
+                            let token_num = this.state.num_of_tokens;
+                            token_num++;
+							this.setState({num_of_tokens: token_num});
+                            //this.setState({num_of_tokens});
                             
                             var token_number=tokens.indexOf(closestToken);
-                            if(num_of_tokens<4){
-                            Speech.speak('congratulations! you have found ' + num_of_tokens +' of 4 tokens');
+                            if(this.state.num_of_tokens<4){
+                            Speech.speak('congratulations! you have found ' + (this.state.num_of_tokens + 1) +' of 4 tokens');
                             }
-                            else if(num_of_tokens==4)
+                            else if(this.state.num_of_tokens==4)
                             {
-                                Speech.speak('congratulations! you have found all 4 tokens!');
+                                Speech.speak('Congratulations! you have found all 4 tokens!');
                             }
 							
 							//reset the token distance to 9999999 (a number that should always be bigger than the rest)and so that it will never be the minimum as above
@@ -442,13 +445,13 @@ console.log(tokens);
                 }
 
                 else{
-                    if(num_of_tokens<4){
+                    if(this.state.num_of_tokens<4){
                     //nearest_token=("you are " + closestToken + " from the closest token!")
                     alert("you are " + closestToken + " from the closest token!");
                     }
                     else{
-                        alert("you have found all 4 tokens!");
-
+                        //alert("you have found all 4 tokens!");
+                        Speech.speak('Congratulations! you have found all 4 tokens!');
                     }
                     
        // this.setState({nearest_token});
@@ -504,7 +507,7 @@ console.log(tokens);
 
 
                     
-                    <TouchableHighlight
+                    {/* <TouchableHighlight
                         style={{   
                                  justifyContent: 'center',
                         alignItems: 'center',
@@ -517,8 +520,9 @@ console.log(tokens);
                         }}>
                         <Text style={{top:5, color:"white"}}>Pick up token</Text>
 
-                    </TouchableHighlight>
-                    <Progress.Bar progress={num_of_tokens / 4} width={200} />
+                    </TouchableHighlight> */}
+
+                    {/* <Progress.Bar progress={num_of_tokens / 4} width={200} /> */}
 
 
 
@@ -601,6 +605,8 @@ console.log(tokens);
                         endTour = {this.endTour.bind(this)}
                         setCurrentLocToCarlingford={this.setCurrentLocToCarlingford.bind(this)}
                         status={this.state.uiState}
+                        tokenGame={this.TokenGame.bind(this)}
+                        num_tokens = {this.state.num_of_tokens}
                         //distnaceBetweenLocationAndTokens={this.distnaceBetweenLocationAndTokens.bind(this)}
                     />
                 </View >

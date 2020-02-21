@@ -16,7 +16,7 @@ const HelpInfoButton = (props) => {
                 position: "absolute",
                 right: 10,
                 alignSelf: 'center',
-                top: 10,
+                top: 15,
             }}>
             <View style={{
                 overflow: 'hidden',
