@@ -88,7 +88,12 @@ export default class GoogleMapsScreen extends React.Component {
                 nextLocation: 1
             },
             tokenGame:{
-                numTokens: 1
+                closestToken: 0,
+                num_of_tokens: 0,
+                token1: 0,
+                token2: 0,
+                token3: 0,
+                token4: 0,
             }
         }
     }
@@ -391,8 +396,10 @@ export default class GoogleMapsScreen extends React.Component {
 
     TokenGame = () => {
              
-this.setTokens();
-console.log(tokens);             
+            this.setTokens();
+            console.log(tokens);
+
+             
 			//calculating what the closts token is
 			 closestToken = Math.min(...tokens) // 1
             this.setState({closestToken});
@@ -504,7 +511,7 @@ console.log(tokens);
 
 
                     
-                    <TouchableHighlight
+                    {/* <TouchableHighlight
                         style={{   
                                  justifyContent: 'center',
                         alignItems: 'center',
@@ -517,8 +524,15 @@ console.log(tokens);
                         }}>
                         <Text style={{top:5, color:"white"}}>Pick up token</Text>
 
-                    </TouchableHighlight>
-                    <Progress.Bar progress={this.state.tokenGame.numTokens / 4} width={200} />
+                    </TouchableHighlight> */}
+
+                    {/* <Progress.Bar progress={num_of_tokens / 4} width={200} /> */}
+
+
+
+
+
+
 
 
 
@@ -597,6 +611,8 @@ console.log(tokens);
                         endTour = {this.endTour.bind(this)}
                         setCurrentLocToCarlingford={this.setCurrentLocToCarlingford.bind(this)}
                         status={this.state.uiState}
+                        tokenGame={this.TokenGame.bind(this)}
+                        tokenStatus={this.state.tokenGame}
                         //distnaceBetweenLocationAndTokens={this.distnaceBetweenLocationAndTokens.bind(this)}
                     />
                 </View >

@@ -123,8 +123,11 @@ class UserInterface extends Component {
 
 
                 <PickUpTokenButton 
-                top="5%"/>
-                {/* this.state.tour.tourStarted ? <PickUpTokenButton top="8%"/> : <PickUpTokenButton top="75%"/> */}
+                top="5%" 
+                pickUpTokenGame = {this.props.tokenGame}
+                
+                />
+
 
                 {/* <HideStartedTourReCenterButton status={this.props.status} CallStartTour={this.props.CallStartTour} /> */}
                 <ShowEndTourButton status={this.props.status} endTour={this.props.endTour} />

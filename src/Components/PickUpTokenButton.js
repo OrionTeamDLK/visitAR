@@ -7,7 +7,6 @@ import * as Progress from 'react-native-progress';
 
 const PickUpTokenButton = (props) => {
     const {top} = props
-
     return (
         <View
         style={{
@@ -18,7 +17,7 @@ const PickUpTokenButton = (props) => {
             alignItems: "center"
         }}>
         <TouchableOpacity
-            onPress={() => console.log("Collect token pushed")}
+            onPress={props.pickUpTokenGame}
             >
             <View style={{
                 //  backgroundColor: 'none',
