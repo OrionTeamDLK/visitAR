@@ -87,14 +87,7 @@ export default class GoogleMapsScreen extends React.Component {
                 destination: null,
                 nextLocation: 1
             },
-            tokenGame:{
-                closestToken: 0,
-                num_of_tokens: 0,
-                token1: 0,
-                token2: 0,
-                token3: 0,
-                token4: 0,
-            }
+            num_of_tokens:0
         }
     }
 
@@ -407,10 +400,11 @@ export default class GoogleMapsScreen extends React.Component {
 			 //num_of_tokens=0;	
 
              //for each token , check that the closest token is less than 5 meters( for testing i use a larger number)
+            
              if(closestToken<800){
                  alert("You must be Carlingford town to pick up tokens.")
              }
-             else if (closestToken <200000 && num_of_tokens<=4 )                    
+             else if (closestToken <200000 && this.state.num_of_tokens<=4 )                    
              {
              //for loop to run through all of the tokens, to see if there is a token that matches the closest token            
 				for( var i=0; i<tokens.length; i++)
@@ -419,17 +413,19 @@ export default class GoogleMapsScreen extends React.Component {
 						//match the closest distance with the relevant token  
 						if(tokens[i]==closestToken)
 						{
-							//add a token to the count of tokens
-							num_of_tokens++;
-                            this.setState({num_of_tokens});
+                            //add a token to the count of tokens
+                            let token_num = this.state.num_of_tokens;
+                            token_num++;
+							this.setState({num_of_tokens: token_num});
+                            //this.setState({num_of_tokens});
                             
                             var token_number=tokens.indexOf(closestToken);
-                            if(num_of_tokens<4){
-                            Speech.speak('congratulations! you have found ' + num_of_tokens +' of 4 tokens');
+                            if(this.state.num_of_tokens<4){
+                            Speech.speak('congratulations! you have found ' + (this.state.num_of_tokens + 1) +' of 4 tokens');
                             }
-                            else if(num_of_tokens==4)
+                            else if(this.state.num_of_tokens==4)
                             {
-                                Speech.speak('congratulations! you have found all 4 tokens!');
+                                Speech.speak('Congratulations! you have found all 4 tokens!');
                             }
 							
 							//reset the token distance to 9999999 (a number that should always be bigger than the rest)and so that it will never be the minimum as above
@@ -449,13 +445,13 @@ export default class GoogleMapsScreen extends React.Component {
                 }
 
                 else{
-                    if(num_of_tokens<4){
+                    if(this.state.num_of_tokens<4){
                     //nearest_token=("you are " + closestToken + " from the closest token!")
                     alert("you are " + closestToken + " from the closest token!");
                     }
                     else{
-                        alert("you have found all 4 tokens!");
-
+                        //alert("you have found all 4 tokens!");
+                        Speech.speak('Congratulations! you have found all 4 tokens!');
                     }
                     
        // this.setState({nearest_token});
@@ -612,7 +608,7 @@ export default class GoogleMapsScreen extends React.Component {
                         setCurrentLocToCarlingford={this.setCurrentLocToCarlingford.bind(this)}
                         status={this.state.uiState}
                         tokenGame={this.TokenGame.bind(this)}
-                        tokenStatus={this.state.tokenGame}
+                        num_tokens = {this.state.num_of_tokens}
                         //distnaceBetweenLocationAndTokens={this.distnaceBetweenLocationAndTokens.bind(this)}
                     />
                 </View >
