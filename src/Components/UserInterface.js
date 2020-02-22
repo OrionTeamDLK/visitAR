@@ -37,8 +37,6 @@ ShowEndTourButton = (props) => {
                // onPress={() => props.navigation.navigate("EndTourScreen")}
                 style={{
                     position: "absolute",
-                    left: 0,
-                    right: 0,
                     top:"3%",
                     alignItems: "center"
                 }}
