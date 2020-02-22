@@ -12,7 +12,8 @@ import {
     Alert,
     TouchableOpacity,
     TouchableHighlight,
-    StatusBar
+    StatusBar,
+    Vibration
 } from "react-native";
 
 import {
@@ -152,7 +153,8 @@ export default class GoogleMapsScreen extends React.Component {
                         this.setState(newState);
 
                     } else {
-                        alert(`${waypoints[nextLocation - 1].title} Landmark Triggered`);
+                        alert(`${waypoints[nextLocation - 1].title} Landmark Triggered, hi`);
+                        {/*put marker auto pop up*/}
                         newState.waypoints[nextLocation - 1].visited = true;
                         this.setState(newState);
                     }
@@ -421,6 +423,8 @@ export default class GoogleMapsScreen extends React.Component {
                             var token_number=tokens.indexOf(closestToken);
                             if(this.state.num_of_tokens<4){
                             Speech.speak('congratulations! you have found ' + (this.state.num_of_tokens + 1) +' of 4 tokens');
+                            const PATTERN = [1500, 1000, 1500];
+                            Vibration.vibrate(PATTERN);
                             }
                             else if(this.state.num_of_tokens==4)
                             {

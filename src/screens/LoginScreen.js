@@ -139,7 +139,7 @@ export default class Login extends React.Component {
           </Button>
         </Form>
 
-        <Form style={{borderTopColor: "#d9d9d9",
+       {/*} <Form style={{borderTopColor: "#d9d9d9",
     borderTopWidth: 2}}>
           <Button style={ styles.GoogleButton }
             full
@@ -149,7 +149,7 @@ export default class Login extends React.Component {
           >
           <Text style={{ color: '#fff' }}>Log in with Google</Text>
           </Button>
-        </Form>
+    </Form>*/}
         
         <View style={{borderTopColor: "#d9d9d9",
     borderTopWidth: 2}} />

@@ -74,7 +74,7 @@ export default class ProfileScreen extends React.Component {
       .then(
         () => {
           console.log("Signed Out");
-          this.props.navigation.navigate("Index");
+          this.props.navigation.navigate("GMaps");
         },
         function(error) {
           console.error("Sign Out Error", error);
@@ -90,17 +90,17 @@ export default class ProfileScreen extends React.Component {
       <Container style={styles.container}>
         <Content>
           <Image source={{ uri: image }} style={styles.profile_pic} />
-          <Text>Name: {this.state.name && null}</Text>
+          {/*<Text>Name: {this.state.name && null}</Text>*/}
           <Text>Email: {this.state.email}</Text>
-          <Text>User ID: {this.state.uid}</Text>
-          <Text>Photo URL: {this.state.photoURL}</Text>
+         {/* <Text>User ID: {this.state.uid}</Text>*/}
+          {/*<Text>Photo URL: {this.state.photoURL}</Text>*/}
 
-          <Text style={styles.heading}>Favourite</Text>
+          {/* <Text style={styles.heading}>Favourite</Text>
           <View >
           { favourite && favourite.map((item, key)=>(
            <Text key={key}>Tour ID:  { item } </Text>)
           )}
-          </View>
+          </View>*/}
 
           <Text style={styles.heading}>History</Text>
 

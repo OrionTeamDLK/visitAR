@@ -46,12 +46,12 @@ export default class MenuScreen extends React.Component {
 						styleText={{ color: "white", fontSize: 30 }}/>
 				}
 
-				<NavigationButton
+				{/*<NavigationButton
 					data-test="MenuScreen_button"
 					title="Language"
 					icon="language"
 					navName="Language" 
-					styleText={{ color: "white", fontSize: 30 }}/>
+				styleText={{ color: "white", fontSize: 30 }}/>*/}
 
 				<NavigationButton
 					data-test="MenuScreen_button"
