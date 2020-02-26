@@ -59,9 +59,14 @@ var token1 = 0;
 var token2 = 0;
 var token3 = 0;
 var token4 = 0;
+var token5 = 0;
+var token6 = 0;
+var token7 = 0;
+var token8 = 0;
 
-var tokens = [token1, token2, token3, token4];
 
+
+var tokens = [token1, token2, token3, token4,token5,token6,token7,token8];
 const LOCATION_SETTINGS = {
     accuracy: Location.Accuracy.Balanced,
     timeInterval: 200,
@@ -83,15 +88,10 @@ export default class GoogleMapsScreen extends React.Component {
             uiState: 0,
             waypoints: null,
             tour: {
-                date: '',
-                time_started: 0,
-                time_finished: 0,
                 tourStarted: false,
-                tour_completed: false,
                 origin: null,
                 destination: null,
-                nextLocation: 1,
-                landmarks_visited: []
+                nextLocation: 1
             },
             num_of_tokens:0
         }
@@ -147,7 +147,6 @@ export default class GoogleMapsScreen extends React.Component {
 
                 if ((distance < 20) && (waypoints[nextLocation - 1].id == nextLocation) && (!waypoints[nextLocation - 1].visited)) {
 
-                    //¯\_(ツ)_/¯
                     const newState = JSON.parse(JSON.stringify(this.state));
 
                     if (nextLocation != waypoints.length) {
@@ -156,14 +155,11 @@ export default class GoogleMapsScreen extends React.Component {
                         newState.waypoints[nextLocation - 1].visited = true;
                         newState.tour.nextLocation++;
                         newState.tour.destination = newState.waypoints[newState.tour.nextLocation - 1].location;
-                        newState.tour.landmarks_visited.push(newState.waypoints[nextLocation - 1].id);
                         this.setState(newState);
 
                     } else {
                         alert(`${waypoints[nextLocation - 1].title} Landmark Triggered`);
                         newState.waypoints[nextLocation - 1].visited = true;
-                        newState.tour.landmarks_visited.push(newState.waypoints[nextLocation - 1].id);
-                        newState.tour.tour_completed = true;
                         this.setState(newState);
                     }
                 }
@@ -258,6 +254,10 @@ export default class GoogleMapsScreen extends React.Component {
                 })
             }
 
+            // let tour = {
+            //     ...this.state
+            // }
+            // tour.waypoints = waypointArr;
             this.setState({
                 waypoints: waypointArr
             })
@@ -290,58 +290,33 @@ export default class GoogleMapsScreen extends React.Component {
     }
 
     endTour = () => {
-
+        //alert("This is the end tour screen");
         this.showLoader();
+        let tour = {
+            ...this.state.tour
+        }
+        tour.origin = null;
+        tour.destination = null;
+        tour.tourStarted = false;
 
-        //create date object
-        let date = new Date();
+        this.setState({
+            tour,
+            uiState: 0
+        })
 
-        //Get Time
-        let hours = date.getHours();
-        let minutes = date.getMinutes();
-        let seconds = date.getSeconds();
+        {/*this.setState({
+            uiState: 1
+        })*/}
 
-        //// TODO:
-        //Switch back to original state copy, Json copy mmight be unnecessary
-        //Add in Axios call to store data in backend 
-
-        //¯\_(ツ)_/¯
-        const newState = JSON.parse(JSON.stringify(this.state));
-
-        newState.tour.origin = null;
-        newState.tour.destination = null;
-        newState.tour.tourStarted = false;
-        newState.tour.time_finished = `${hours}:${minutes}:${seconds}`;
-        newState.uiState = 0;
-
-        //this.setState(newState);
-
-        this.setState(newState, () => {
-          this.hideLoader();
-          console.log(this.state);
-          this.props.navigation.navigate("EndTour");
-        });
-
+        this.hideLoader();
+        this.props.navigation.navigate("EndTour");
+    
     }
 
     toStart = () => {
         this.showLoader();
         //alert("start tour stuff and things");
-        console.log("Setting the start point");
-
-        //create date object
-        let date = new Date();
-
-        //Get Time
-        let hours = date.getHours();
-        let minutes = date.getMinutes();
-        let seconds = date.getSeconds();
-
-        //Get Date
-        let day = date.getDate();
-        let month = date.getMonth() + 1;
-        let year = date.getFullYear();
-
+        console.log("Setting the start point")
 
         let tour = { ...this.state.tour }
         tour.origin = {
@@ -350,9 +325,6 @@ export default class GoogleMapsScreen extends React.Component {
         }
         tour.destination = this.state.waypoints[0].location;
         tour.tourStarted = true;
-
-        tour.date         = `${day}/${month}/${year}`;
-        tour.time_started = `${hours}:${minutes}:${seconds}`;
 
         this.setState({
             tour,
@@ -365,135 +337,180 @@ export default class GoogleMapsScreen extends React.Component {
 
     hideLoader = () => this.setState({ showLoader: false });
 
-
-    setTokens = ()  => {
+    
+    setTokens = ()  => 
+    {
         navigator.geolocation.getCurrentPosition(
-            position => {
+            position => { 	
                 //comparring my current geo location with the location of the tokens in Carlingford.
               if(tokens[0]!=99999999){
                 tokens[0] = getPreciseDistance(
-
+      
                 { latitude: position.coords.latitude, longitude: position.coords.longitude },
                 { latitude: 54.041875, longitude: -6.18777778 }
-              );
+              );    			 
               this.setState({token1});
-
+            
                }
-
+      
                if(tokens[1]!=99999999){
                 tokens[1] = getPreciseDistance(
-
+      
                 { latitude: position.coords.latitude, longitude: position.coords.longitude },
                 { latitude: 54.04219, longitude: -6.187161 }
-              );
+              );      
                this.setState({token2});
-
+            
                }
-
+  
                if(tokens[2]!=99999999){
                 tokens[2] = getPreciseDistance(
-
+      
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
                   { latitude: 54.03935278, longitude: -6.18638889 }
-                );
+                );      
               this.setState({token3});
-
+           
                }
-
+  
                if(tokens[3]!=99999999){
                 tokens[3] = getPreciseDistance(
-
+      
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
                   { latitude: 54.03803889, longitude: -6.185 }
-                );
+                );      
               this.setState({token4});
+         
+               }
+
+               if(tokens[4]!=99999999){
+                tokens[4] = getPreciseDistance(
+
+                  { latitude: position.coords.latitude, longitude: position.coords.longitude },
+                  { latitude: 54.038989, longitude: -6.185383}
+                );
+              this.setState({token5});
 
                }
 
+               if(tokens[5]!=99999999){
+                tokens[5] = getPreciseDistance(
+
+                  { latitude: position.coords.latitude, longitude: position.coords.longitude },
+                  { latitude: 54.04006944444444, longitude: -6.185625 }
+                );
+              this.setState({token6});
+
+               }
+
+               if(tokens[6]!=99999999){
+                tokens[6] = getPreciseDistance(
+
+                  { latitude: position.coords.latitude, longitude: position.coords.longitude },
+                  { latitude:54.040225, longitude:  -6.185383 }
+                );
+              this.setState({token7});
+
+               }
+
+               if(tokens[7]!=99999999){
+                tokens[7] = getPreciseDistance(
+
+                  { latitude: position.coords.latitude, longitude: position.coords.longitude },
+                  { latitude: 54.04071, longitude:-6.186574 }
+                );
+              this.setState({token8});
+
+               }
+
+            
 
 
                error => Alert.alert(error.message),
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
             }
         )
-
+        
     }
 
 
     TokenGame = () => {
-
+             
             this.setTokens();
             console.log(tokens);
 
-
+             
 			//calculating what the closts token is
 			 closestToken = Math.min(...tokens) // 1
             this.setState({closestToken});
-
-			 //num_of_tokens=0;
+            
+			 //num_of_tokens=0;	
 
              //for each token , check that the closest token is less than 5 meters( for testing i use a larger number)
-
-             if(closestToken<800){
+            
+             if(closestToken>1000){
                  alert("You must be Carlingford town to pick up tokens.")
              }
-             else if (closestToken <200000 && this.state.num_of_tokens<=4 )
+             else if (closestToken <5 && this.state.num_of_tokens<=6 )                    
              {
-             //for loop to run through all of the tokens, to see if there is a token that matches the closest token
+             //for loop to run through all of the tokens, to see if there is a token that matches the closest token            
 				for( var i=0; i<tokens.length; i++)
-				{
-
-						//match the closest distance with the relevant token
+				{					
+						//match the closest distance with the relevant token  
 						if(tokens[i]==closestToken)
 						{
                             //add a token to the count of tokens
                             let token_num = this.state.num_of_tokens;
+                            if(token_num<6)
+                            {
                             token_num++;
+                            }
 							this.setState({num_of_tokens: token_num});
                             //this.setState({num_of_tokens});
-
+                            
                             var token_number=tokens.indexOf(closestToken);
-                            if(this.state.num_of_tokens<4){
-                            Speech.speak('congratulations! you have found ' + (this.state.num_of_tokens + 1) +' of 4 tokens');
+                            if(this.state.num_of_tokens+1<6 ){
+                            Speech.speak('congratulations! you have found ' + (this.state.num_of_tokens + 1) +' of 6 tokens');
                             }
-                            else if(this.state.num_of_tokens==4)
+                            else if(token_num==6)
                             {
-                                Speech.speak('Congratulations! you have found all 4 tokens!');
+                                Speech.speak('You have found all 6 tokens!');
+                                alert('you have found all 6 tokens! Congratuations!');
                             }
-
-							//reset the token distance to 9999999 (a number that should always be bigger than the rest)and so that it will never be the minimum as above
+							
+                            //reset the token distance to 9999999 (a number that should always be bigger than the rest)and so that it will never be the minimum as above
+                            if(token_num<6)
+                            {
 							const index = tokens.indexOf(tokens[i]);
-							if (index !== -1)
+							if (index !== -1) 
 							{
    							 tokens[index] = 99999999;
-							}
-
+                            }	
+                        }
+							
                             this.setState({tokens})	;
                             console.log("tokens modified")
                             this.setTokens();
                             console.log(tokens);
 						}
-                    }
-
+                    }                  
+                    
                 }
 
                 else{
-                    if(this.state.num_of_tokens<4){
+                    if(this.state.num_of_tokens<6){
                     //nearest_token=("you are " + closestToken + " from the closest token!")
                     alert("you are " + closestToken + " from the closest token!");
                     }
-                    else{
-                        //alert("you have found all 4 tokens!");
-                        Speech.speak('Congratulations! you have found all 4 tokens!');
-                    }
-
+                   
+                    
        // this.setState({nearest_token});
                 }
-
-
-
-
-
+            
+           
+                
+		
+		
 	  }
 
 
@@ -539,9 +556,9 @@ export default class GoogleMapsScreen extends React.Component {
                     </View>
 
 
-
+                    
                     {/* <TouchableHighlight
-                        style={{
+                        style={{   
                                  justifyContent: 'center',
                         alignItems: 'center',
                         height: 60,
@@ -556,6 +573,14 @@ export default class GoogleMapsScreen extends React.Component {
                     </TouchableHighlight> */}
 
                     {/* <Progress.Bar progress={num_of_tokens / 4} width={200} /> */}
+
+
+
+
+
+
+
+
 
                     <MapView
                         ref={(ref) => this.mapView = ref}
@@ -572,20 +597,17 @@ export default class GoogleMapsScreen extends React.Component {
                             longitudeDelta: this.state.longitudeDelta}}
                     >
 
-                        {tourStarted && (
-                          <MapViewDirections
-                              origin={origin}
-                              destination={destination}
+                        <MapViewDirections
+                            origin={origin}
+                            destination={destination}
 
-                              resetOnChange={false}
-                              apikey={GOOGLE_MAPS_APIKEY}
-                              strokeWidth={2.5}
-                              strokeColor="#4d99e6"
-                              mode="WALKING"
-                              precision="low"
-                          />
-                        ) }
-
+                            resetOnChange={false}
+                            apikey={GOOGLE_MAPS_APIKEY}
+                            strokeWidth={2.5}
+                            strokeColor="#4d99e6"
+                            mode="WALKING"
+                            precision="low"
+                        />
 
                         {//destination && <MapView.Marker
                             //    coordinate={destination}
@@ -593,19 +615,15 @@ export default class GoogleMapsScreen extends React.Component {
                         }
 
                         {
-                            // start marker for before tour starts
-                            this.state.tour.tourStarted ? null: <CustomMarker
-                            title={'Tour Start Location'}
-                            desc={'Start location for the Historic Carlingford tour!'}
+                            // start marker for before tour starts 
+                            this.state.tour.tourStarted ? null: <CustomMarker 
+                            title={'Tour Start Location'} 
+                            desc={'Start location for the Historic Carlingford tour!'} 
                             latitude={54.041000}
                             longitude={-6.185922}/>
-                        }
+                        }        
 
                         {tourStarted && waypoints.map((waypoint, index) =>
-
-
-
-
                             <Marker
                                 coordinate={waypoint.location}
                                 key={waypoint.title}

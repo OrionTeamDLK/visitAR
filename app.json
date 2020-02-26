@@ -29,6 +29,7 @@
     "android": {
       "package": "com.orion.visitar",
       "versionCode": 1
-    }
+    },
+    "description": "published iphone version of visitAR"
   }
 }
