@@ -473,7 +473,7 @@ export default class GoogleMapsScreen extends React.Component {
     TokenGame = () => {
 
             this.setTokens();
-        console.log(tokens);
+            console.log(tokens);
 
 
 			//calculating what the closts token is
@@ -613,6 +613,8 @@ export default class GoogleMapsScreen extends React.Component {
                     <MapView
                         ref={(ref) => this.mapView = ref}
                         showsUserLocation
+                        followsUserLocation
+                        showsScale
                         data-test="MapView"
                         style={styles.mapStyle}
                         customMapStyle={mapStyle}
