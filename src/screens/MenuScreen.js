@@ -35,14 +35,14 @@ export default class MenuScreen extends React.Component {
 						data-test="MenuScreen_button"
 						title="Profile"
 						icon="address-card"
-						navName="Profile" 
+						navName="Profile"
 						styleText={{ color: "white", fontSize: 30 }}/>
 					:
 					<NavigationButton
 						data-test="MenuScreen_button"
 						title="Login"
 						icon="sign-in"
-						navName="Login" 
+						navName="Login"
 						styleText={{ color: "white", fontSize: 30 }}/>
 				}
 
@@ -50,14 +50,14 @@ export default class MenuScreen extends React.Component {
 					data-test="MenuScreen_button"
 					title="Language"
 					icon="language"
-					navName="Language" 
+					navName="Language"
 					styleText={{ color: "white", fontSize: 30 }}/>
 
 				<NavigationButton
 					data-test="MenuScreen_button"
 					title="Settings"
 					icon="cog"
-					navName="Settings" 
+					navName="Settings"
 					styleText={{ color: "white", fontSize: 30 }}/>
 
 				<NavigationButton
