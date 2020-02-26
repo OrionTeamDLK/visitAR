@@ -24,7 +24,7 @@ export default class App extends React.Component {
 				height={window.height}
 				width={window.width}
 				autoplay
-				autoplayDelay={3}
+				autoplayDelay={5}
 				autoplayLoop
 			>
 				<HelpInfo num='1' text='Click start tour button, follow blue line for your suggested route' />

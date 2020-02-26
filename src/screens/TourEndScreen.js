@@ -25,10 +25,6 @@ const EndTourScreen =(props)=>{
         title="Go to map screen"
         accessibilityLabel="Go to map screen"
         />
-        <Button
-        style={{marginTop:20}} 
-        title="Add tour to favourites"
-        />
         </View>
     );
 };
