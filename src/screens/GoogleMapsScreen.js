@@ -489,7 +489,7 @@ export default class GoogleMapsScreen extends React.Component {
              if(closestToken>1000){
                  alert("You must be Carlingford town to pick up tokens.")
              }
-             else if (closestToken <5 && this.state.num_of_tokens<=6 )
+             else if (closestToken <20 && this.state.num_of_tokens<=6 )
              {
              //for loop to run through all of the tokens, to see if there is a token that matches the closest token
 				for( var i=0; i<tokens.length; i++)
