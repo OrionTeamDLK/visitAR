@@ -385,7 +385,7 @@ export default class GoogleMapsScreen extends React.Component {
                 tokens[0] = getPreciseDistance(
 
                 { latitude: position.coords.latitude, longitude: position.coords.longitude },
-                { latitude: 54.041875, longitude: -6.18777778 }
+                { latitude: 54.04207, longitude: -6.18787 }
               );
               this.setState({token1});
 
@@ -395,7 +395,7 @@ export default class GoogleMapsScreen extends React.Component {
                 tokens[1] = getPreciseDistance(
 
                 { latitude: position.coords.latitude, longitude: position.coords.longitude },
-                { latitude: 54.04219, longitude: -6.187161 }
+                { latitude: 54.04198, longitude: -6.187025 }
               );
                this.setState({token2});
 
@@ -405,7 +405,7 @@ export default class GoogleMapsScreen extends React.Component {
                 tokens[2] = getPreciseDistance(
 
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
-                  { latitude: 54.03935278, longitude: -6.18638889 }
+                  { latitude: 54.039403, longitude: -6.186478 }
                 );
               this.setState({token3});
 
@@ -415,7 +415,7 @@ export default class GoogleMapsScreen extends React.Component {
                 tokens[3] = getPreciseDistance(
 
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
-                  { latitude: 54.03803889, longitude: -6.185 }
+                  { latitude: 54.038039, longitude: -6.185042 }
                 );
               this.setState({token4});
 
@@ -425,7 +425,7 @@ export default class GoogleMapsScreen extends React.Component {
                 tokens[4] = getPreciseDistance(
 
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
-                  { latitude: 54.038989, longitude: -6.185383}
+                  { latitude: 54.038039, longitude: -6.185042}
                 );
               this.setState({token5});
 
@@ -435,7 +435,7 @@ export default class GoogleMapsScreen extends React.Component {
                 tokens[5] = getPreciseDistance(
 
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
-                  { latitude: 54.04006944444444, longitude: -6.185625 }
+                  { latitude: 54.039803, longitude: -6.185992 }
                 );
               this.setState({token6});
 
@@ -445,7 +445,7 @@ export default class GoogleMapsScreen extends React.Component {
                 tokens[6] = getPreciseDistance(
 
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
-                  { latitude:54.040225, longitude:  -6.185383 }
+                  { latitude:54.040183, longitude: -6.186233 }
                 );
               this.setState({token7});
 
@@ -455,7 +455,17 @@ export default class GoogleMapsScreen extends React.Component {
                 tokens[7] = getPreciseDistance(
 
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
-                  { latitude: 54.04071, longitude:-6.186574 }
+                  { latitude: 54.040703, longitude:-6.186455 }
+                );
+              this.setState({token8});
+
+               }
+
+               if(tokens[8]!=99999999){
+                tokens[8] = getPreciseDistance(
+
+                  { latitude: position.coords.latitude, longitude: position.coords.longitude },
+                  { latitude: 54.04028, longitude:-6.184787}
                 );
               this.setState({token8});
 
@@ -486,10 +496,10 @@ export default class GoogleMapsScreen extends React.Component {
 
              //for each token , check that the closest token is less than 5 meters( for testing i use a larger number)
 
-             if(closestToken>1000){
+             if(closestToken<1000){
                  alert("You must be Carlingford town to pick up tokens.")
              }
-             else if (closestToken <20 && this.state.num_of_tokens<=6 )
+             else if (closestToken <20000 && this.state.num_of_tokens<=6 )//change closest toke to 20 for release
              {
              //for loop to run through all of the tokens, to see if there is a token that matches the closest token
 				for( var i=0; i<tokens.length; i++)
