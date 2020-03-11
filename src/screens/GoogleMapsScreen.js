@@ -669,17 +669,36 @@ export default class GoogleMapsScreen extends React.Component {
                         {tourStarted && waypoints.map((waypoint, index) =>
 
 
+// <Icon name={props.icon} size={30} color="white" style={styles.iconStyle} />
+//  import Icon from "react-native-vector-icons/FontAwesome";
+//      iconStyle: {        marginHorizontal: 20,    }
 
+//                                    require('../../assets/PointOfInterestIconVisited.png')
+//                                    :
+//                                    require('../../assets/PointOfInterestIcon.png')
+//                            {waypoint.visited ?
+//                              <Image source={require('../../assets/mapIcons/castle-visited.png')} style={{height: 64, width:64 }} />
+//                              :
+//                              <Image source={require('../../assets/mapIcons/castle.png')} style={{height: 64, width:64 }} />
+//                            }
+
+//icon={waypoint.visited ?
+//    require('../../assets/mapIcons/castle-visited.png')
+//    :
+//    require('../../assets/mapIcons/castle.png')
+//}
 
                             <Marker
                                 coordinate={waypoint.location}
                                 key={waypoint.title}
                                 icon={waypoint.visited ?
-                                    require('../../assets/PointOfInterestIconVisited.png')
+                                    require('../../assets/mapIcons/castle-visited.png')
                                     :
-                                    require('../../assets/PointOfInterestIcon.png')
+                                    require('../../assets/mapIcons/castle.png')
                                 }
                             >
+
+
                                 <Callout
                                     onPress={e => {
                                         this.props.navigation.navigate('Landmark', { landmark: waypoint });
@@ -687,6 +706,7 @@ export default class GoogleMapsScreen extends React.Component {
                                     }>
                                     <InfoPopUp title={waypoint.title} description={waypoint.description} />
                                 </Callout>
+
                             </Marker>)}
                     </MapView>
 
