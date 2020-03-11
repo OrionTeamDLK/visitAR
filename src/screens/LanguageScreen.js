@@ -3,14 +3,19 @@ import {View, Text, StyleSheet} from 'react-native';
 
 const LanguageScreen = () => {
     return (
-        <View data-test = "LanguageScreen_view">
-        <Text data-test = "LanguageScreen_text">VisitAR</Text>
-        <Text data-test = "LanguageScreen_text">Language screen</Text>
+        <View style={styles.textStyle} data-test = "LanguageScreen_view">
+        <Text style={styles.textStyle} data-test = "LanguageScreen_text">- English</Text>
+        <Text style={styles.textStyle} data-test = "LanguageScreen_text">- German</Text>
+        <Text style={styles.textStyle} data-test = "LanguageScreen_text">- French</Text>
         </View>
     );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  textStyle: {
+    fontSize:25
+}
+});
 
 export default LanguageScreen;
 

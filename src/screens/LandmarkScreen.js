@@ -34,9 +34,15 @@ export default class LandmarkScreen extends React.Component {
         <Text>{location.latitude}</Text>
         <Text>{location.longitude}</Text>      
         <Button
-            title="speech"
-            onPress={() => Speech.speak(title + ". " + description)}
+            title="Speech"
+          
+            onPress={() =>  Speech.speak(title + ". " + description)}
         />
+        <Button
+            title="Stop speech"
+            onPress={() => Speech.stop()}
+        />
+       
 
 
 

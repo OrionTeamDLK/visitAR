@@ -61,19 +61,22 @@ const navigator = createStackNavigator({
 },{
   initialRouteName: 'GMaps',
   defaultNavigationOptions:{
-    title:'VisitAR  ',
+    title:'VisitAR',
     //header:null,
     headerTitleStyle: {
       textAlign:"center",
       flex:1 ,
       fontWeight: 'bold',
-      fontSize:50,
+      fontSize:35,
+      right:"55%"
   },
   headerStyle: {
     backgroundColor: '#f4511e',
+    height:40
   },
-  headerTintColor: '#fff',
-  }
+  headerTintColor: '#fff'
+  },
+  
 });
 
 //Donal commit 15 - 11 - 19

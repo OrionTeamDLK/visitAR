@@ -111,8 +111,8 @@ export default class ProfileScreen extends React.Component {
 
           <Text>Name: {this.state.name && null}</Text>
           <Text>Email: {this.state.email}</Text>
-          <Text>User ID: {this.state.uid}</Text>
-          <Text>Photo URL: {this.state.photoURL}</Text>
+         {/* <Text>User ID: {this.state.uid}</Text>*/}
+          {/*<Text>Photo URL: {this.state.photoURL}</Text>*/}
 
           <Button
             style={styles.Button}
