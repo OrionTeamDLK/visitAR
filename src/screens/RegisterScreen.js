@@ -1,5 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
+import {
+    JWT_SECRET
+} from "../../config/config.js"
 import NavigationButton from "../Components/NavigationButton";
 import AnimatedLoadingBar from "../Components/AnimatedLoadingBar";
 import {
@@ -22,9 +25,9 @@ export default class Register extends React.Component {
   constructor(props) {
     super(props);
     this.signUpUser = this.signUpUser.bind(this);
-    let key = "XVSHDsTWogsEszjM";
-    let access_token = JWT.encode({ foo: "bar" }, key);
-    axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
+
+    let access_token = JWT.encode({ foo: "bar" }, JWT_SECRET);
+    Axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
 
     this.state = {
       email: "",
