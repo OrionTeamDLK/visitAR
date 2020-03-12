@@ -50,7 +50,9 @@ import * as Progress from 'react-native-progress';
 import InfoPopUp from "../Components/InfoPopUp";
 import CustomMarker from "../Components/CustomMarker";
 import PickUpTokenButton from "../Components/PickUpTokenButton";
-import { Notifications } from 'expo'
+import { Notifications } from 'expo';
+import {getUserID} from '../../Utils/user_func';
+
 
 
 
@@ -105,8 +107,21 @@ export default class GoogleMapsScreen extends React.Component {
 
     async componentDidMount() {
         this.registerForPushNotifications();
+
+        // const encodeBody = {};
+        //
+        // const uid = getUserID();
+        // if(uid!=null){
+        //   encodeBody = {
+        //     "uid": uid
+        //   }
+        // } else {
+        //   encodeBody = {
+        //     "uid": null
+        //   }
+        // }
         //set Axios Request Auth Header with JWT Token
-        let access_token = JWT.encode({ foo: "bar" }, JWT_SECRET);
+        let access_token = JWT.encode({foo:"bar"}, JWT_SECRET);
         Axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
 
         //Declaring a variable, status. to ask for permission for location services.
@@ -300,7 +315,22 @@ export default class GoogleMapsScreen extends React.Component {
         if (coordCheck == true) {setTimeout(this.hideLoader, 2000);}
     }
 
-    endTour = () => {
+    postTour = async () => {
+
+      this.showLoader();
+
+      const res = await Axios({
+          method: "post",
+          url: "https://orion-visitar.herokuapp.com/tourlog",
+          data: this.state.tour
+      });
+
+      console.log(res);
+
+      this.hideLoader();
+    }
+
+    endTour = async () => {
 
         this.showLoader();
 
@@ -314,7 +344,7 @@ export default class GoogleMapsScreen extends React.Component {
 
         //// TODO:
         //Switch back to original state copy, Json copy mmight be unnecessary
-        //Add in Axios call to store data in backend
+
 
         //¯\_(ツ)_/¯
         const newState = JSON.parse(JSON.stringify(this.state));
@@ -325,14 +355,22 @@ export default class GoogleMapsScreen extends React.Component {
         newState.tour.time_finished = `${hours}:${minutes}:${seconds}`;
         newState.uiState = 0;
 
+        try{
+          const uid = await getUserID();
+        } catch (e){
+          console.log(e)
+        }
+
+
+
+
         //this.setState(newState);
 
-        this.setState(newState, () => {
+        this.setState(newState, async () => {
           this.hideLoader();
-          console.log(this.state);
+          await this.postTour();
           this.props.navigation.navigate("EndTour");
         });
-
     }
 
     toStart = () => {
@@ -375,7 +413,6 @@ export default class GoogleMapsScreen extends React.Component {
     showLoader = () => this.setState({ showLoader: true });
 
     hideLoader = () => this.setState({ showLoader: false });
-
 
     setTokens = ()  => {
         navigator.geolocation.getCurrentPosition(
@@ -480,7 +517,6 @@ export default class GoogleMapsScreen extends React.Component {
         )
 
     }
-
 
     TokenGame = () => {
 
