@@ -1,9 +1,9 @@
 import React from "react";
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Image } from "react-native";
 import Swiper from "react-native-swiper";
 import HelpInfo from '../Components/HelpInfo';
 
-const window = Dimensions.get("window");
+const windowWidth = Dimensions.get("window").width;
 
 export default class App extends React.Component {
 	constructor() {
@@ -28,6 +28,8 @@ export default class App extends React.Component {
 				<HelpInfo num='2' text='click the markers for more information, text to speech is available too' />
 				<HelpInfo num='3' text='Collect tokens at various landmarks' />
 				<HelpInfo num='4' text='Click end tour to finish and view your stats' />
+				<Image style={{width:"100%", height:"100%"}}
+					source={require('../../assets/splash.png')}/>
 
 			</Swiper>
 		);

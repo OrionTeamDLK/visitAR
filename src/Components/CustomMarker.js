@@ -19,7 +19,7 @@ const CustomMarker = (props) => {
             title={props.title}
             description={props.desc}
             >
-            <Image source={require('../../assets/mapIcons/travel_road.png')} style={{height: 64, width:64 }} />
+            <Image source={require('../../assets/mapIcons/vc.png')} style={{height: 64, width:64 }} />
             </Marker>
     );
 };

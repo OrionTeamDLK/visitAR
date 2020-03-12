@@ -532,10 +532,10 @@ export default class GoogleMapsScreen extends React.Component {
 
              //for each token , check that the closest token is less than 5 meters( for testing i use a larger number)
 
-             if(closestToken<1000){
+             if(closestToken>1000){
                  alert("You must be Carlingford town to pick up tokens.")
              }
-             else if (closestToken <20000 && this.state.num_of_tokens<=6 )//change closest toke to 20 for release
+             else if (closestToken <20 && this.state.num_of_tokens<=6 )//change closest toke to 20 for release
              {
              //for loop to run through all of the tokens, to see if there is a token that matches the closest token
 				for( var i=0; i<tokens.length; i++)
@@ -705,17 +705,36 @@ export default class GoogleMapsScreen extends React.Component {
                         {tourStarted && waypoints.map((waypoint, index) =>
 
 
+// <Icon name={props.icon} size={30} color="white" style={styles.iconStyle} />
+//  import Icon from "react-native-vector-icons/FontAwesome";
+//      iconStyle: {        marginHorizontal: 20,    }
 
+//                                    require('../../assets/PointOfInterestIconVisited.png')
+//                                    :
+//                                    require('../../assets/PointOfInterestIcon.png')
+//                            {waypoint.visited ?
+//                              <Image source={require('../../assets/mapIcons/castle-visited.png')} style={{height: 64, width:64 }} />
+//                              :
+//                              <Image source={require('../../assets/mapIcons/castle.png')} style={{height: 64, width:64 }} />
+//                            }
+
+//icon={waypoint.visited ?
+//    require('../../assets/mapIcons/castle-visited.png')
+//    :
+//    require('../../assets/mapIcons/castle.png')
+//}
 
                             <Marker
                                 coordinate={waypoint.location}
                                 key={waypoint.title}
                                 icon={waypoint.visited ?
-                                    require('../../assets/PointOfInterestIconVisited.png')
+                                    require('../../assets/mapIcons/castle-visited.png')
                                     :
-                                    require('../../assets/PointOfInterestIcon.png')
+                                    require('../../assets/mapIcons/castle.png')
                                 }
                             >
+
+
                                 <Callout
                                     onPress={e => {
                                         this.props.navigation.navigate('Landmark', { landmark: waypoint });
@@ -723,6 +742,7 @@ export default class GoogleMapsScreen extends React.Component {
                                     }>
                                     <InfoPopUp title={waypoint.title} description={waypoint.description} />
                                 </Callout>
+
                             </Marker>)}
                     </MapView>
 
