@@ -22,6 +22,9 @@ import {
 import * as firebase from "firebase";
 import JWT from "expo-jwt";
 import Axios from "axios";
+import {getUserID} from '../../Utils/user_func';
+import styles from "../styles/ProfileScreenStyle";
+
 
 export default class ProfileScreen extends React.Component {
 
@@ -41,6 +44,8 @@ export default class ProfileScreen extends React.Component {
   componentWillMount() {
 
     const user = firebase.auth().currentUser;
+
+    console.log(getUserID);
 
     // if (user != null) {
     //   const ref = firebase.storage().ref(user.photoURL);
@@ -144,29 +149,3 @@ export default class ProfileScreen extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    justifyContent: "center"
-  },
-  Button: {
-    marginTop: 10
-  },
-  profile_pic: {
-    width: 200,
-    height: 200,
-    borderRadius: 200 / 2,
-    overflow: "hidden",
-    borderWidth: 3,
-    borderColor: "black",
-    marginTop: 10,
-    marginBottom: 10,
-    justifyContent: 'center'
-  },
-  heading: {
-    margin:20,
-    fontSize:20
-  }
-});
