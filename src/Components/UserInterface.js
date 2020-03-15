@@ -42,7 +42,7 @@ ShowEndTourButton = (props) => {
                 }}
                // onPress={()=>{alert("this is the end screen")}}
                 //      || props.navigation.navigate("EndTourScreen")
-                >                
+                >
 
                 <View
                     style={{
@@ -119,10 +119,13 @@ class UserInterface extends Component {
                     alignSelf: 'left'
                 }} navName="Menu" />
 
-                
-                {this.props.status == 0 ? <PickUpTokenButton top="5%" pickUpTokenGame = {this.props.tokenGame} num_tokens = {this.props.num_tokens}/> : <PickUpTokenButton top="85%" pickUpTokenGame = {this.props.tokenGame} num_tokens = {this.props.num_tokens}/>}
-                {/*<PickUpTokenButton 
-                top="5%" 
+
+                {this.props.status == 0 ?
+                   <PickUpTokenButton top="5%" pickUpTokenGame = {this.props.tokenGame} num_tokens = {this.props.num_tokens}/>
+                   :
+                    <PickUpTokenButton top="85%" pickUpTokenGame = {this.props.tokenGame} num_tokens = {this.props.num_tokens}/>}
+                {/*<PickUpTokenButton
+                top="5%"
                 pickUpTokenGame = {this.props.tokenGame}
                 num_tokens = {this.props.num_tokens}
                 />*/}
