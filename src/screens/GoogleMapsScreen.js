@@ -414,6 +414,13 @@ export default class GoogleMapsScreen extends React.Component {
         this.hideLoader();
     }
 
+    skipLocation = () => {
+      const newState = JSON.parse(JSON.stringify(this.state));
+      newState.tour.nextLocation++;
+      newState.tour.destination = newState.waypoints[newState.tour.nextLocation - 1].location;
+      this.setState(newState);
+    }
+
     showLoader = () => this.setState({ showLoader: true });
 
     hideLoader = () => this.setState({ showLoader: false });
@@ -737,6 +744,35 @@ export default class GoogleMapsScreen extends React.Component {
                             textStyle={styles.spinnerTextStyle}
                         />
                     )}
+
+                    <TouchableOpacity style={{
+                        position: "absolute",
+                        bottom: 150,
+                        alignSelf: 'center',
+                        left: 20
+                    }}
+                        onPress={ () => this.skipLocation()}
+                    >
+                        <View data-test="Screen_Recenter_Button"
+                            style={{
+                                borderWidth: 0.1,
+                                borderColor: '#e4d9c0',
+                                borderRadius: 75,
+                                overflow: 'hidden',
+                                height: 70,
+                                width: 70,
+                                backgroundColor: '#4c6294',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderBottomWidth: 3,
+                                borderColor: "black"
+                            }}>
+                                <Image
+                                    style={{ width: 35, height: 35, alignItems: "center", justifyContent: "center" }}
+                                    source={require('../../assets/skip.png')}
+                                />
+                        </View>
+                    </TouchableOpacity>
 
                     <UserInterface
                         CallStartTour={this.toStart.bind(this)}
