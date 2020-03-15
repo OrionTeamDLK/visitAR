@@ -2,25 +2,32 @@ import React from 'react';
 import {View, Text, StyleSheet, Image,TouchableOpacity, Button} from 'react-native';
 import NavigationButton from '../Components/NavigationButton';
 import { withNavigation } from 'react-navigation';
+import {getTimeDiff} from '../../Utils/date_time';
 
 const EndTourScreen =(props)=>{
+
+    let { time_started, time_finished, landmarks_visited} = props.navigation.state.params.tour;
+    let timeDiff = getTimeDiff(time_started, time_finished);
+    let tokens =  props.navigation.state.params.tokens;
+
     return (
         <View data-test = "EndTourScreen_view">
         <Image style={styles.image} source={require('../../assets/carl1.jpeg')}/>
         <Text style={styles.textHeader}>Congratulations on completing the Carlingford Tour!</Text>
-        <Text style={styles.textMain}>You spent 1:15:24 on this historic tour</Text>
+        <Text style={styles.textMain}>You spent { timeDiff } on this historic tour</Text>
         <Text style={styles.textMain}>we hope you had a wonderful time</Text>
         <View style={styles.viewBar} />
         <Text style={styles.textList}>You have visted:</Text>
-        <Text style={styles.textList}>-Carlingford Castle</Text>
-        <Text style={styles.textList}>-The Spout</Text>
-        <Text style={styles.textList}>-The Mint</Text>
-        <Text style={styles.textList}>-Carlingford Priory</Text>
+
+        {landmarks_visited.map((landmark, index) =>
+          <Text style={styles.textList} key={landmark.id} >-{landmark.title}</Text>
+        )}
+
         <View style={styles.viewBar} />
-        <Text style={styles.textMain}>You have collected 4 out of 5 tokens! well done!</Text>
+        <Text style={styles.textMain}>You have collected {tokens} out of 8 tokens! well done!</Text>
         <Text style={styles.textMain}>How many can you and your friends collect next time?</Text>
         <Button
-        style={{marginTop:20}} 
+        style={{marginTop:20}}
         onPress={()=> props.navigation.navigate("GMaps")}
         title="Go to map screen"
         accessibilityLabel="Go to map screen"
@@ -97,7 +104,7 @@ export default class EndTourScreen extends React.Component {
         <Text>You spent 1:15:24 on this historic tour</Text>
         <Text>we hope you had a wonderful time</Text>
         <Text>===================</Text>
-        <Text>-Carlingford Castle</Text> 
+        <Text>-Carlingford Castle</Text>
         <Text>You have viisted:</Text>
         <Text>-Carlingford Castle</Text>
         <Text>-The Spout</Text>
@@ -129,6 +136,3 @@ const styles = StyleSheet.create({
   }
 });
 */}
-
-
-
