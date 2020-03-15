@@ -21,7 +21,7 @@ const getUserID = () => {
     : null;
 }
 
-export default {
+export {
   isUserLoggedIn,
   getUser,
   getUserID

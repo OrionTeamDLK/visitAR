@@ -70,6 +70,7 @@ var token8 = 0;
 
 
 var tokens = [token1, token2, token3, token4,token5,token6,token7,token8];
+
 const LOCATION_SETTINGS = {
     accuracy: Location.Accuracy.Balanced,
     timeInterval: 200,
@@ -174,10 +175,20 @@ export default class GoogleMapsScreen extends React.Component {
                     if (nextLocation != waypoints.length) {
                         alert(`${waypoints[nextLocation - 1].title} Landmark Triggered`);
 
+                        let date = new Date();
+
+                        //Get Time
+                        let hours = date.getHours();
+                        let minutes = date.getMinutes();
+                        let seconds = date.getSeconds();
                         newState.waypoints[nextLocation - 1].visited = true;
                         newState.tour.nextLocation++;
                         newState.tour.destination = newState.waypoints[newState.tour.nextLocation - 1].location;
-                        newState.tour.landmarks_visited.push(newState.waypoints[nextLocation - 1].id);
+                        newState.tour.landmarks_visited.push({
+                          "id":newState.waypoints[nextLocation - 1].id,
+                          "title":newState.waypoints[nextLocation - 1].title,
+                          "time_visited":`${hours}:${minutes}:${seconds}`
+                        });
                         this.setState(newState);
 
                     } else {
@@ -280,10 +291,6 @@ export default class GoogleMapsScreen extends React.Component {
                 })
             }
 
-            // let tour = {
-            //     ...this.state
-            // }
-            // tour.waypoints = waypointArr;
             this.setState({
                 waypoints: waypointArr
             })
@@ -325,7 +332,6 @@ export default class GoogleMapsScreen extends React.Component {
           data: this.state.tour
       });
 
-      console.log(res);
 
       this.hideLoader();
     }
@@ -355,21 +361,19 @@ export default class GoogleMapsScreen extends React.Component {
         newState.tour.time_finished = `${hours}:${minutes}:${seconds}`;
         newState.uiState = 0;
 
-        try{
-          const uid = await getUserID();
-        } catch (e){
-          console.log(e)
-        }
 
-
+        const uid = await getUserID();
 
 
         //this.setState(newState);
 
         this.setState(newState, async () => {
-          this.hideLoader();
           await this.postTour();
-          this.props.navigation.navigate("EndTour");
+          this.hideLoader();
+          this.props.navigation.navigate("EndTour", {
+            tour: newState.tour,
+            tokens: num_of_tokens
+          });
         });
     }
 
@@ -408,6 +412,13 @@ export default class GoogleMapsScreen extends React.Component {
             uiState: 1
         })
         this.hideLoader();
+    }
+
+    skipLocation = () => {
+      const newState = JSON.parse(JSON.stringify(this.state));
+      newState.tour.nextLocation++;
+      newState.tour.destination = newState.waypoints[newState.tour.nextLocation - 1].location;
+      this.setState(newState);
     }
 
     showLoader = () => this.setState({ showLoader: true });
@@ -532,10 +543,10 @@ export default class GoogleMapsScreen extends React.Component {
 
              //for each token , check that the closest token is less than 5 meters( for testing i use a larger number)
 
-             if(closestToken>1000){
+             if(closestToken<1000){
                  alert("You must be Carlingford town to pick up tokens.")
              }
-             else if (closestToken <20 && this.state.num_of_tokens<=6 )//change closest toke to 20 for release
+             else if (closestToken <20000 && this.state.num_of_tokens<=6 )//change closest toke to 20 for release
              {
              //for loop to run through all of the tokens, to see if there is a token that matches the closest token
 				for( var i=0; i<tokens.length; i++)
@@ -705,36 +716,17 @@ export default class GoogleMapsScreen extends React.Component {
                         {tourStarted && waypoints.map((waypoint, index) =>
 
 
-// <Icon name={props.icon} size={30} color="white" style={styles.iconStyle} />
-//  import Icon from "react-native-vector-icons/FontAwesome";
-//      iconStyle: {        marginHorizontal: 20,    }
 
-//                                    require('../../assets/PointOfInterestIconVisited.png')
-//                                    :
-//                                    require('../../assets/PointOfInterestIcon.png')
-//                            {waypoint.visited ?
-//                              <Image source={require('../../assets/mapIcons/castle-visited.png')} style={{height: 64, width:64 }} />
-//                              :
-//                              <Image source={require('../../assets/mapIcons/castle.png')} style={{height: 64, width:64 }} />
-//                            }
-
-//icon={waypoint.visited ?
-//    require('../../assets/mapIcons/castle-visited.png')
-//    :
-//    require('../../assets/mapIcons/castle.png')
-//}
 
                             <Marker
                                 coordinate={waypoint.location}
                                 key={waypoint.title}
                                 icon={waypoint.visited ?
-                                    require('../../assets/mapIcons/castle-visited.png')
+                                    require('../../assets/PointOfInterestIconVisited.png')
                                     :
-                                    require('../../assets/mapIcons/castle.png')
+                                    require('../../assets/PointOfInterestIcon.png')
                                 }
                             >
-
-
                                 <Callout
                                     onPress={e => {
                                         this.props.navigation.navigate('Landmark', { landmark: waypoint });
@@ -742,7 +734,6 @@ export default class GoogleMapsScreen extends React.Component {
                                     }>
                                     <InfoPopUp title={waypoint.title} description={waypoint.description} />
                                 </Callout>
-
                             </Marker>)}
                     </MapView>
 
@@ -753,6 +744,35 @@ export default class GoogleMapsScreen extends React.Component {
                             textStyle={styles.spinnerTextStyle}
                         />
                     )}
+
+                    <TouchableOpacity style={{
+                        position: "absolute",
+                        bottom: 150,
+                        alignSelf: 'center',
+                        left: 20
+                    }}
+                        onPress={ () => this.skipLocation()}
+                    >
+                        <View data-test="Screen_Recenter_Button"
+                            style={{
+                                borderWidth: 0.1,
+                                borderColor: '#e4d9c0',
+                                borderRadius: 75,
+                                overflow: 'hidden',
+                                height: 70,
+                                width: 70,
+                                backgroundColor: '#4c6294',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderBottomWidth: 3,
+                                borderColor: "black"
+                            }}>
+                                <Image
+                                    style={{ width: 35, height: 35, alignItems: "center", justifyContent: "center" }}
+                                    source={require('../../assets/skip.png')}
+                                />
+                        </View>
+                    </TouchableOpacity>
 
                     <UserInterface
                         CallStartTour={this.toStart.bind(this)}
