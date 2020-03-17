@@ -25,8 +25,12 @@ const EndTourScreen =(props)=>{
           )}
 
           <View style={styles.viewBar} />
-          <Text style={styles.textMain}>You have collected {tokens} out of 8 tokens! well done!</Text>
-          <Text style={styles.textMain}>How many can you and your friends collect next time?</Text>
+          {tokens === 0?
+          <Text style={styles.textMain}>No tokens this time.{"\n"}How many can you and your friends collect next time?</Text>
+          :
+          <Text style={styles.textMain}>You have collected {tokens} out of 8 tokens! well done!!!{"\n"}How many can you and your friends collect next time?</Text>
+          }
+
           <Button
             style={{marginTop:20}}
             onPress={()=> props.navigation.navigate("GMaps")}
