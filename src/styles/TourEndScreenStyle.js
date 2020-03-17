@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
   },
   image: {
     width: "80%",
-    height: 250,
+    height: 200,
     left: "10%",
     resizeMode: 'stretch'
   }
