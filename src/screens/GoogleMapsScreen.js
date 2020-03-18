@@ -715,7 +715,7 @@ export default class GoogleMapsScreen extends React.Component {
                             latitude={54.041000}
                             longitude={-6.185922}/>
                         }
-                        {console.log("test101")}
+
 
                         {tourStarted && waypoints.map((waypoint, index) =>
 
@@ -732,6 +732,7 @@ export default class GoogleMapsScreen extends React.Component {
 
                             >
                             {console.log("waypoint icon name: " + waypoint.icon)}
+                            {console.log("waypoint land name: " + waypoint.title)}
                             {waypoint.icon ==="castle" ?
                               waypoint.visited ?
                                <Image source={Images.castleVisited} style={styles.iconStyle}/>

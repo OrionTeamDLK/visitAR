@@ -18,15 +18,22 @@ const EndTourScreen =(props)=>{
         <View data-test = "EndTourScreen_view">
         	<ScrollView>
             <Image style={styles.image} source={require('../../assets/carl1.jpeg')}/>
-            <Text style={styles.textHeader}>Congratulations on completing the Carlingford Tour!</Text>
+            <Text style={styles.textHeader}>Congratulations on completing the Carlingford Tour!{"\n"}</Text>
             <Text style={styles.textMain}>You spent { timeDiff } on this historic tour</Text>
             <Text style={styles.textMain}>we hope you had a wonderful time</Text>
             <View style={styles.viewBar} />
+            {console.log(landmarks_visited.length)}
             <Text style={styles.textList}>You have visted:</Text>
+            {landmarks_visited.length > 0 ?
+                landmarks_visited.map((landmark, index) =>
+                  <Text style={styles.textList} key={landmark.id} >-{landmark.title}</Text>
+                )
+            :
+              <Text style={styles.textMain}>
+                No landmarks this time, hope you come back and check out more of Carlingford town
+              </Text>
+            }
 
-            {landmarks_visited.map((landmark, index) =>
-              <Text style={styles.textList} key={landmark.id} >-{landmark.title}</Text>
-            )}
 
             <View style={styles.viewBar} />
             {tokens === 0?
@@ -38,8 +45,8 @@ const EndTourScreen =(props)=>{
             <Button
               style={{marginTop:20}}
               onPress={()=> props.navigation.navigate("GMaps")}
-              title="Go to map screen"
-              accessibilityLabel="Go to map screen"
+              title="Back to map screen"
+              accessibilityLabel="Back to map screen"
             />
           </ScrollView>
       </View>
