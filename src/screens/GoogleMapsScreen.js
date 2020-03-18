@@ -52,6 +52,8 @@ import CustomMarker from "../Components/CustomMarker";
 import PickUpTokenButton from "../Components/PickUpTokenButton";
 import { Notifications } from 'expo';
 import {getUserID} from '../../Utils/user_func';
+import Images from'../../assets/images';
+
 
 
 
@@ -165,7 +167,7 @@ export default class GoogleMapsScreen extends React.Component {
             if (waypoints != null && tourStarted) {
 
                 let distance = getDistance(location.coords, waypoints[nextLocation - 1].location);
-                console.log(distance);
+                //console.log(distance);
 
                 if ((distance < 20) && (waypoints[nextLocation - 1].id == nextLocation) && (!waypoints[nextLocation - 1].visited)) {
 
@@ -284,6 +286,7 @@ export default class GoogleMapsScreen extends React.Component {
                     "description": waypoint.history,
                     "image": waypoint.image,
                     "fact": waypoint.fact,
+                    "icon":waypoint.icon,
                     "location": {
                         "latitude": waypoint.location._latitude,
                         "longitude": waypoint.location._longitude
@@ -372,7 +375,7 @@ export default class GoogleMapsScreen extends React.Component {
           this.hideLoader();
           this.props.navigation.navigate("EndTour", {
             tour: newState.tour,
-            tokens: num_of_tokens
+            tokens: this.state.num_of_tokens
           });
         });
     }
@@ -713,20 +716,94 @@ export default class GoogleMapsScreen extends React.Component {
                             longitude={-6.185922}/>
                         }
 
+
                         {tourStarted && waypoints.map((waypoint, index) =>
 
 
 
-
+                        //  icon={waypoint.visited ?
+                        //      require('../../assets/PointOfInterestIconVisite.png')
+                        //      :
+                        //      require('../../assets/PointOfInterestIcon.png')
+                        //  }
                             <Marker
                                 coordinate={waypoint.location}
                                 key={waypoint.title}
-                                icon={waypoint.visited ?
-                                    require('../../assets/PointOfInterestIconVisited.png')
-                                    :
-                                    require('../../assets/PointOfInterestIcon.png')
-                                }
+
                             >
+
+                            {waypoint.icon ==="castle" ?
+                              waypoint.visited ?
+                               <Image source={Images.castleVisited} style={styles.iconStyle}/>
+                               :
+                               <Image source={Images.castle} style={styles.iconStyle}/>
+                               :
+                               null
+                            }
+                            {waypoint.icon ==="spout" ?
+                              waypoint.visited ?
+                               <Image source={Images.spoutVisited} style={styles.iconStyle}/>
+                               :
+                               <Image source={Images.spout} style={styles.iconStyle}/>
+                               :
+                               null
+                            }
+                            {waypoint.icon ==="face" ?
+                              waypoint.visited ?
+                               <Image source={Images.faceVisited} style={styles.iconStyle}/>
+                               :
+                               <Image source={Images.face} style={styles.iconStyle}/>
+                               :
+                               null
+                            }
+                            {waypoint.icon ==="taffe" ?
+                              waypoint.visited ?
+                               <Image source={Images.taffeVisited} style={styles.iconStyle}/>
+                               :
+                               <Image source={Images.taffe} style={styles.iconStyle}/>
+                               :
+                               null
+                            }
+                            {waypoint.icon ==="abbey" ?
+                              waypoint.visited ?
+                               <Image source={Images.abbeyVisited} style={styles.iconStyle}/>
+                               :
+                               <Image source={Images.abbey} style={styles.iconStyle}/>
+                               :
+                               null
+                            }
+                            {waypoint.icon ==="centre" ?
+                              waypoint.visited ?
+                               <Image source={Images.centreVisited} style={styles.iconStyle}/>
+                               :
+                               <Image source={Images.centre} style={styles.iconStyle}/>
+                               :
+                               null
+                            }
+                            {waypoint.icon ==="thosel" ?
+                              waypoint.visited ?
+                               <Image source={Images.thoselVisited} style={styles.iconStyle}/>
+                               :
+                               <Image source={Images.thosel} style={styles.iconStyle}/>
+                               :
+                               null
+                            }
+                            {waypoint.icon ==="mint" ?
+                              waypoint.visited ?
+                               <Image source={Images.mintVisited} style={styles.iconStyle}/>
+                               :
+                               <Image source={Images.mint} style={styles.iconStyle}/>
+                               :
+                               null
+                            }
+                            {waypoint.icon ==="bust" ?
+                              waypoint.visited ?
+                               <Image source={Images.bustVisited} style={styles.iconStyle}/>
+                               :
+                               <Image source={Images.bust} style={styles.iconStyle}/>
+                               :
+                               null
+                            }
                                 <Callout
                                     onPress={e => {
                                         this.props.navigation.navigate('Landmark', { landmark: waypoint });
@@ -744,35 +821,38 @@ export default class GoogleMapsScreen extends React.Component {
                             textStyle={styles.spinnerTextStyle}
                         />
                     )}
+                    {this.state.tour.tourStarted?
+                      <TouchableOpacity style={{
+                          position: "absolute",
+                          bottom: 150,
+                          alignSelf: 'center',
+                          left: 20
+                      }}
+                          onPress={ () => this.skipLocation()}
+                      >
+                          <View data-test="Screen_Recenter_Button"
+                              style={{
+                                  borderWidth: 0.1,
+                                  borderColor: '#e4d9c0',
+                                  borderRadius: 75,
+                                  overflow: 'hidden',
+                                  height: 70,
+                                  width: 70,
+                                  backgroundColor: '#4c6294',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                  borderBottomWidth: 3,
+                                  borderColor: "black"
+                              }}>
+                                  <Image
+                                      style={{ width: 35, height: 35, alignItems: "center", justifyContent: "center" }}
+                                      source={require('../../assets/skip.png')}
+                                  />
+                          </View>
+                      </TouchableOpacity>
+                  :
+                  null}
 
-                    <TouchableOpacity style={{
-                        position: "absolute",
-                        bottom: 150,
-                        alignSelf: 'center',
-                        left: 20
-                    }}
-                        onPress={ () => this.skipLocation()}
-                    >
-                        <View data-test="Screen_Recenter_Button"
-                            style={{
-                                borderWidth: 0.1,
-                                borderColor: '#e4d9c0',
-                                borderRadius: 75,
-                                overflow: 'hidden',
-                                height: 70,
-                                width: 70,
-                                backgroundColor: '#4c6294',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                borderBottomWidth: 3,
-                                borderColor: "black"
-                            }}>
-                                <Image
-                                    style={{ width: 35, height: 35, alignItems: "center", justifyContent: "center" }}
-                                    source={require('../../assets/skip.png')}
-                                />
-                        </View>
-                    </TouchableOpacity>
 
                     <UserInterface
                         CallStartTour={this.toStart.bind(this)}
@@ -821,7 +901,11 @@ const styles = StyleSheet.create({
         height: 50,
         backgroundColor: '#4B6296',
         margin: 10,
-    }
+    },
+    iconStyle: {
+        width:48,
+        height:48
+    },
 
 });
 
