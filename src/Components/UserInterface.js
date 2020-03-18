@@ -113,6 +113,9 @@ class UserInterface extends Component {
                     top: 15,
                     alignSelf: 'right'
                 }} navName="Help" />
+
+
+
                 <MenuButton style={{
                     position: "absolute",
                     top: 10,
