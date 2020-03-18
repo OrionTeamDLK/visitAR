@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, FlatList } from "react-native";
 
+
 const InfoPopUp = (props) => {
     const desc = props.description;
     return (
@@ -15,23 +16,22 @@ const InfoPopUp = (props) => {
 export default InfoPopUp;
 
 
-
 const styles = StyleSheet.create({
-    boxStyle: {
-      width:350,
-      height:100
-    },
-    titleStyle:{
-      fontSize: 25,
-      textAlign:"center",
-      fontWeight:"bold"
-    },
-    contentStyle:{
-      fontSize: 16
-    },
-    linkStyle:{
-      fontSize: 14,
-       textAlign:"center",
-       textDecorationLine:'underline'
-    },
-  });
+  boxStyle: {
+    width:350,
+    height:100
+  },
+  titleStyle:{
+    fontSize: 25,
+    textAlign:"center",
+    fontWeight:"bold"
+  },
+  contentStyle:{
+    fontSize: 16
+  },
+  linkStyle:{
+    fontSize: 14,
+     textAlign:"center",
+     textDecorationLine:'underline'
+  },
+});
