@@ -22,6 +22,14 @@ export default class LandmarkScreen extends React.Component {
     })
   }
 
+  playText = (title, description) => {
+    Speech.speak("Landmark: " + title);
+    Speech.speak("Information: " + description);
+  }
+  stopSpeech = () => {
+    Speech.stop();
+  }
+
 
   render() {
     //console.log(this.props.navigation.state.params.landmark)
@@ -36,21 +44,23 @@ export default class LandmarkScreen extends React.Component {
         <Text style={styles.textTitle}>{title}</Text>
         <Text style={styles.textContent}>{description}</Text>
         <Text style={styles.textContent}>Lat,Long: ({location.latitude},{location.longitude})</Text>
+
         {this.state.played?
           <TouchableOpacity
             style={styles.buttonStop}
-            onPress={this.playPress}
+            onPress={() => { this.playPress(); this.stopSpeech(); }}
           >
             <Icon name='stop-circle' size={30} color="white" style={styles.iconStyle} />
           </TouchableOpacity>
         :
         <TouchableOpacity
           style={styles.buttonPlay}
-          onPress={this.playPress}
+          onPress={() => { this.playPress(); this.playText(title, description); }}
           >
           <Icon name='play' size={30} color="white" style={styles.iconStyle} />
         </TouchableOpacity>
         }
+        <Text>Play text to speech</Text>
 
       </View>
     );
