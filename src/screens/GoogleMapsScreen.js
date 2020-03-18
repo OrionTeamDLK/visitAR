@@ -167,7 +167,7 @@ export default class GoogleMapsScreen extends React.Component {
             if (waypoints != null && tourStarted) {
 
                 let distance = getDistance(location.coords, waypoints[nextLocation - 1].location);
-                console.log(distance);
+                //console.log(distance);
 
                 if ((distance < 20) && (waypoints[nextLocation - 1].id == nextLocation) && (!waypoints[nextLocation - 1].visited)) {
 
@@ -731,8 +731,7 @@ export default class GoogleMapsScreen extends React.Component {
                                 key={waypoint.title}
 
                             >
-                            {console.log("waypoint icon name: " + waypoint.icon)}
-                            {console.log("waypoint land name: " + waypoint.title)}
+
                             {waypoint.icon ==="castle" ?
                               waypoint.visited ?
                                <Image source={Images.castleVisited} style={styles.iconStyle}/>
