@@ -879,27 +879,32 @@ export default class GoogleMapsScreen extends React.Component {
                       >Close</Text>
                   </TouchableHighlight>
 
-                  <Modal
-                  animationType="fade"
-                  transparent={true}
-                  visible={this.state.infoModalVisible}
-                  onRequestClose={() => {
-                    console.log('Modal has been closed.');
-                  }}>
-                  <View style={styles.infoModalOuter}>
-                      <View style={styles.infoModalInner}>
-                              <Text>Info modal</Text>
-                              <TouchableHighlight
-                                onPress={() => {
-                                  this.toggleModal();
-                                }}>
-                                <Text
-                                  style={{fontSize:22, fontWeight:'bold'}}
-                                  >Close</Text>
-                              </TouchableHighlight>
+
+                  {this.state.infoModalVisible?
+                    <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={this.state.infoModalVisible}
+                    onRequestClose={() => {
+                      console.log('Modal has been closed.');
+                    }}>
+                    <View style={styles.infoModalOuter}>
+                        <View style={styles.infoModalInner}>
+                                <Text>Info modal</Text>
+                                <TouchableHighlight
+                                  onPress={() => {
+                                    this.toggleModal();
+                                  }}>
+                                  <Text
+                                    style={{fontSize:22, fontWeight:'bold'}}
+                                    >Close</Text>
+                                </TouchableHighlight>
+                        </View>
                       </View>
-                    </View>
-                </Modal>
+                  </Modal>
+                     :
+                      null}
+
 
                     <UserInterface
                         CallStartTour={this.toStart.bind(this)}
