@@ -33,6 +33,7 @@ const PickUpTokenButton = (props) => {
                 </Text>
                 </View>
         </TouchableOpacity>
+        
         <Progress.Bar progress={props.num_tokens / 6} width={200}  height={10}>
         <Text style = {{textAlign:"center"}}>Tokens Collected {props.num_tokens}/ 6</Text>
         </Progress.Bar>
