@@ -1033,6 +1033,13 @@ const mapStyle = [{
     }]
 },
 {
+    featureType: "road",
+    elementType: "labels",
+    stylers: [{
+        visibility: "off"
+      }]
+},
+{
     featureType: "transit.line",
     elementType: "geometry",
     stylers: [{

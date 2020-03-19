@@ -109,15 +109,15 @@ class UserInterface extends Component {
             <>
 
 
-               
-           
+
+
                 <HelpInfoButton style={{
                     position: "absolute",
                     top: 15,
                     alignSelf: 'right'
                 }} navName="Help" />
 
-            
+
 
                 <MenuButton style={{
                     position: "absolute",
@@ -140,19 +140,20 @@ class UserInterface extends Component {
 
 
 
-            <Image                       
+            <Image
             style={{
                  position: "absolute",
                  top: 10,
-                 alignSelf: 'right',
-                 left:320,top :150,
+                 alignSelf:'auto',
+                 left:380,
+                 top :150,
                  width: 50,
                  height: 300,
                  resizeMode: 'stretch'
-            }}            
+            }}
             source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F1.png?alt=media&token=e1b0139d-769f-4438-8f3a-0e5fe7386c34'}}
             />
-    
+
 
                 {/* <HideStartedTourReCenterButton status={this.props.status} CallStartTour={this.props.CallStartTour} /> */}
                 <ShowEndTourButton status={this.props.status} endTour={this.props.endTour} />
