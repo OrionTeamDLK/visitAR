@@ -13,7 +13,8 @@ import {
     TouchableOpacity,
     TouchableHighlight,
     StatusBar,
-    Vibration
+    Vibration,
+    Modal
 } from "react-native";
 
 import {
@@ -104,7 +105,8 @@ export default class GoogleMapsScreen extends React.Component {
                 nextLocation: 1,
                 landmarks_visited: []
             },
-            num_of_tokens:0
+            num_of_tokens:0,
+            infoModalVisible:false
         }
     }
 
@@ -175,7 +177,12 @@ export default class GoogleMapsScreen extends React.Component {
                     const newState = JSON.parse(JSON.stringify(this.state));
 
                     if (nextLocation != waypoints.length) {
-                        alert(`${waypoints[nextLocation - 1].title} Landmark Triggered`);
+
+
+                        this.setState({
+                          infoModalVisible:true
+                        })
+                        console.log("modal view state 1: " + this.state.infoModalVisible);
 
                         let date = new Date();
 
@@ -194,8 +201,10 @@ export default class GoogleMapsScreen extends React.Component {
                         this.setState(newState);
 
                     } else {
-                        alert(`${waypoints[nextLocation - 1].title} Landmark Triggered, hi`);
+
                         {/*put marker auto pop up*/}
+                        this.toggleModal();
+                        console.log("modal view state 2: " + this.state.infoModalVisible);
                         newState.waypoints[nextLocation - 1].visited = true;
                         newState.tour.landmarks_visited.push(newState.waypoints[nextLocation - 1].id);
                         newState.tour.tour_completed = true;
@@ -552,45 +561,45 @@ export default class GoogleMapsScreen extends React.Component {
              else if (closestToken >20000 && this.state.num_of_tokens<=6 )//change closest toke to 20 for release
              {
              //for loop to run through all of the tokens, to see if there is a token that matches the closest token
-				for( var i=0; i<tokens.length; i++)
-				{
-						//match the closest distance with the relevant token
-						if(tokens[i]==closestToken)
-						{
-                            //add a token to the count of tokens
-                            let token_num = this.state.num_of_tokens;
-                            if(token_num<6)
-                            {
-                            token_num++;
-                            }
-							this.setState({num_of_tokens: token_num});
-                            //this.setState({num_of_tokens});
+        				for( var i=0; i<tokens.length; i++)
+        				{
+      						//match the closest distance with the relevant token
+      						if(tokens[i]==closestToken)
+      						{
+                                  //add a token to the count of tokens
+                                  let token_num = this.state.num_of_tokens;
+                                  if(token_num<6)
+                                  {
+                                  token_num++;
+                                  }
+      							this.setState({num_of_tokens: token_num});
+                                  //this.setState({num_of_tokens});
 
-                            var token_number=tokens.indexOf(closestToken);
-                            if(this.state.num_of_tokens+1<6 ){
-                            Speech.speak('congratulations! you have found ' + (this.state.num_of_tokens + 1) +' of 6 tokens');
-                            }
-                            else if(token_num==6)
-                            {
-                                Speech.speak('You have found all 6 tokens!');
-                                alert('you have found all 6 tokens! Congratuations!');
-                            }
+                                  var token_number=tokens.indexOf(closestToken);
+                                  if(this.state.num_of_tokens+1<6 ){
+                                  Speech.speak('congratulations! you have found ' + (this.state.num_of_tokens + 1) +' of 6 tokens');
+                                  }
+                                  else if(token_num==6)
+                                  {
+                                      Speech.speak('You have found all 6 tokens!');
+                                      alert('you have found all 6 tokens! Congratuations!');
+                                  }
 
-                            //reset the token distance to 9999999 (a number that should always be bigger than the rest)and so that it will never be the minimum as above
-                            if(token_num<6)
-                            {
-							const index = tokens.indexOf(tokens[i]);
-							if (index !== -1)
-							{
-   							 tokens[index] = 99999999;
-                            }
-                        }
+                                  //reset the token distance to 9999999 (a number that should always be bigger than the rest)and so that it will never be the minimum as above
+                                  if(token_num<6)
+                                  {
+      							const index = tokens.indexOf(tokens[i]);
+      							if (index !== -1)
+      							{
+         							 tokens[index] = 99999999;
+                                  }
+                              }
 
-                            this.setState({tokens})	;
-                            console.log("tokens modified")
-                            this.setTokens();
-                            console.log(tokens);
-						}
+                                  this.setState({tokens})	;
+                                  console.log("tokens modified")
+                                  this.setTokens();
+                                  console.log(tokens);
+      						}
                     }
 
                 }
@@ -629,6 +638,14 @@ export default class GoogleMapsScreen extends React.Component {
         //get push notification token...
         let token = await Notifications.getExpoPushTokenAsync();
         console.log(token);
+    }
+
+    toggleModal = () => {
+      console.log("1 modal called and it is set to: " + this.state.infoModalVisible);
+      this.setState({
+        infoModalVisible:!this.state.infoModalVisible
+      })
+      console.log("2 modal called and it is set to: " + this.state.infoModalVisible);
     }
 
     render() {
@@ -853,6 +870,36 @@ export default class GoogleMapsScreen extends React.Component {
                   :
                   null}
 
+                  <TouchableHighlight
+                    onPress={() => {
+                      this.toggleModal();
+                    }}>
+                    <Text
+                      style={{fontSize:50, fontWeight:'bold',}}
+                      >Close</Text>
+                  </TouchableHighlight>
+
+                  <Modal
+                  animationType="fade"
+                  transparent={true}
+                  visible={this.state.infoModalVisible}
+                  onRequestClose={() => {
+                    console.log('Modal has been closed.');
+                  }}>
+                  <View style={styles.infoModalOuter}>
+                      <View style={styles.infoModalInner}>
+                              <Text>Info modal</Text>
+                              <TouchableHighlight
+                                onPress={() => {
+                                  this.toggleModal();
+                                }}>
+                                <Text
+                                  style={{fontSize:22, fontWeight:'bold'}}
+                                  >Close</Text>
+                              </TouchableHighlight>
+                      </View>
+                    </View>
+                </Modal>
 
                     <UserInterface
                         CallStartTour={this.toStart.bind(this)}
@@ -906,6 +953,21 @@ const styles = StyleSheet.create({
         width:48,
         height:48
     },
+    infoModalOuter:{
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#00000080',
+        margin:0
+    },
+    infoModalInner:{
+        width: Dimensions.get('window').width * 0.5,
+        height: Dimensions.get('window').height * 0.3,
+        backgroundColor: '#fff',
+        padding: 20
+    }
 
 });
 

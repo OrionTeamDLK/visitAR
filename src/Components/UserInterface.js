@@ -244,7 +244,7 @@ class UserInterface extends Component {
                 transparent={true}
                 visible={this.state.modalVisible}
                 onRequestClose={() => {
-                  Alert.alert('Modal has been closed.');
+                  console.log('Modal has been closed.');
                 }}>
                 <View style={styles.modalOuter}>
                     <View style={styles.modalInner}>
@@ -259,17 +259,7 @@ class UserInterface extends Component {
                             </TouchableHighlight>
                     </View>
                   </View>
-
-
               </Modal>
-
-
-
-
-
-
-
-
 
             </>
         )
@@ -279,19 +269,19 @@ export default withNavigation(UserInterface)
 
 
 const styles = StyleSheet.create({
-modalOuter:{
-flex: 1,
-flexDirection: 'column',
-justifyContent: 'center',
-justifyContent: 'center',
-alignItems: 'center',
-backgroundColor: '#00000080',
-margin:0
-},
-modalInner:{
-width: Dimensions.get('window').width * 0.5,
-height: Dimensions.get('window').height * 0.3,
-backgroundColor: '#fff',
-padding: 20
-}
+    modalOuter:{
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#00000080',
+    margin:0
+    },
+    modalInner:{
+    width: Dimensions.get('window').width * 0.5,
+    height: Dimensions.get('window').height * 0.3,
+    backgroundColor: '#fff',
+    padding: 20
+    }
 });
