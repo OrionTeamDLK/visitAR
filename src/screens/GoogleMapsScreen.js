@@ -547,7 +547,7 @@ export default class GoogleMapsScreen extends React.Component {
              //for each token , check that the closest token is less than 5 meters( for testing i use a larger number)
 
              if(closestToken<1000){
-                 alert("You must be Carlingford town to pick up tokens.")
+                 alert("You must be Carlingford town to pick up tokens. Come on down and see the wonders of Carlingford!")
              }
              else if (closestToken >20000 && this.state.num_of_tokens<=6 )//change closest toke to 20 for release
              {
@@ -598,7 +598,7 @@ export default class GoogleMapsScreen extends React.Component {
                 else{
                     if(this.state.num_of_tokens<6){
                     //nearest_token=("you are " + closestToken + " from the closest token!")
-                    alert("you are " + closestToken + " from the closest token!");
+                    alert("you are " + closestToken + "m from the closest token! They are located at each landmark, can you find it?");
                     }
 
 
