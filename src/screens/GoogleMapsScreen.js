@@ -694,8 +694,8 @@ export default class GoogleMapsScreen extends React.Component {
 
                               resetOnChange={false}
                               apikey={GOOGLE_MAPS_APIKEY}
-                              strokeWidth={2.5}
-                              strokeColor="#4d99e6"
+                              strokeWidth={10}
+                              strokeColor="#20fc03"
                               mode="WALKING"
                               precision="low"
                           />
