@@ -86,6 +86,7 @@ export default class GoogleMapsScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+          infoModalVisible:false,
             latitude: null,
             longitude: null,
             latitudeDelta: 0.007,
@@ -105,8 +106,8 @@ export default class GoogleMapsScreen extends React.Component {
                 nextLocation: 1,
                 landmarks_visited: []
             },
-            num_of_tokens:0,
-            infoModalVisible:false
+            num_of_tokens:0
+
         }
     }
 
@@ -178,11 +179,13 @@ export default class GoogleMapsScreen extends React.Component {
 
                     if (nextLocation != waypoints.length) {
 
+                      this.setState({
+                        infoModalVisible:true
+                      })
 
-                        this.setState({
-                          infoModalVisible:true
-                        })
                         console.log("modal view state 1: " + this.state.infoModalVisible);
+                        console.log("landmark trigered" + waypoints[nextLocation - 1].title);
+
 
                         let date = new Date();
 
@@ -872,28 +875,28 @@ export default class GoogleMapsScreen extends React.Component {
 
                   <TouchableHighlight
                     onPress={() => {
-                      this.toggleModal();
+                      this.setState({infoModalVisible:true});
                     }}>
                     <Text
                       style={{fontSize:50, fontWeight:'bold',}}
                       >Close</Text>
                   </TouchableHighlight>
 
-
-                  {this.state.infoModalVisible?
                     <Modal
                     animationType="fade"
                     transparent={true}
                     visible={this.state.infoModalVisible}
                     onRequestClose={() => {
-                      console.log('Modal has been closed.');
+                    console.log('Modal has been closed.');
                     }}>
                     <View style={styles.infoModalOuter}>
                         <View style={styles.infoModalInner}>
                                 <Text>Info modal</Text>
                                 <TouchableHighlight
                                   onPress={() => {
-                                    this.toggleModal();
+                                    this.setState({
+                                      infoModalVisible:false
+                                    });
                                   }}>
                                   <Text
                                     style={{fontSize:22, fontWeight:'bold'}}
@@ -902,9 +905,6 @@ export default class GoogleMapsScreen extends React.Component {
                         </View>
                       </View>
                   </Modal>
-                     :
-                      null}
-
 
                     <UserInterface
                         CallStartTour={this.toStart.bind(this)}
