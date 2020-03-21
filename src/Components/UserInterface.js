@@ -6,6 +6,7 @@ import { withNavigation } from 'react-navigation';
 import PickUpTokenButton from "../Components/PickUpTokenButton";
 import tokenGame from "../screens/GoogleMapsScreen";
 
+
 HideStartedTourReCenterButton = (props) => {
     if (props.status == 0) {
         return (
@@ -136,11 +137,15 @@ class UserInterface extends Component {
                 num_tokens = {this.props.num_tokens}
                 />*/}
 
+                
+        
 
 
 
 
-            <Image                       
+
+            <Image      
+                                       
             style={{
                  position: "absolute",
                  top: 10,
