@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TouchableOpacity, View, Text, Button, Image } from 'react-native'
+import { TouchableOpacity, View, Text, Button, Image, Modal, TouchableHighlight, Dimensions, StyleSheet } from 'react-native'
 import HelpInfoButton from "../Components/HelpInfoButton"
 import MenuButton from "../Components/MenuButton"
 import { withNavigation } from 'react-navigation';
@@ -29,6 +29,7 @@ HideStartedTourReCenterButton = (props) => {
     }
 
 }
+
 
 ShowEndTourButton = (props) => {
     if (props.status == 1) {
@@ -75,11 +76,16 @@ ShowEndTourButton = (props) => {
 }
 
 
+
+
+
+
 class UserInterface extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
+          modalVisible:false,
             uiState:
                 [{
                     onPress: this.props.CallStartTour,
@@ -103,22 +109,27 @@ class UserInterface extends Component {
                 }]
         }
     }
-
+    setModalVisible = () => {
+      //console.log("modal called and it is set to: " + this.state.modalVisible);
+      this.setState({
+        modalVisible:!this.state.modalVisible
+      })
+    }
 
     render(props) {
         return (
             <>
 
 
-               
-           
+
+
                 <HelpInfoButton style={{
                     position: "absolute",
                     top: 15,
                     alignSelf: 'right'
                 }} navName="Help" />
 
-            
+
 
                 <MenuButton style={{
                     position: "absolute",
@@ -142,22 +153,26 @@ class UserInterface extends Component {
 
 
 
+                <TouchableOpacity
+                  onPress={() => { this.setModalVisible() }}
+                  style={{
+                       position: "absolute",
+                       left:Dimensions.get('window').width * 0.85,
+                       top :180,
+                  }}
+                  >
+                  <Image
+                    source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F1.png?alt=media&token=e1b0139d-769f-4438-8f3a-0e5fe7386c34'}}
+                    style={{
+                       width: 50,
+                       height: 300,
+                       resizeMode: 'stretch'
+                     }}
+                />
+                </TouchableOpacity>
 
 
-            <Image      
-                                       
-            style={{
-                 position: "absolute",
-                 top: 10,
-                 alignSelf: 'right',
-                 left:320,top :150,
-                 width: 50,
-                 height: 300,
-                 resizeMode: 'stretch'
-            }}            
-            source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F1.png?alt=media&token=e1b0139d-769f-4438-8f3a-0e5fe7386c34'}}
-            />
-    
+
 
                 {/* <HideStartedTourReCenterButton status={this.props.status} CallStartTour={this.props.CallStartTour} /> */}
                 <ShowEndTourButton status={this.props.status} endTour={this.props.endTour} />
@@ -227,8 +242,50 @@ class UserInterface extends Component {
                             />}
                     </View>
                 </TouchableOpacity>
+
+                <Modal
+                animationType="fade"
+                transparent={true}
+                visible={this.state.modalVisible}
+                onRequestClose={() => {
+                  console.log('Modal has been closed.');
+                }}>
+                <View style={styles.modalOuter}>
+                    <View style={styles.modalInner}>
+                            <Text>Number of tokens you have collected so far, collect more at each landmark to fill up all the slots</Text>
+                            <TouchableHighlight
+                              onPress={() => {
+                                this.setModalVisible();
+                              }}>
+                              <Text
+                                style={{fontSize:22, fontWeight:'bold'}}
+                                >Close</Text>
+                            </TouchableHighlight>
+                    </View>
+                  </View>
+              </Modal>
+
             </>
         )
     }
 }
 export default withNavigation(UserInterface)
+
+
+const styles = StyleSheet.create({
+    modalOuter:{
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#00000080',
+    margin:0
+    },
+    modalInner:{
+    width: Dimensions.get('window').width * 0.5,
+    height: Dimensions.get('window').height * 0.3,
+    backgroundColor: '#fff',
+    padding: 20
+    }
+});
