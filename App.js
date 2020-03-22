@@ -59,7 +59,7 @@ const navigator = createStackNavigator({
     },
   },
 },{
-  initialRouteName: 'Settings',
+  initialRouteName: 'GMaps',
   defaultNavigationOptions:{
     title:'VisitAR',
     //header:null,
