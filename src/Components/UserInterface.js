@@ -249,7 +249,9 @@ class UserInterface extends Component {
                 <View style={styles.modalOuter}>
                     <View style={styles.modalInner}>
 
-                            <Text style={styles.contentText}>Number of tokens you have collected so far, collect more at each landmark to fill up all the slots</Text>
+                            <Text style={styles.contentText}>
+                                {`Number of tokens you have collected so far.\n\nCollect more at each landmark to fill up all the slots.\n\nThey are denoted by a blue plaque.`}
+                              </Text>
                             <TouchableHighlight
                               onPress={() => {
                                 this.setModalVisible();
@@ -295,8 +297,8 @@ const styles = StyleSheet.create({
     },
     modalInner:{
     width: Dimensions.get('window').width * 0.5,
-    height: Dimensions.get('window').height * 0.3,
-    backgroundColor: '#fff',
+    height: Dimensions.get('window').height * 0.4,
+    backgroundColor: '#EBD5B3',
     padding: 20
   },
   closeButton:{
@@ -307,7 +309,7 @@ const styles = StyleSheet.create({
    fontSize:22
  },
  closeText:{
-   fontSize:19,
+   fontSize:20,
    fontWeight:'bold',
    textDecorationLine:'underline',
    textAlign:'center'}
