@@ -1,42 +1,49 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
+import { StyleSheet, TouchableOpacity, Text, View, Image,Dimensions } from "react-native";
 import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { withNavigation } from 'react-navigation';
 import * as Progress from 'react-native-progress';
 
 const PickUpTokenButton = (props) => {
-    const {top} = props
+
     return (
         <View
         style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            top:top,
-            alignItems: "center"
+          position: "absolute",
+          left:Dimensions.get('window').width * 0.82,
+          top :Dimensions.get('window').height * 0.6
         }}>
         <TouchableOpacity
             onPress={props.pickUpTokenGame}
-            >
-            <View style={{
-                //  backgroundColor: 'none',
-                //  justifyContent: 'center',
-                //  alignItems: 'center',
-                  borderRadius: 120,
-                  borderWidth: 5,
-                  borderColor: "#4c6294",
-                 // width:"100%"
-              }}>
-                <Text style={{ color: "#4c6294", fontSize:35}}>
-                    Pick up Token
-                </Text>
-                </View>
+        >
+            <View data-test="Screen_Recenter_Button"
+                style={{
+                    borderWidth: 0.1,
+                    borderColor: '#e4d9c0',
+                    borderRadius: 75,
+                    overflow: 'hidden',
+                    height: 70,
+                    width: 70,
+                    backgroundColor: '#4c6294',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderBottomWidth: 3,
+                    borderColor: "black"
+                }}>
+                    <Image
+                        style={{ width: 35, height: 35, alignItems: "center", justifyContent: "center" }}
+                        source={require('../../assets/searchIcon.png')}
+                    />
+            </View>
         </TouchableOpacity>
-        
+
+
+{/*}
         <Progress.Bar progress={props.num_tokens / 6} width={200}  height={10}>
         <Text style = {{textAlign:"center"}}>Tokens Collected {props.num_tokens}/ 6</Text>
         </Progress.Bar>
+*/}
         </View>
     );
 
@@ -76,7 +83,7 @@ const PickUpTokenButton = (props) => {
            // width:"100%"
         }}>
             <Text style={{ color: "#4c6294",fontSize: 35, fontWeight: "bold"}}>
-            pick up token              
+            pick up token
             </Text>
         </View>
     </TouchableOpacity>
@@ -132,7 +139,7 @@ const PickUpTokenButton = (props) => {
 export default PickUpTokenButton;
 
 /*<TouchableHighlight
-style={{   
+style={{
          justifyContent: 'center',
 alignItems: 'center',
 height: 60,
@@ -169,7 +176,3 @@ onPress={() => {
 
 
 */
-
-
-
-
