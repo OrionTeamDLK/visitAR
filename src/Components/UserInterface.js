@@ -157,6 +157,8 @@ class UserInterface extends Component {
                        top :Dimensions.get('window').width * 0.38,
                   }}
                   >
+
+                      
                   <Image
                     source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F1.png?alt=media&token=e1b0139d-769f-4438-8f3a-0e5fe7386c34'}}
                     style={{
