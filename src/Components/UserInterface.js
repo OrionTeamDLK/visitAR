@@ -139,17 +139,17 @@ class UserInterface extends Component {
 
 
                 {this.props.status == 0 ?
-                   <PickUpTokenButton top="5%" pickUpTokenGame = {this.props.tokenGame} num_tokens = {this.props.num_tokens}/>
+                   <PickUpTokenButton pickUpTokenGame = {this.props.tokenGame} num_tokens = {this.props.num_tokens}/>
                    :
-                    <PickUpTokenButton top="85%" pickUpTokenGame = {this.props.tokenGame} num_tokens = {this.props.num_tokens}/>}
+                    <PickUpTokenButton pickUpTokenGame = {this.props.tokenGame} num_tokens = {this.props.num_tokens}/>}
                 {/*<PickUpTokenButton
                 top="5%"
                 pickUpTokenGame = {this.props.tokenGame}
                 num_tokens = {this.props.num_tokens}
                 />*/}
 
-                
-        
+
+
 
 
 
@@ -252,15 +252,30 @@ class UserInterface extends Component {
                 }}>
                 <View style={styles.modalOuter}>
                     <View style={styles.modalInner}>
-                            <Text>Number of tokens you have collected so far, collect more at each landmark to fill up all the slots</Text>
+
+                            <Text style={styles.contentText}>Number of tokens you have collected so far, collect more at each landmark to fill up all the slots</Text>
                             <TouchableHighlight
                               onPress={() => {
                                 this.setModalVisible();
                               }}>
                               <Text
-                                style={{fontSize:22, fontWeight:'bold'}}
+                                style={styles.closeText}
                                 >Close</Text>
                             </TouchableHighlight>
+
+
+{/*
+  <TouchableHighlight
+    onPress={() => {
+      this.setModalVisible();
+    }}>
+    <Image
+        style={styles.closButton}
+        source={require('../../assets/closeIcon.png')}
+    />
+  </TouchableHighlight>
+*/}
+
                     </View>
                   </View>
               </Modal>
@@ -287,5 +302,17 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height * 0.3,
     backgroundColor: '#fff',
     padding: 20
-    }
+  },
+  closeButton:{
+    marginTop:50,
+    position:'absolute'
+ },
+ contentText:{
+   fontSize:22
+ },
+ closeText:{
+   fontSize:19,
+   fontWeight:'bold',
+   textDecorationLine:'underline',
+   textAlign:'center'}
 });
