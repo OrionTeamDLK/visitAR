@@ -260,20 +260,6 @@ class UserInterface extends Component {
                                 style={styles.closeText}
                                 >Close</Text>
                             </TouchableHighlight>
-
-
-{/*
-  <TouchableHighlight
-    onPress={() => {
-      this.setModalVisible();
-    }}>
-    <Image
-        style={styles.closButton}
-        source={require('../../assets/closeIcon.png')}
-    />
-  </TouchableHighlight>
-*/}
-
                     </View>
                   </View>
               </Modal>

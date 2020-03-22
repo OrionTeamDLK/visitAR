@@ -1,12 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView  } from "react-native";
 
 
 const AcceptableUsePolicy = (props) => {
     return (
         <View>
-            <Text>Acceptable use policy</Text>
-            <Text>These acceptable use policy ("Acceptable Use Policy", "AUP", "Policy") is an agreement between Mobile Application Developer ("Mobile Application Developer", "us", "we" or "our") and you ("User", "you" or "your"). This Policy sets forth the general guidelines and acceptable and prohibited uses of the VisitAR mobile application and any of its products or services (collectively, "Mobile Application" or "Services").
+            <Text style={styles.titleText}>Acceptable use policy</Text>
+            <ScrollView >
+            <Text>{`These acceptable use policy ("Acceptable Use Policy", "AUP", "Policy") is an agreement between Mobile Application Developer ("Mobile Application Developer", "us", "we" or "our") and you ("User", "you" or "your"). This Policy sets forth the general guidelines and acceptable and prohibited uses of the VisitAR mobile application and any of its products or services (collectively, "Mobile Application" or "Services").
 
                     Prohibited activities and uses
 
@@ -66,7 +67,13 @@ const AcceptableUsePolicy = (props) => {
 
                     If you would like to contact us to understand more about this Policy or wish to contact us concerning any matter relating to it, you may send an email to orionteamdlk@gmail.com
 
-                    This document was last updated on March 21, 2020</Text>
+                    This document was last updated on March 21, 2020
+
+
+
+
+                    `}</Text>
+                    </ScrollView >
         </View>
     );
 };
@@ -75,5 +82,9 @@ export default AcceptableUsePolicy;
 
 
 const styles = StyleSheet.create({
-
+titleText:{
+  textAlign:'center',
+  fontWeight:'bold',
+  fontSize:25
+}
 });

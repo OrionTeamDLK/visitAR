@@ -59,7 +59,7 @@ const navigator = createStackNavigator({
     },
   },
 },{
-  initialRouteName: 'GMaps',
+  initialRouteName: 'Settings',
   defaultNavigationOptions:{
     title:'VisitAR',
     //header:null,
@@ -76,7 +76,7 @@ const navigator = createStackNavigator({
   },
   headerTintColor: '#fff'
   },
-  
+
 });
 
 //Donal commit 15 - 11 - 19
