@@ -119,10 +119,6 @@ class UserInterface extends Component {
     render(props) {
         return (
             <>
-
-
-
-
                 <HelpInfoButton style={{
                     position: "absolute",
                     top: 15,
@@ -158,7 +154,7 @@ class UserInterface extends Component {
                   style={{
                        position: "absolute",
                        left:Dimensions.get('window').width * 0.85,
-                       top :180,
+                       top :Dimensions.get('window').width * 0.38,
                   }}
                   >
                   <Image

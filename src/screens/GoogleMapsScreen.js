@@ -804,7 +804,6 @@ export default class GoogleMapsScreen extends React.Component {
                             <Marker
                                 coordinate={waypoint.location}
                                 key={waypoint.title}
-
                             >
 
                             {waypoint.icon ==="castle" ?

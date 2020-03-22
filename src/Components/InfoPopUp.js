@@ -19,7 +19,7 @@ export default InfoPopUp;
 const styles = StyleSheet.create({
   boxStyle: {
     width:350,
-    height:100
+    height:120
   },
   titleStyle:{
     fontSize: 25,
@@ -27,10 +27,10 @@ const styles = StyleSheet.create({
     fontWeight:"bold"
   },
   contentStyle:{
-    fontSize: 16
+    fontSize: 18
   },
   linkStyle:{
-    fontSize: 14,
+    fontSize: 16,
      textAlign:"center",
      textDecorationLine:'underline'
   },
