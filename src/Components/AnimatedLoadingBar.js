@@ -41,7 +41,7 @@ export default class AnimatedLoadingBar extends React.Component {
         height: Dimensions.get("window").height
       }}
       >
-      <Image source = {require('.../../assets/splash02.png')} style={styles.backgroundImage}/>
+      <Image source = {require('../../assets/splash02.png')} style={styles.backgroundImage}/>
       <Spinner
         color='red'
         style={{
