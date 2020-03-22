@@ -4,7 +4,7 @@ import HelpInfoButton from "../Components/HelpInfoButton"
 import MenuButton from "../Components/MenuButton"
 import { withNavigation } from 'react-navigation';
 import PickUpTokenButton from "../Components/PickUpTokenButton";
-import tokenGame from "../screens/GoogleMapsScreen";
+//import tokenGame from "../screens/GoogleMapsScreen";
 
 
 HideStartedTourReCenterButton = (props) => {
@@ -148,8 +148,8 @@ class UserInterface extends Component {
                 num_tokens = {this.props.num_tokens}
                 />*/}
 
-                
-        
+
+
 
 
 
