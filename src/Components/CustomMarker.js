@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, Text, View,Image } from "react-native";
+import { StyleSheet, TouchableOpacity, Text, View,Image,Dimensions } from "react-native";
 import MapView, {
     Marker,
     Callout
@@ -10,27 +10,33 @@ import MapView, {
 
 const CustomMarker = (props) => {
     return (
-            <Marker
-            coordinate={{
-                latitude:props.latitude,
-                longitude:props.longitude
-            }}
-            key={"current location"}
-            title={props.title}
-            description={props.desc}
-            >
-            <Image source={require('../../assets/mapIcons/vc.png')} style={{height: 64, width:64 }} />
-            </Marker>
+      <View style={styles.boxStyle}>
+      <Text style={styles.titleStyle}>{props.title}</Text>
+      <Text style={styles.contentStyle}>{props.description}</Text>
+      <Image source={require('../../assets/mapIcons/vc.png')}style={{height: 64, width:64 }} />
+      </View>
     );
 };
 
-const styles = StyleSheet.create({
-    button: {
-        //height: (Dimensions.get('window').height/ 3),
-    },
-    iconStyle: {
-        marginHorizontal: 20,
-    }
-});
-
 export default CustomMarker;
+
+const styles = StyleSheet.create({
+  boxStyle: {
+    width:Dimensions.get("window").width*.7,
+    height:Dimensions.get("window").height*.14
+  },
+  titleStyle:{
+    fontSize: 30,
+    textAlign:"center",
+    fontWeight:"bold"
+  },
+  contentStyle:{
+    fontSize: 22,
+    textAlign:"center",
+  },
+  linkStyle:{
+    fontSize: 14,
+     textAlign:"center",
+     textDecorationLine:'underline'
+  },
+});
