@@ -86,7 +86,6 @@ export default class GoogleMapsScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-          infoModalVisible:false,
             latitude: null,
             longitude: null,
             latitudeDelta: 0.007,
@@ -179,13 +178,22 @@ export default class GoogleMapsScreen extends React.Component {
 
                     if (nextLocation != waypoints.length) {
 
-                      this.setState({
-                        infoModalVisible:true
-                      })
+                      const PATTERN = [100, 500,200,600,200,500];
+                      Vibration.vibrate(PATTERN);
 
-                        console.log("modal view state 1: " + this.state.infoModalVisible);
-                        console.log("landmark trigered" + waypoints[nextLocation - 1].title);
-
+                      const title = newState.waypoints[nextLocation - 1].title;
+                      const description = newState.waypoints[nextLocation - 1].description;
+                      // Works on both Android and iOS
+                      Alert.alert(
+                        title,
+                        description.substring(0, 100) + "...",
+                        [
+                          {text: 'View details', onPress: () => this.props.navigation.navigate('Landmark', { landmark: newState.waypoints[nextLocation - 1] })},
+                          {text: '', onPress: () => console.log('')},
+                          {text: 'OK', onPress: () => console.log('OK Pressed')},
+                        ],
+                        {cancelable: false},
+                      );
 
                         let date = new Date();
 
@@ -206,7 +214,22 @@ export default class GoogleMapsScreen extends React.Component {
                     } else {
 
                         {/*put marker auto pop up*/}
-                        this.toggleModal();
+                        const PATTERN = [100, 500,200,600,200,500];
+                        Vibration.vibrate(PATTERN);
+                        const title = newState.waypoints[nextLocation - 1].title;
+                        const description = newState.waypoints[nextLocation - 1].description;
+                        // Works on both Android and iOS
+                        Alert.alert(
+                          title,
+                          description.substring(0, 100) + "...",
+                          [
+                            {text: 'View details', onPress: () => this.props.navigation.navigate('Landmark', { landmark: newState.waypoints[nextLocation - 1] })},
+                            {text: '', onPress: () => console.log('')},
+                            {text: 'OK', onPress: () => console.log('OK Pressed')},
+                          ],
+                          {cancelable: false},
+                        );
+
                         console.log("modal view state 2: " + this.state.infoModalVisible);
                         newState.waypoints[nextLocation - 1].visited = true;
                         newState.tour.landmarks_visited.push(newState.waypoints[nextLocation - 1].id);
@@ -559,7 +582,15 @@ export default class GoogleMapsScreen extends React.Component {
              //for each token , check that the closest token is less than 5 meters( for testing i use a larger number)
 
              if(closestToken<1000){
-                 alert("You must be Carlingford town to pick up tokens. Come on down and see the wonders of Carlingford!")
+                 //alert("You must be Carlingford town to pick up tokens.\nCome on down and see the wonders of Carlingford!")
+                 Alert.alert(
+                   'Token game',
+                   'You must be Carlingford town to pick up tokens.\nCome on down and see the wonders of Carlingford!"',
+                   [
+                     {text: 'OK', onPress: () => console.log('OK Pressed')},
+                   ],
+                   {cancelable: false},
+                 );
              }
              else if (closestToken >20000 && this.state.num_of_tokens<=6 )//change closest toke to 20 for release
              {
@@ -575,7 +606,7 @@ export default class GoogleMapsScreen extends React.Component {
                                   {
                                   token_num++;
                                   }
-      							this.setState({num_of_tokens: token_num});
+      							                     this.setState({num_of_tokens: token_num});
                                   //this.setState({num_of_tokens});
 
                                   var token_number=tokens.indexOf(closestToken);
@@ -585,7 +616,15 @@ export default class GoogleMapsScreen extends React.Component {
                                   else if(token_num==6)
                                   {
                                       Speech.speak('You have found all 6 tokens!');
-                                      alert('you have found all 6 tokens! Congratuations!');
+                                      //alert('you have found all 6 tokens! Congratuations!');
+                                      Alert.alert(
+                                        'Token game',
+                                        'you have found all 6 tokens!\nCongratuations!',
+                                        [
+                                          {text: 'OK', onPress: () => console.log('OK Pressed')},
+                                        ],
+                                        {cancelable: false},
+                                      );
                                   }
 
                                   //reset the token distance to 9999999 (a number that should always be bigger than the rest)and so that it will never be the minimum as above
@@ -609,8 +648,19 @@ export default class GoogleMapsScreen extends React.Component {
 
                 else{
                     if(this.state.num_of_tokens<6){
+                      let tknDistance ="" +  closestToken + "m from the closest token!\nThey are located at each landmark, and marked by a blue plaque, can you find it?";
                     //nearest_token=("you are " + closestToken + " from the closest token!")
-                    alert("you are " + closestToken + "m from the closest token! They are located at each landmark, can you find it?");
+                    //alert("you are " + closestToken + "m from the closest token! They are located at each landmark, can you find it?");
+                    Alert.alert(
+                      "Distance from nearest token",
+                      tknDistance,
+                      [
+                        {text: 'Token game?', onPress: () => this.props.navigation.navigate('Help')},
+                        {text:''},
+                        {text: 'I will go look now!', onPress: () => console.log('YES Pressed')},
+                      ],
+                      {cancelable: false},
+                    );
                     }
 
 
@@ -643,13 +693,7 @@ export default class GoogleMapsScreen extends React.Component {
         console.log(token);
     }
 
-    toggleModal = () => {
-      console.log("1 modal called and it is set to: " + this.state.infoModalVisible);
-      this.setState({
-        infoModalVisible:!this.state.infoModalVisible
-      })
-      console.log("2 modal called and it is set to: " + this.state.infoModalVisible);
-    }
+
 
     render() {
         let {
@@ -729,13 +773,24 @@ export default class GoogleMapsScreen extends React.Component {
 
                         {
                             // start marker for before tour starts
-                            this.state.tour.tourStarted ? null: <CustomMarker
-                            title={'Tour Start Location'}
-                            desc={'Start location for the Historic Carlingford tour!'}
-                            latitude={54.041000}
-                            longitude={-6.185922}/>
+                            this.state.tour.tourStarted ?
+                                      null
+                                      :
+                            <Marker
+                            coordinate={{
+                              latitude:54.041000,
+                              longitude:-6.185922
+                            }}
+                            key={"Visit Carlingford Location"}
+                            >
+                            <Image source={require('../../assets/mapIcons/vc.png')} style={{height: 64, width:64 }} />
+                            <Callout>
+                            <View>
+                              <CustomMarker title="Visit Carlingford" description="Visit Carlingford tourist Office and tour start location" />
+                            </View>
+                            </Callout>
+                            </Marker>
                         }
-
 
                         {tourStarted && waypoints.map((waypoint, index) =>
 
@@ -873,39 +928,6 @@ export default class GoogleMapsScreen extends React.Component {
                   :
                   null}
 
-                  <TouchableHighlight
-                    onPress={() => {
-                      this.setState({infoModalVisible:true});
-                    }}>
-                    <Text
-                      style={{fontSize:50, fontWeight:'bold',}}
-                      >Close</Text>
-                  </TouchableHighlight>
-
-                    <Modal
-                    animationType="fade"
-                    transparent={true}
-                    visible={this.state.infoModalVisible}
-                    onRequestClose={() => {
-                    console.log('Modal has been closed.');
-                    }}>
-                    <View style={styles.infoModalOuter}>
-                        <View style={styles.infoModalInner}>
-                                <Text>Info modal</Text>
-                                <TouchableHighlight
-                                  onPress={() => {
-                                    this.setState({
-                                      infoModalVisible:false
-                                    });
-                                  }}>
-                                  <Text
-                                    style={{fontSize:22, fontWeight:'bold'}}
-                                    >Close</Text>
-                                </TouchableHighlight>
-                        </View>
-                      </View>
-                  </Modal>
-
                     <UserInterface
                         CallStartTour={this.toStart.bind(this)}
                         CallReCenter={this.recenter.bind(this)}
@@ -958,21 +980,7 @@ const styles = StyleSheet.create({
         width:48,
         height:48
     },
-    infoModalOuter:{
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#00000080',
-        margin:0
-    },
-    infoModalInner:{
-        width: Dimensions.get('window').width * 0.5,
-        height: Dimensions.get('window').height * 0.3,
-        backgroundColor: '#fff',
-        padding: 20
-    }
+
 
 });
 
