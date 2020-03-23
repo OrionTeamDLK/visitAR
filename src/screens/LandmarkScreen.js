@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableHighlight,View, Text, StyleSheet, TouchableOpacity, Image, FlatList, Button, Alert, SafeAreaView } from "react-native";
+import { TouchableHighlight,View, Text, StyleSheet, TouchableOpacity, Image, FlatList, Button, Alert, SafeAreaView,ScrollView } from "react-native";
 import * as Speech from 'expo-speech';
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -39,9 +39,11 @@ export default class LandmarkScreen extends React.Component {
 
 
     return (
-      <View>
+      <View style={{flex:1}}>
+
         <Image source={ {uri: image } } style={{width: 500, height: 300}}/>
         <Text style={styles.textTitle}>{title}</Text>
+        <ScrollView style={styles.scroll}>
         <Text style={styles.textContent}>{description}</Text>
         <Text style={styles.textContent}>Lat,Long: ({location.latitude},{location.longitude})</Text>
 
@@ -61,7 +63,7 @@ export default class LandmarkScreen extends React.Component {
         </TouchableOpacity>
         }
         <Text>Play text to speech</Text>
-
+        </ScrollView>
       </View>
     );
   }
@@ -99,5 +101,8 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
       marginHorizontal: 20,
+  },
+  scroll:{
+
   }
 });
