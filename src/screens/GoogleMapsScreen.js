@@ -105,7 +105,9 @@ export default class GoogleMapsScreen extends React.Component {
                 nextLocation: 1,
                 landmarks_visited: []
             },
-            num_of_tokens:0
+            num_of_tokens:0,
+            tokenUpdateVisible:false,
+            tokenCollectVisible:false
 
         }
     }
@@ -581,7 +583,7 @@ export default class GoogleMapsScreen extends React.Component {
 
              //for each token , check that the closest token is less than 5 meters( for testing i use a larger number)
 
-             if(closestToken>7000){
+             if(closestToken<7000){
                  //alert("You must be Carlingford town to pick up tokens.\nCome on down and see the wonders of Carlingford!")
                  Alert.alert(
                    'Token game',
@@ -592,7 +594,7 @@ export default class GoogleMapsScreen extends React.Component {
                    {cancelable: false},
                  );
              }
-             else if (closestToken <20 && this.state.num_of_tokens<=6 )//change closest toke to 20 for release
+             else if (closestToken >20 && this.state.num_of_tokens<=6 )//change closest toke to 20 for release
              {
              //for loop to run through all of the tokens, to see if there is a token that matches the closest token
         				for( var i=0; i<tokens.length; i++)
@@ -611,20 +613,22 @@ export default class GoogleMapsScreen extends React.Component {
 
                                   var token_number=tokens.indexOf(closestToken);
                                   if(this.state.num_of_tokens+1<6 ){
+                                  this.setModalVisible("tokenUpdate");
                                   Speech.speak('congratulations! you have found ' + (this.state.num_of_tokens + 1) +' of 6 tokens');
                                   }
                                   else if(token_num==6)
                                   {
-                                      Speech.speak('You have found all 6 tokens!');
+                                      Speech.speak('You have found all 6 tokens!, Congratulations!');
+                                      this.setModalVisible("tokenCollect");
                                       //alert('you have found all 6 tokens! Congratuations!');
-                                      Alert.alert(
+                                    /*  Alert.alert(
                                         'Token game',
                                         'you have found all 6 tokens!\nCongratuations!',
                                         [
                                           {text: 'OK', onPress: () => console.log('OK Pressed')},
                                         ],
                                         {cancelable: false},
-                                      );
+                                      );*/
                                   }
 
                                   //reset the token distance to 9999999 (a number that should always be bigger than the rest)and so that it will never be the minimum as above
@@ -693,6 +697,20 @@ export default class GoogleMapsScreen extends React.Component {
         console.log(token);
     }
 
+    setModalVisible = (term) => {
+      //console.log("modal called and it is set to: " + this.state.modalVisible);
+      term==="tokenUpdate"?
+      this.setState({
+        tokenUpdateVisible:!this.state.tokenUpdateVisible
+      })
+      :
+      term==="tokenCollect"?
+      this.setState({
+        tokenCollectVisible:!this.state.tokenCollectVisible
+      })
+      :
+      null
+    }
 
 
     render() {
@@ -937,6 +955,62 @@ export default class GoogleMapsScreen extends React.Component {
                         num_tokens = {this.state.num_of_tokens}
                         //distnaceBetweenLocationAndTokens={this.distnaceBetweenLocationAndTokens.bind(this)}
                     />
+
+
+                    <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={this.state.tokenUpdateVisible}
+                    onRequestClose={() => {
+                      console.log('Modal has been closed.');
+                    }}>
+                    <View style={styles.modalOuter}>
+                        <View style={styles.modalInner}>
+                        <Text style={styles.contentText}>
+                                    You have collected a token!
+                                  </Text>
+                                  <Text style={styles.contentText}>
+                                              {this.state.num_of_tokens} out of 6 so far!
+                                            </Text>
+                                <TouchableHighlight
+                                  onPress={() => {
+                                    this.setModalVisible("tokenUpdate");
+                                  }}>
+                                  <Text
+                                    style={styles.closeText}
+                                    >Close</Text>
+                                </TouchableHighlight>
+                        </View>
+                      </View>
+                  </Modal>
+
+                  <Modal
+                  animationType="fade"
+                  transparent={true}
+                  visible={this.state.tokenCollectVisible}
+                  onRequestClose={() => {
+                    console.log('Modal has been closed.');
+                  }}>
+                  <View style={styles.modalOuter}>
+                      <View style={styles.modalInner}>
+                         <Text style={styles.contentText}>
+                                  You have found all {this.state.num_of_tokens} tokens.
+                        </Text>
+                        <Text style={styles.contentText}>
+                                 Congratulations!
+                        </Text>
+                        <TouchableHighlight
+                               onPress={() => {
+                                  this.setModalVisible("tokenCollect");
+                                }}>
+                                <Text
+                                  style={styles.closeText}
+                                  >Close</Text>
+                              </TouchableHighlight>
+                      </View>
+                    </View>
+                </Modal>
+
                 </View >
                 :
                 <View style={{ flex: 1, alignItems: 'center' }} data-test="Alt_View">
@@ -979,8 +1053,32 @@ const styles = StyleSheet.create({
         width:48,
         height:48
     },
-
-
+    modalOuter:{
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#00000080',
+    margin:0
+    },
+    modalInner:{
+    width: Dimensions.get('window').width * 0.5,
+    height: Dimensions.get('window').height * 0.21,
+    backgroundColor: '#EBD5B3',
+    padding: 20,
+    borderRadius:15
+  },
+  closeText:{
+    fontSize:30,
+    fontWeight:'bold',
+    textDecorationLine:'underline',
+    textAlign:'center',
+    marginTop:5
+  },
+ contentText:{
+   fontSize:22
+ },
 });
 
 const mapStyle = [{
