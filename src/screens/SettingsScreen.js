@@ -52,7 +52,7 @@ export default class SettingsScreen extends React.Component {
               <View
                   style={styles.viewStyle}>
                 <Text style={styles.buttonText}>
-                Accpetable use policy
+                Acceptable Use Policy
                 </Text>
               </View>
           </TouchableOpacity>
@@ -63,7 +63,7 @@ export default class SettingsScreen extends React.Component {
               <View
                   style={styles.viewStyle}>
                   <Text style={styles.buttonText}>
-                  Terms and Conditions
+                  Terms & Conditions
                   </Text>
               </View>
           </TouchableOpacity>
@@ -183,7 +183,9 @@ const styles = StyleSheet.create({
   width: Dimensions.get('window').width * .95,
   height: Dimensions.get('window').height * .95,
   backgroundColor: '#EBD5B3',
-  padding: 20
+  padding: 20,
+  overflow:'hidden',
+  borderRadius: 20,
 },
 closeButton:{
   marginTop:50,
@@ -196,11 +198,12 @@ closeText:{
  fontSize:20,
  fontWeight:'bold',
  textDecorationLine:'underline',
- textAlign:'center'},
+ textAlign:'center'
+},
  viewStyle:{
    borderWidth: 0.1,
    borderColor: '#e4d9c0',
-   borderRadius: 10,
+   borderRadius: 20,
    overflow: 'hidden',
    height: 70,
    width: Dimensions.get('window').width * .8,
