@@ -157,14 +157,30 @@ class UserInterface extends Component {
                        top :Dimensions.get('window').width * 0.38,
                   }}
                   >
-                  <Image
-                    source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F1.png?alt=media&token=e1b0139d-769f-4438-8f3a-0e5fe7386c34'}}
-                    style={{
-                       width: 50,
-                       height: 300,
-                       resizeMode: 'stretch'
-                     }}
-                />
+                {this.props.num_tokens == 0 ?
+                   <Image
+                   source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F0.png?alt=media&token=7500e3f5-8505-48ca-a056-59ca911e7a01'}}
+                   style={{
+                      width: 50,
+                      height: 300,
+                      resizeMode: 'stretch'
+                    }}
+               />                              
+               :
+                   <Image
+                   source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F1.png?alt=media&token=e1b0139d-769f-4438-8f3a-0e5fe7386c34'}}
+                   style={{
+                      width: 50,
+                      height: 300,
+                      resizeMode: 'stretch'
+                    }}
+               />
+
+               }
+
+
+
+
                 </TouchableOpacity>
 
 
