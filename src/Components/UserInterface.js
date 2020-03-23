@@ -157,30 +157,148 @@ class UserInterface extends Component {
                        top :Dimensions.get('window').width * 0.38,
                   }}
                   >
-                {this.props.num_tokens == 0 ?
-                   <Image
-                   source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F0.png?alt=media&token=7500e3f5-8505-48ca-a056-59ca911e7a01'}}
-                   style={{
-                      width: 50,
-                      height: 300,
-                      resizeMode: 'stretch'
-                    }}
-               />                              
-               :
-                   <Image
-                   source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F1.png?alt=media&token=e1b0139d-769f-4438-8f3a-0e5fe7386c34'}}
-                   style={{
-                      width: 50,
-                      height: 300,
-                      resizeMode: 'stretch'
-                    }}
-               />
+                      
 
-               }
+                      {this.props.num_tokens >= 1 ?
+                             
+                             <Image
+                             source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F1token.png?alt=media&token=50480003-e1ab-4cb5-8b0d-b3e2d8ec3fa0'}}
+                             style={{
+                                width: 40,
+                                height: 40,
+                                bottom: 30,
+                                resizeMode: 'stretch'
+                              }}
+                         />    
+                               :
+                               <Image
+                               source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2Ftokenunfilled.png?alt=media&token=b12218fd-e80f-4586-90d5-1063249aa834'}}
+                               style={{
+                                  width: 40,
+                                  height: 40,
+                                  bottom: 30,
+                                  resizeMode: 'stretch'
+                                }}
+                           /> 
+                               
+                            }
 
 
+                            {this.props.num_tokens >= 2 ?
+                             
+                             <Image
+                             source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F1token.png?alt=media&token=50480003-e1ab-4cb5-8b0d-b3e2d8ec3fa0'}}
+                             style={{
+                                width: 40,
+                                height: 40,
+                                bottom: 20,
+                                resizeMode: 'stretch'
+                              }}
+                         />    
+                               :
+                               <Image
+                               source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2Ftokenunfilled.png?alt=media&token=b12218fd-e80f-4586-90d5-1063249aa834'}}
+                               style={{
+                                  width: 40,
+                                  height: 40,
+                                  bottom: 20,
+                                  resizeMode: 'stretch'
+                                }}
+                           /> 
+                               
+                            }
 
+                            
+{this.props.num_tokens >= 3 ?
+                             
+                             <Image
+                             source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F1token.png?alt=media&token=50480003-e1ab-4cb5-8b0d-b3e2d8ec3fa0'}}
+                             style={{
+                                width: 40,
+                                height: 40,
+                                bottom: 10,
+                                resizeMode: 'stretch'
+                              }}
+                         />    
+                               :
+                               <Image
+                               source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2Ftokenunfilled.png?alt=media&token=b12218fd-e80f-4586-90d5-1063249aa834'}}
+                               style={{
+                                  width: 40,
+                                  height: 40,
+                                  bottom: 10,
+                                  resizeMode: 'stretch'
+                                }}
+                           /> 
+                               
+                            }
+                            {this.props.num_tokens >= 4 ?                             
+                             <Image
+                             source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F1token.png?alt=media&token=50480003-e1ab-4cb5-8b0d-b3e2d8ec3fa0'}}
+                             style={{
+                                width: 40,
+                                height: 40,
+                                bottom: 0,
+                                resizeMode: 'stretch'
+                              }}
+                         />    
+                               :
+                               <Image
+                               source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2Ftokenunfilled.png?alt=media&token=b12218fd-e80f-4586-90d5-1063249aa834'}}
+                               style={{
+                                  width: 40,
+                                  height: 40,
+                                  bottom: 0,
+                                  resizeMode: 'stretch'
+                                }}
+                           /> 
+                               
+                            }
+                             {this.props.num_tokens >= 5 ?                             
+                             <Image
+                             source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F1token.png?alt=media&token=50480003-e1ab-4cb5-8b0d-b3e2d8ec3fa0'}}
+                             style={{
+                                width: 40,
+                                height: 40,
+                                bottom: -10,
+                                resizeMode: 'stretch'
+                              }}
+                         />    
+                               :
+                               <Image
+                               source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2Ftokenunfilled.png?alt=media&token=b12218fd-e80f-4586-90d5-1063249aa834'}}
+                               style={{
+                                  width: 40,
+                                  height: 40,
+                                  bottom: -10,
+                                  resizeMode: 'stretch'
+                                }}
+                           /> 
+                               
+                            }
 
+                            {this.props.num_tokens >= 6 ?                             
+                             <Image
+                             source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F1token.png?alt=media&token=50480003-e1ab-4cb5-8b0d-b3e2d8ec3fa0'}}
+                             style={{
+                                width: 40,
+                                height: 40,
+                                bottom: -20,
+                                resizeMode: 'stretch'
+                              }}
+                         />    
+                               :
+                               <Image
+                               source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2Ftokenunfilled.png?alt=media&token=b12218fd-e80f-4586-90d5-1063249aa834'}}
+                               style={{
+                                  width: 40,
+                                  height: 40,
+                                  bottom: -20,
+                                  resizeMode: 'stretch'
+                                }}
+                           /> 
+                               
+                            }
                 </TouchableOpacity>
 
 
