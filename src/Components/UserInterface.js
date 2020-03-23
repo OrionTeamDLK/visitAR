@@ -285,7 +285,8 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width * 0.5,
     height: Dimensions.get('window').height * 0.4,
     backgroundColor: '#EBD5B3',
-    padding: 20
+    padding: 20,
+    borderRadius:15
   },
   closeButton:{
     marginTop:50,
