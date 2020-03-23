@@ -180,8 +180,8 @@ const styles = StyleSheet.create({
   margin:0
   },
   modalInner:{
-  width: Dimensions.get('window').width * .95,
-  height: Dimensions.get('window').height * .95,
+  width: Dimensions.get('window').width * .9,
+  height: Dimensions.get('window').height * .9,
   backgroundColor: '#EBD5B3',
   padding: 20,
   overflow:'hidden',
