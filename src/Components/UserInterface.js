@@ -40,7 +40,7 @@ ShowEndTourButton = (props) => {
                // onPress={() => props.navigation.navigate("EndTourScreen")}
                 style={{
                     position: "absolute",
-                    top:"3%",
+                    top: Dimensions.get('window').height * 0.85,
                     alignItems: "center"
                 }}
                // onPress={()=>{alert("this is the end screen")}}
@@ -157,10 +157,10 @@ class UserInterface extends Component {
                        top :Dimensions.get('window').width * 0.38,
                   }}
                   >
-                      
+
 
                       {this.props.num_tokens >= 1 ?
-                             
+
                              <Image
                              source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F1token.png?alt=media&token=50480003-e1ab-4cb5-8b0d-b3e2d8ec3fa0'}}
                              style={{
@@ -169,7 +169,7 @@ class UserInterface extends Component {
                                 bottom: 30,
                                 resizeMode: 'stretch'
                               }}
-                         />    
+                         />
                                :
                                <Image
                                source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2Ftokenunfilled.png?alt=media&token=b12218fd-e80f-4586-90d5-1063249aa834'}}
@@ -179,13 +179,13 @@ class UserInterface extends Component {
                                   bottom: 30,
                                   resizeMode: 'stretch'
                                 }}
-                           /> 
-                               
+                           />
+
                             }
 
 
                             {this.props.num_tokens >= 2 ?
-                             
+
                              <Image
                              source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F1token.png?alt=media&token=50480003-e1ab-4cb5-8b0d-b3e2d8ec3fa0'}}
                              style={{
@@ -194,7 +194,7 @@ class UserInterface extends Component {
                                 bottom: 20,
                                 resizeMode: 'stretch'
                               }}
-                         />    
+                         />
                                :
                                <Image
                                source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2Ftokenunfilled.png?alt=media&token=b12218fd-e80f-4586-90d5-1063249aa834'}}
@@ -204,13 +204,13 @@ class UserInterface extends Component {
                                   bottom: 20,
                                   resizeMode: 'stretch'
                                 }}
-                           /> 
-                               
+                           />
+
                             }
 
-                            
-{this.props.num_tokens >= 3 ?
-                             
+
+                            {this.props.num_tokens >= 3 ?
+
                              <Image
                              source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F1token.png?alt=media&token=50480003-e1ab-4cb5-8b0d-b3e2d8ec3fa0'}}
                              style={{
@@ -219,7 +219,7 @@ class UserInterface extends Component {
                                 bottom: 10,
                                 resizeMode: 'stretch'
                               }}
-                         />    
+                         />
                                :
                                <Image
                                source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2Ftokenunfilled.png?alt=media&token=b12218fd-e80f-4586-90d5-1063249aa834'}}
@@ -229,10 +229,10 @@ class UserInterface extends Component {
                                   bottom: 10,
                                   resizeMode: 'stretch'
                                 }}
-                           /> 
-                               
+                           />
+
                             }
-                            {this.props.num_tokens >= 4 ?                             
+                            {this.props.num_tokens >= 4 ?
                              <Image
                              source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F1token.png?alt=media&token=50480003-e1ab-4cb5-8b0d-b3e2d8ec3fa0'}}
                              style={{
@@ -241,7 +241,7 @@ class UserInterface extends Component {
                                 bottom: 0,
                                 resizeMode: 'stretch'
                               }}
-                         />    
+                         />
                                :
                                <Image
                                source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2Ftokenunfilled.png?alt=media&token=b12218fd-e80f-4586-90d5-1063249aa834'}}
@@ -251,10 +251,10 @@ class UserInterface extends Component {
                                   bottom: 0,
                                   resizeMode: 'stretch'
                                 }}
-                           /> 
-                               
+                           />
+
                             }
-                             {this.props.num_tokens >= 5 ?                             
+                             {this.props.num_tokens >= 5 ?
                              <Image
                              source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F1token.png?alt=media&token=50480003-e1ab-4cb5-8b0d-b3e2d8ec3fa0'}}
                              style={{
@@ -263,7 +263,7 @@ class UserInterface extends Component {
                                 bottom: -10,
                                 resizeMode: 'stretch'
                               }}
-                         />    
+                         />
                                :
                                <Image
                                source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2Ftokenunfilled.png?alt=media&token=b12218fd-e80f-4586-90d5-1063249aa834'}}
@@ -273,11 +273,11 @@ class UserInterface extends Component {
                                   bottom: -10,
                                   resizeMode: 'stretch'
                                 }}
-                           /> 
-                               
+                           />
+
                             }
 
-                            {this.props.num_tokens >= 6 ?                             
+                            {this.props.num_tokens >= 6 ?
                              <Image
                              source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2F1token.png?alt=media&token=50480003-e1ab-4cb5-8b0d-b3e2d8ec3fa0'}}
                              style={{
@@ -286,7 +286,7 @@ class UserInterface extends Component {
                                 bottom: -20,
                                 resizeMode: 'stretch'
                               }}
-                         />    
+                         />
                                :
                                <Image
                                source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2Ftokenunfilled.png?alt=media&token=b12218fd-e80f-4586-90d5-1063249aa834'}}
@@ -296,8 +296,8 @@ class UserInterface extends Component {
                                   bottom: -20,
                                   resizeMode: 'stretch'
                                 }}
-                           /> 
-                               
+                           />
+
                             }
                 </TouchableOpacity>
 
@@ -433,5 +433,12 @@ const styles = StyleSheet.create({
    fontSize:20,
    fontWeight:'bold',
    textDecorationLine:'underline',
-   textAlign:'center'}
+   textAlign:'center'
+ },
+   tokenImg:{
+     width: 40,
+     height: 40,
+     bottom: -20,
+     resizeMode: 'stretch'
+   }
 });
