@@ -107,7 +107,8 @@ export default class GoogleMapsScreen extends React.Component {
             },
             num_of_tokens:0,
             tokenUpdateVisible:false,
-            tokenCollectVisible:false
+            tokenCollectVisible:false,
+            tokenInfoVisible:false
 
         }
     }
@@ -583,18 +584,20 @@ export default class GoogleMapsScreen extends React.Component {
 
              //for each token , check that the closest token is less than 5 meters( for testing i use a larger number)
 
-             if(closestToken<7000){
+             if(closestToken>7000){
                  //alert("You must be Carlingford town to pick up tokens.\nCome on down and see the wonders of Carlingford!")
-                 Alert.alert(
+                /* Alert.alert(
                    'Token game',
                    'You must be Carlingford town to pick up tokens.\nCome on down and see the wonders of Carlingford!"',
                    [
                      {text: 'OK', onPress: () => console.log('OK Pressed')},
                    ],
                    {cancelable: false},
-                 );
+                 );*/
+
+                 this.setModalVisible("tokenInfoVisible");
              }
-             else if (closestToken >20 && this.state.num_of_tokens<=6 )//change closest toke to 20 for release
+             else if (closestToken <=20 && this.state.num_of_tokens<=6 )//change closest toke to 20 for release
              {
              //for loop to run through all of the tokens, to see if there is a token that matches the closest token
         				for( var i=0; i<tokens.length; i++)
@@ -707,6 +710,11 @@ export default class GoogleMapsScreen extends React.Component {
       term==="tokenCollect"?
       this.setState({
         tokenCollectVisible:!this.state.tokenCollectVisible
+      })
+      :
+      term==="tokenInfoVisible"?
+      this.setState({
+        tokenInfoVisible:!this.state.tokenInfoVisible
       })
       :
       null
@@ -1011,6 +1019,32 @@ export default class GoogleMapsScreen extends React.Component {
                     </View>
                 </Modal>
 
+                <Modal
+                animationType="fade"
+                transparent={true}
+                visible={this.state.tokenInfoVisible}
+                onRequestClose={() => {
+                  console.log('Modal has been closed.');
+                }}>
+                <View style={styles.modalOuter}>
+                    <View style={styles.modalInnerInfo}>
+                       <Text style={styles.contentText}>
+                            You must be Carlingford town to pick up tokens.{"\n"}Come on down and see the wonders of Carlingford!
+                      </Text>
+
+                      <TouchableHighlight
+                             onPress={() => {
+                                this.setModalVisible("tokenInfoVisible");
+                              }}>
+                              <Text
+                                style={styles.closeText}
+                                >Close</Text>
+                            </TouchableHighlight>
+                    </View>
+                  </View>
+              </Modal>
+
+
                 </View >
                 :
                 <View style={{ flex: 1, alignItems: 'center' }} data-test="Alt_View">
@@ -1069,6 +1103,13 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius:15
   },
+  modalInnerInfo:{
+    width: Dimensions.get('window').width * 0.5,
+    height: Dimensions.get('window').height * 0.33,
+    backgroundColor: '#EBD5B3',
+    padding: 20,
+    borderRadius:15
+  },
   closeText:{
     fontSize:30,
     fontWeight:'bold',
@@ -1077,7 +1118,8 @@ const styles = StyleSheet.create({
     marginTop:5
   },
  contentText:{
-   fontSize:22
+   fontSize:22,
+   textAlign:'center'
  },
 });
 
