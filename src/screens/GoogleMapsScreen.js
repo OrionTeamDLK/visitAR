@@ -190,7 +190,7 @@ export default class GoogleMapsScreen extends React.Component {
                         [
                           {text: 'View details', onPress: () => this.props.navigation.navigate('Landmark', { landmark: newState.waypoints[nextLocation - 1] })},
                           {text: '', onPress: () => console.log('')},
-                          {text: 'OK', onPress: () => console.log('OK Pressed')},
+                          {text: 'Continue Tour', onPress: () => console.log('Continue Tour Pressed')},
                         ],
                         {cancelable: false},
                       );
@@ -225,7 +225,7 @@ export default class GoogleMapsScreen extends React.Component {
                           [
                             {text: 'View details', onPress: () => this.props.navigation.navigate('Landmark', { landmark: newState.waypoints[nextLocation - 1] })},
                             {text: '', onPress: () => console.log('')},
-                            {text: 'OK', onPress: () => console.log('OK Pressed')},
+                            {text: 'Continue Tour', onPress: () => console.log('Continue Tour Pressed')},
                           ],
                           {cancelable: false},
                         );
