@@ -804,8 +804,8 @@ export default class GoogleMapsScreen extends React.Component {
                                       :
                             <Marker
                             coordinate={{
-                              latitude:54.041000,
-                              longitude:-6.185922
+                              latitude: 54.040721,
+                              longitude: -6.185286
                             }}
                             key={"Visit Carlingford Location"}
                             >
