@@ -40,8 +40,19 @@ ShowEndTourButton = (props) => {
                // onPress={() => props.navigation.navigate("EndTourScreen")}
                 style={{
                     position: "absolute",
-                    top: Dimensions.get('window').height * 0.85,
-                    alignItems: "center"
+                    top: Dimensions.get('window').height * 0.83,
+                    alignItems: "center",
+                    borderWidth: 0.1,
+                    borderColor: '#e4d9c0',
+                    borderRadius: 75,
+                    overflow: 'hidden',
+                    height: 120,
+                    width: 120,
+                    backgroundColor: '#d63315',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderBottomWidth: 3,
+                    borderColor: "black"
                 }}
                // onPress={()=>{alert("this is the end screen")}}
                 //      || props.navigation.navigate("EndTourScreen")
@@ -51,17 +62,13 @@ ShowEndTourButton = (props) => {
                     style={{
                         height: 60,
                         width: 150,
-                        backgroundColor: '#4c6294',
+                        backgroundColor: '#d63315',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        borderRadius: 1,
-                        borderWidth: 0.1,
-                        borderBottomWidth: 3,
-                        borderColor: "black"
                     }}>
                     <Text style={{
                         color: "white",
-                        fontSize: 30,
+                        fontSize: 25,
                         textAlign: "center"
                     }}>End Tour
                 </Text>
@@ -89,8 +96,8 @@ class UserInterface extends Component {
             uiState:
                 [{
                     onPress: this.props.CallStartTour,
-                    height: 150,
-                    width: 150,
+                    height: 120,
+                    width: 120,
                     color: "white",
                     text: "Start Tour",
                     fontsize: 25,
@@ -336,10 +343,10 @@ class UserInterface extends Component {
                     </View>
                 </TouchableOpacity>
 
-
+                {/*start tour button sharing props with recenter*/}
                 <TouchableOpacity style={{
                     position: "absolute",
-                    bottom: 30,
+                    top:Dimensions.get('window').height * 0.83,
                     alignSelf: 'center',
                     right: this.state.uiState[this.props.status].right
                 }}
@@ -365,7 +372,8 @@ class UserInterface extends Component {
                             <Text style={{
                                 color: this.state.uiState[this.props.status].color,
                                 fontSize: this.state.uiState[this.props.status].fontsize
-                            }}>{this.state.uiState[this.props.status].text}</Text> :
+                            }}>{this.state.uiState[this.props.status].text}</Text>
+                            :
                             <Image
                                 style={{ width: 40, height: 40, alignItems: "center", justifyContent: "center" }}
                                 source={require('../../assets/recenter.png')}
@@ -417,7 +425,7 @@ const styles = StyleSheet.create({
     },
     modalInner:{
     width: Dimensions.get('window').width * 0.5,
-    height: Dimensions.get('window').height * 0.4,
+    height: Dimensions.get('window').height * 0.42,
     backgroundColor: '#EBD5B3',
     padding: 20,
     borderRadius:15
@@ -430,10 +438,11 @@ const styles = StyleSheet.create({
    fontSize:22
  },
  closeText:{
-   fontSize:20,
+   fontSize:30,
    fontWeight:'bold',
    textDecorationLine:'underline',
-   textAlign:'center'
+   textAlign:'center',
+   marginTop:5
  },
    tokenImg:{
      width: 40,
