@@ -2,6 +2,8 @@ import React from "react";
 import { TouchableHighlight,View, Text, StyleSheet, TouchableOpacity, Image, FlatList, Button, Alert, SafeAreaView,ScrollView } from "react-native";
 import * as Speech from 'expo-speech';
 import Icon from "react-native-vector-icons/FontAwesome";
+import LinkButton from "../Components/LinkButton";
+
 
 
 
@@ -40,13 +42,11 @@ export default class LandmarkScreen extends React.Component {
 
     return (
       <View style={{flex:1}}>
-
         <Image source={ {uri: image } } style={{width: 500, height: 300}}/>
         <Text style={styles.textTitle}>{title}</Text>
         <ScrollView style={styles.scroll}>
         <Text style={styles.textContent}>{description}</Text>
-        <Text style={styles.textContent}>Lat,Long: ({location.latitude},{location.longitude})</Text>
-
+        <View style={styles.centerView}>
         {this.state.played?
           <TouchableOpacity
             style={styles.buttonStop}
@@ -62,7 +62,9 @@ export default class LandmarkScreen extends React.Component {
           <Icon name='play' size={30} color="white" style={styles.iconStyle} />
         </TouchableOpacity>
         }
-        <Text>Play text to speech</Text>
+        <Text style={{marginBottom:5}}>Play text to speech</Text>
+        <LinkButton icon="link" name="More Info" link='https://visitcarlingford.com/' />
+        </View>
         </ScrollView>
       </View>
     );
@@ -102,7 +104,9 @@ const styles = StyleSheet.create({
   iconStyle: {
       marginHorizontal: 20,
   },
-  scroll:{
-
+  centerView:{
+    marginTop:10,
+    alignItems:'center',
+    justifyContent:'center'
   }
 });
