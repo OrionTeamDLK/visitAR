@@ -108,7 +108,8 @@ export default class GoogleMapsScreen extends React.Component {
             num_of_tokens:0,
             tokenUpdateVisible:false,
             tokenCollectVisible:false,
-            tokenInfoVisible:false
+            tokenInfoVisible:false,
+            distanceTokenModal:false
 
         }
     }
@@ -656,9 +657,10 @@ export default class GoogleMapsScreen extends React.Component {
                 else{
                     if(this.state.num_of_tokens<6){
                       let tknDistance ="" +  closestToken + "m from the closest token!\nThey are located at each landmark, and marked by a blue plaque, can you find it?";
+                      this.setModalVisible("distanceTokenModal");
                     //nearest_token=("you are " + closestToken + " from the closest token!")
                     //alert("you are " + closestToken + "m from the closest token! They are located at each landmark, can you find it?");
-                    Alert.alert(
+      /*              Alert.alert(
                       "Distance from nearest token",
                       tknDistance,
                       [
@@ -668,6 +670,7 @@ export default class GoogleMapsScreen extends React.Component {
                       ],
                       {cancelable: false},
                     );
+                    */
                     }
 
 
@@ -715,6 +718,11 @@ export default class GoogleMapsScreen extends React.Component {
       term==="tokenInfoVisible"?
       this.setState({
         tokenInfoVisible:!this.state.tokenInfoVisible
+      })
+      :
+      term==="distanceTokenModal"?
+      this.setState({
+        distanceTokenModal:!this.state.distanceTokenModal
       })
       :
       null
@@ -1044,6 +1052,39 @@ export default class GoogleMapsScreen extends React.Component {
                   </View>
               </Modal>
 
+              <Modal
+              animationType="fade"
+              transparent={true}
+              visible={this.state.distanceTokenModal}
+              onRequestClose={() => {
+                console.log('Modal has been closed.');
+              }}>
+              <View style={styles.modalOuter}>
+                  <View style={styles.modalInnerInfoDistance}>
+                     <Text style={styles.contentTextDistance}>
+                          {closestToken}m{"\n"}From the nearest token!{"\n"}They are located at each landmark, and marked by a blue plaque.{"\n"} can you find it?
+                    </Text>
+
+              <TouchableHighlight
+                     onPress={() => {
+                        this.setModalVisible("distanceTokenModal");this.props.navigation.navigate('Help');
+                      }}>
+                      <Text
+                        style={styles.closeText}
+                        >Token?</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                           onPress={() => {
+                              this.setModalVisible("distanceTokenModal");
+                            }}>
+                            <Text
+                              style={styles.closeText}
+                              >Close</Text>
+                          </TouchableHighlight>
+                  </View>
+                </View>
+            </Modal>
+
 
                 </View >
                 :
@@ -1110,6 +1151,13 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius:15
   },
+  modalInnerInfoDistance:{
+    width: Dimensions.get('window').width * 0.5,
+    height: Dimensions.get('window').height * 0.46,
+    backgroundColor: '#EBD5B3',
+    padding: 20,
+    borderRadius:15
+  },
   closeText:{
     fontSize:30,
     fontWeight:'bold',
@@ -1121,6 +1169,10 @@ const styles = StyleSheet.create({
    fontSize:22,
    textAlign:'center'
  },
+ contentTextDistance:{
+   fontSize:24,
+   textAlign:'center'
+ }
 });
 
 const mapStyle = [{
