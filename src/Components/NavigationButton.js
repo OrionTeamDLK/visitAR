@@ -21,6 +21,7 @@ const NavigationButton = (props) => {
             <View>
                 <Text style={props.styleText}>
                     <Icon name={props.icon} size={30} color="white" style={styles.iconStyle} />
+                    <Text>  </Text>
                     {props.title}
                 </Text>
             </View>
