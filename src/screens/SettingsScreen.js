@@ -6,6 +6,7 @@ import PrivacyPolicy from '../Components/PrivacyPolicy';
 import TermsAndConditions from '../Components/TermsAndConditions';
 import { withNavigation } from 'react-navigation';
 
+
 export default class SettingsScreen extends React.Component {
   componentWillMount() {
 
@@ -46,8 +47,10 @@ export default class SettingsScreen extends React.Component {
     return (
       <View data-test = "SettingsScreen_view" style={{ flex: 1 }}>
           <Text style={{fontWeight:"bold", fontSize: 30, textAlign:'center'}}data-test = "SettingsScreen_text">Settings screen</Text>
+            <View style={styles.buttonsView}>
           <TouchableOpacity
-                  onPress={() => { this.setModalVisible("acceptanceDisplay") }}
+          style={styles.touchStyle}
+          onPress={() => { this.setModalVisible("acceptanceDisplay") }}
           >
               <View
                   style={styles.viewStyle}>
@@ -58,6 +61,7 @@ export default class SettingsScreen extends React.Component {
           </TouchableOpacity>
 
           <TouchableOpacity
+                  style={styles.touchStyle}
                   onPress={() => { this.setModalVisible("termsDisplay") }}
           >
               <View
@@ -69,6 +73,7 @@ export default class SettingsScreen extends React.Component {
           </TouchableOpacity>
 
           <TouchableOpacity
+                  style={styles.touchStyle}
                   onPress={() => { this.setModalVisible("privacyDisplay") }}
           >
               <View
@@ -80,6 +85,7 @@ export default class SettingsScreen extends React.Component {
           </TouchableOpacity>
 
           <TouchableOpacity
+              style={styles.touchStyle}
               onPress={ () => console.log("permissions pressed")}
           >
               <View
@@ -161,7 +167,7 @@ export default class SettingsScreen extends React.Component {
           </View>
         </View>
     </Modal>
-
+</View>
 
       </View>
     );
@@ -215,7 +221,16 @@ closeText:{
  },
  buttonText:{
    color:"white",
-   fontSize:22}
+   fontSize:22},
+buttonsView:
+ {
+     marginTop:10,
+     alignItems:'center',
+     justifyContent:'center'
+   },
+   touchStyle:{
+     marginBottom:5
+   }
 
 });
 
