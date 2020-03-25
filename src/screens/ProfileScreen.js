@@ -3,7 +3,8 @@ import {
     View,
     Text,
     StyleSheet,
-    Image
+    Image,
+    YellowBox
 } from "react-native";
 import {
     JWT_SECRET
@@ -20,13 +21,17 @@ import {
     Label
 } from "native-base";
 import * as firebase from "firebase";
+import Spinner from "react-native-loading-spinner-overlay";
 import JWT from "expo-jwt";
 import Axios from "axios";
-import {getUserID} from '../../Utils/user_func';
-import styles from "../styles/ProfileScreenStyle";
+import {getUserID, getUser} from '../../Utils/user_func';
+import {styles} from "../styles/ProfileScreenStyle";
 
+console.ignoredYellowBox = [
+  "Setting a timer for a long period of time"];
 
 export default class ProfileScreen extends React.Component {
+
 
   constructor(props) {
     super(props);
@@ -43,21 +48,24 @@ export default class ProfileScreen extends React.Component {
 
   componentWillMount() {
 
-    const user = firebase.auth().currentUser;
+    this.showLoader();
 
-    console.log(getUserID);
+    const user = getUser();
 
-    // if (user != null) {
-    //   const ref = firebase.storage().ref(user.photoURL);
-    //   const url = ref.getDownloadURL().then( result => this.setState({ image: result }) );
-    //
-    //   this.setState({ name: user.displayName });
-    //   this.setState({ email: user.email });
-    //   this.setState({ emailVerified: user.emailVerified });
-    //   this.setState({ photoURL: user.photoURL });
-    //   this.setState({ uid: user.uid });
-    // }
+    if(user){
 
+      let {uid, email, displayName, photoURL} = user;
+      const ref = firebase.storage().ref(user.photoURL);
+
+      ref.getDownloadURL().then( (url) => {
+        this.setState({ uid });
+        this.setState({ email });
+        this.setState({ displayName });
+        this.setState({ image: url });
+      })
+    }
+
+      console.log(this.state);
     // let key = "XVSHDsTWogsEszjM";
     // let access_token = JWT.encode({ foo: "bar" }, key);
     // axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
@@ -88,8 +96,17 @@ export default class ProfileScreen extends React.Component {
     //     //console.log(result)
     //     this.setState({ history: results.data });
     // })
+
+    this.hideLoader();
   }
 
+  showLoader = () => {
+    this.setState({ showLoader: true });
+  };
+
+  hideLoader = () => {
+    this.setState({ showLoader: false });
+  };
 
   logOut = () => {
     firebase
@@ -108,12 +125,12 @@ export default class ProfileScreen extends React.Component {
 
 
   render() {
-    //let { image, favourite, history } = this.state;
+    let { image, history } = this.state;
 
     return (
       <Container style={styles.container}>
         <Content>
-
+          <Image source={{ uri: image }} style={styles.profile_pic} />
           <Text>Name: {this.state.name && null}</Text>
           <Text>Email: {this.state.email}</Text>
          {/* <Text>User ID: {this.state.uid}</Text>*/}
@@ -145,6 +162,13 @@ export default class ProfileScreen extends React.Component {
             navName="EditProfile"
           />
         </Content>
+        {this.state.showLoader && (
+          <Spinner
+            visible={true}
+            textContent={"Loading..."}
+            textStyle={styles.spinnerTextStyle}
+          />
+        )}
       </Container>
     );
   }

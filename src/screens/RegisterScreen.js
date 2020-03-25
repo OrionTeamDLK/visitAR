@@ -19,7 +19,8 @@ import * as firebase from "firebase";
 import * as ImagePicker from "expo-image-picker";
 import Spinner from "react-native-loading-spinner-overlay";
 import JWT from "expo-jwt";
-import axios from "axios";
+import Axios from "axios";
+import {styles} from "../styles/RegisterScreenStyle";
 
 export default class Register extends React.Component {
   constructor(props) {
@@ -102,6 +103,7 @@ export default class Register extends React.Component {
       const userData = await firebase
         .auth()
         .createUserWithEmailAndPassword(email, password);
+
       if (this.state.image != null) {
         const res = await this.uploadImage(
           this.state.image,
@@ -120,7 +122,7 @@ export default class Register extends React.Component {
 
       await userData.user.sendEmailVerification();
 
-      const res = await axios({
+      const res = await Axios({
         method: "post",
         url: "https://orion-visitar.herokuapp.com/user",
         data: {
@@ -215,27 +217,3 @@ export default class Register extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    justifyContent: "center"
-  },
-  Button: {
-    marginTop: 10
-  },
-  profile_pic: {
-    width: 200,
-    height: 200,
-    borderRadius: 200 / 2,
-    overflow: "hidden",
-    borderWidth: 3,
-    borderColor: "black",
-    marginTop: 10,
-    marginBottom: 10
-  },
-  spinnerTextStyle: {
-    color: "#FFF"
-  }
-});

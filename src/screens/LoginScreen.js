@@ -5,11 +5,19 @@ import RegisterButton from '../Components/RegisterButton';
 import * as Google from 'expo-google-app-auth';
 import { Container, Content, Header, Form, Input, Item, Button, Label } from 'native-base';
 import * as firebase from 'firebase';
+import {getUserID, isUserLoggedIn} from '../../Utils/user_func';
 
 export default class Login extends React.Component {
 
+  componentWillMount() {
+    if(isUserLoggedIn()){
+      this.props.navigation.navigate('Profile');
+    }
+  }
+
   constructor(props){
     super(props)
+
 
     this.state = ({
       email: '',
@@ -17,6 +25,7 @@ export default class Login extends React.Component {
     })
 
   }
+
 
   isUserEqual = (googleUser, firebaseUser) => {
     if (firebaseUser) {
@@ -150,7 +159,7 @@ export default class Login extends React.Component {
           <Text style={{ color: '#fff' }}>Log in with Google</Text>
           </Button>
     </Form>*/}
-        
+
         <View style={{borderTopColor: "#d9d9d9",
     borderTopWidth: 2}} />
 
