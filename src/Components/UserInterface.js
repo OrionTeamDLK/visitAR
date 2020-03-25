@@ -48,7 +48,7 @@ ShowEndTourButton = (props) => {
                     overflow: 'hidden',
                     height: 120,
                     width: 120,
-                    backgroundColor: '#d63315',
+                    backgroundColor: '#cf1717',
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderBottomWidth: 3,
@@ -62,7 +62,7 @@ ShowEndTourButton = (props) => {
                     style={{
                         height: 60,
                         width: 150,
-                        backgroundColor: '#d63315',
+                        backgroundColor: '#cf1717',
                         justifyContent: 'center',
                         alignItems: 'center',
                     }}>

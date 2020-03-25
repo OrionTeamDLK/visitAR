@@ -357,8 +357,8 @@ export default class GoogleMapsScreen extends React.Component {
         this.mapView.animateToRegion({
             latitude,
             longitude,
-            latitudeDelta,
-            longitudeDelta
+            latitudeDelta: 0.002,
+            longitudeDelta: 0.002,
         }, 1000)
         if (coordCheck == true) {setTimeout(this.hideLoader, 2000);}
     }
@@ -792,7 +792,7 @@ export default class GoogleMapsScreen extends React.Component {
                               resetOnChange={false}
                               apikey={GOOGLE_MAPS_APIKEY}
                               strokeWidth={10}
-                              strokeColor="#20fc03"
+                              strokeColor="#cf1717"
                               mode="WALKING"
                               precision="low"
                           />
@@ -816,12 +816,12 @@ export default class GoogleMapsScreen extends React.Component {
                             }}
                             key={"Visit Carlingford Location"}
                             >
-                            <Image source={require('../../assets/mapIcons/vc.png')} style={{height: 64, width:64 }} />
-                            <Callout>
-                            <View>
-                              <CustomMarker title="Visit Carlingford" description="Visit Carlingford tourist Office and tour start location" />
-                            </View>
-                            </Callout>
+                          <Image source={require('../../assets/mapIcons/vc.png')} style={{height: 64, width:64 }} />
+                              <Callout>
+                              <View>
+                                <CustomMarker title="Visit Carlingford" description="Visit Carlingford tourist Office and tour start location" />
+                              </View>
+                              </Callout>
                             </Marker>
                         }
 
