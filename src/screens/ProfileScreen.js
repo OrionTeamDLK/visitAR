@@ -6,9 +6,6 @@ import {
     Image,
     YellowBox
 } from "react-native";
-import {
-    JWT_SECRET
-} from "../../config/config.js"
 import NavigationButton from "../Components/NavigationButton";
 import {
     Container,
@@ -26,6 +23,8 @@ import JWT from "expo-jwt";
 import Axios from "axios";
 import {getUserID, getUser} from '../../Utils/user_func';
 import {styles} from "../styles/ProfileScreenStyle";
+import {AsyncStorage} from 'react-native';
+
 
 console.ignoredYellowBox = [
   "Setting a timer for a long period of time"];
@@ -46,7 +45,7 @@ export default class ProfileScreen extends React.Component {
     })
   }
 
-  componentWillMount() {
+  async componentWillMount() {
 
     this.showLoader();
 
@@ -65,12 +64,10 @@ export default class ProfileScreen extends React.Component {
       })
     }
 
-      console.log(this.state);
-    // let key = "XVSHDsTWogsEszjM";
-    // let access_token = JWT.encode({ foo: "bar" }, key);
-    // axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
-    //
-    // axios({
+    const access_token = await AsyncStorage.getItem('JWT');
+    Axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
+//
+// axios({
     //   method: "get",
     //   url: `https://orion-visitar.herokuapp.com/favourite?uid=${user.uid}`
     // }).then( (results) => {

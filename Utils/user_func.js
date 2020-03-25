@@ -9,9 +9,9 @@ const initializeAuth = async () => {
     url: 'https://orion-visitar.herokuapp.com/auth'
   });
 
-  console.log(`Token: ${token}`);
+  console.log(`Token: ${result.data}`);
 
-  await storeToken(token);
+  await storeToken(result.data);
 }
 
 storeToken = async (token) => {

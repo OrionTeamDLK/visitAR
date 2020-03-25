@@ -1,8 +1,5 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
-import {
-    JWT_SECRET
-} from "../../config/config.js"
 import NavigationButton from "../Components/NavigationButton";
 import AnimatedLoadingBar from "../Components/AnimatedLoadingBar";
 import {
@@ -21,14 +18,12 @@ import Spinner from "react-native-loading-spinner-overlay";
 import JWT from "expo-jwt";
 import Axios from "axios";
 import {styles} from "../styles/RegisterScreenStyle";
+import {AsyncStorage} from 'react-native';
 
 export default class Register extends React.Component {
   constructor(props) {
     super(props);
     this.signUpUser = this.signUpUser.bind(this);
-
-    let access_token = JWT.encode({ foo: "bar" }, JWT_SECRET);
-    Axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
 
     this.state = {
       email: "",
@@ -41,7 +36,9 @@ export default class Register extends React.Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const access_token = await AsyncStorage.getItem('JWT');
+    Axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
     this.getPermissionAsync();
   }
 
@@ -67,11 +64,15 @@ export default class Register extends React.Component {
   };
 
   getPermissionAsync = async () => {
-    if (Constants.platform.ios) {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      if (status !== "granted") {
-        alert("Sorry, we need camera roll permissions to make this work!");
+    try {
+      if (Constants.platform.ios) {
+        const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
       }
+    } catch (e) {
+      console.log(e);
     }
   };
 

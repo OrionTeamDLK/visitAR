@@ -18,8 +18,7 @@ import {
 } from "react-native";
 
 import {
-    GOOGLE_MAPS_APIKEY,
-    JWT_SECRET
+    GOOGLE_MAPS_APIKEY
 } from "../../config/config.js"
 import NavigationButton from "../Components/NavigationButton";
 import AnimatedLoadingBar from "../Components/AnimatedLoadingBar"
@@ -54,7 +53,7 @@ import PickUpTokenButton from "../Components/PickUpTokenButton";
 import { Notifications } from 'expo';
 import {getUserID} from '../../Utils/user_func';
 import Images from'../../assets/images';
-
+import {AsyncStorage} from 'react-native';
 
 
 
@@ -130,7 +129,7 @@ export default class GoogleMapsScreen extends React.Component {
         //   }
         // }
         //set Axios Request Auth Header with JWT Token
-        let access_token = JWT.encode({foo:"bar"}, JWT_SECRET);
+        const access_token = await AsyncStorage.getItem('JWT');
         Axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
 
         //Declaring a variable, status. to ask for permission for location services.

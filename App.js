@@ -15,6 +15,7 @@ import ArTestScreen from './src/screens/ArTestScreen';
 import LandmarkScreen from './src/screens/LandmarkScreen';
 import EndTourScreen from './src/screens/TourEndScreen';
 import * as firebase from 'firebase';
+import {initializeAuth} from './Utils/user_func';
 //import EndTourScreen from './src/screens/TourEndScreen';
 
 
@@ -31,6 +32,8 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+
+initializeAuth();
 
 
 const navigator = createStackNavigator({
