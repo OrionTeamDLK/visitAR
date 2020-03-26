@@ -23,7 +23,7 @@ export default CustomMarker;
 const styles = StyleSheet.create({
   boxStyle: {
     width:Dimensions.get("window").width*.7,
-    height:Dimensions.get("window").height*.14
+    height:Dimensions.get("window").height*.16
   },
   titleStyle:{
     fontSize: 30,
