@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
 },
 modalInnerPermissions:{
 width: Dimensions.get('window').width * .7,
-height: Dimensions.get('window').height * .2,
+height: Dimensions.get('window').height * .35,
 backgroundColor: '#EBD5B3',
 padding: 20,
 overflow:'hidden',
