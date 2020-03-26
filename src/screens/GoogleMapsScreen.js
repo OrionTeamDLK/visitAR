@@ -357,8 +357,8 @@ export default class GoogleMapsScreen extends React.Component {
         this.mapView.animateToRegion({
             latitude,
             longitude,
-            latitudeDelta: 0.002,
-            longitudeDelta: 0.002,
+            latitudeDelta,
+            longitudeDelta
         }, 1000)
         if (coordCheck == true) {setTimeout(this.hideLoader, 2000);}
     }
@@ -470,7 +470,8 @@ export default class GoogleMapsScreen extends React.Component {
         navigator.geolocation.getCurrentPosition(
             position => {
                 //comparring my current geo location with the location of the tokens in Carlingford.
-              if(tokens[0]!=99999999){
+              //spout token
+                if(tokens[0]!=99999999){
                 tokens[0] = getPreciseDistance(
 
                 { latitude: position.coords.latitude, longitude: position.coords.longitude },
@@ -479,7 +480,7 @@ export default class GoogleMapsScreen extends React.Component {
               this.setState({token1});
 
                }
-
+            //stone head
                if(tokens[1]!=99999999){
                 tokens[1] = getPreciseDistance(
 
@@ -489,7 +490,8 @@ export default class GoogleMapsScreen extends React.Component {
                this.setState({token2});
 
                }
-
+               //token that is not on the route (birthplace of darcey magee)
+              
                if(tokens[2]!=99999999){
                 tokens[2] = getPreciseDistance(
 
@@ -499,7 +501,8 @@ export default class GoogleMapsScreen extends React.Component {
               this.setState({token3});
 
                }
-
+              
+               //abbey
                if(tokens[3]!=99999999){
                 tokens[3] = getPreciseDistance(
 
@@ -510,6 +513,7 @@ export default class GoogleMapsScreen extends React.Component {
 
                }
 
+               //heritage ceentre
                if(tokens[4]!=99999999){
                 tokens[4] = getPreciseDistance(
 
@@ -519,7 +523,7 @@ export default class GoogleMapsScreen extends React.Component {
               this.setState({token5});
 
                }
-
+                //town gaol
                if(tokens[5]!=99999999){
                 tokens[5] = getPreciseDistance(
 
@@ -529,6 +533,7 @@ export default class GoogleMapsScreen extends React.Component {
               this.setState({token6});
 
                }
+               //the mint
 
                if(tokens[6]!=99999999){
                 tokens[6] = getPreciseDistance(
@@ -539,7 +544,7 @@ export default class GoogleMapsScreen extends React.Component {
               this.setState({token7});
 
                }
-
+               //taffes castle
                if(tokens[7]!=99999999){
                 tokens[7] = getPreciseDistance(
 
@@ -554,7 +559,10 @@ export default class GoogleMapsScreen extends React.Component {
                 tokens[8] = getPreciseDistance(
 
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
-                  { latitude: 54.04028, longitude:-6.184787}
+                  //test value close to my house(emma)
+                 // { latitude: 54.191527, longitude:-6.399936} 
+                 
+                  { latitude: 54.038969, longitude:-6.185382}
                 );
               this.setState({token8});
 
@@ -597,7 +605,7 @@ export default class GoogleMapsScreen extends React.Component {
 
                  this.setModalVisible("tokenInfoVisible");
              }
-             else if (closestToken <=20 && this.state.num_of_tokens<=6 )//change closest toke to 20 for release
+             else if (closestToken <=20 && this.state.num_of_tokens<=6 )//change closest toke to <=20 for release
              {
              //for loop to run through all of the tokens, to see if there is a token that matches the closest token
         				for( var i=0; i<tokens.length; i++)
@@ -792,7 +800,7 @@ export default class GoogleMapsScreen extends React.Component {
                               resetOnChange={false}
                               apikey={GOOGLE_MAPS_APIKEY}
                               strokeWidth={10}
-                              strokeColor="#cf1717"
+                              strokeColor="#20fc03"
                               mode="WALKING"
                               precision="low"
                           />
@@ -816,12 +824,12 @@ export default class GoogleMapsScreen extends React.Component {
                             }}
                             key={"Visit Carlingford Location"}
                             >
-                          <Image source={require('../../assets/mapIcons/vc.png')} style={{height: 64, width:64 }} />
-                              <Callout>
-                              <View>
-                                <CustomMarker title="Visit Carlingford" description="Visit Carlingford tourist Office and tour start location" />
-                              </View>
-                              </Callout>
+                            <Image source={require('../../assets/mapIcons/vc.png')} style={{height: 64, width:64 }} />
+                            <Callout>
+                            <View>
+                              <CustomMarker title="Visit Carlingford" description="Visit Carlingford tourist Office and tour start location" />
+                            </View>
+                            </Callout>
                             </Marker>
                         }
 
@@ -1138,7 +1146,7 @@ const styles = StyleSheet.create({
     },
     modalInner:{
     width: Dimensions.get('window').width * 0.8,
-    height: Dimensions.get('window').height * 0.6,
+    height: Dimensions.get('window').height * 0.2,
     backgroundColor: '#EBD5B3',
     padding: 20,
     borderRadius:15
@@ -1151,8 +1159,8 @@ const styles = StyleSheet.create({
     borderRadius:15
   },
   modalInnerInfoDistance:{
-    width: Dimensions.get('window').width * 0.5,
-    height: Dimensions.get('window').height * 0.46,
+    width: Dimensions.get('window').width * 0.8,
+    height: Dimensions.get('window').height * 0.4,
     backgroundColor: '#EBD5B3',
     padding: 20,
     borderRadius:15

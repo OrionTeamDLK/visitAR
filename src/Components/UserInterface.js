@@ -392,7 +392,7 @@ class UserInterface extends Component {
                     <View style={styles.modalInner}>
                    
                             <Text style={styles.contentText}>
-                                {`Number of tokens you have collected so far.\n\nCollect more at each landmark to fill up all the slots.\n\nThey are denoted by a blue plaque as shown below.`}
+                                {`Number of tokens you have collected so far.\n\nCollect tokens at each blue information plaque to fill up all the slots.\n\nThey are denoted by a blue plaque as shown below.`}
                               </Text>
                               <Image
                              source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2FIMG_3736%5B2193%5D.jpg?alt=media&token=f4c4a3b8-3a51-45bb-a2a1-5b2c48afc504'}}
