@@ -48,7 +48,7 @@ ShowEndTourButton = (props) => {
                     overflow: 'hidden',
                     height: 120,
                     width: 120,
-                    backgroundColor: '#d63315',
+                    backgroundColor: '#cf1717',
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderBottomWidth: 3,
@@ -62,7 +62,7 @@ ShowEndTourButton = (props) => {
                     style={{
                         height: 60,
                         width: 150,
-                        backgroundColor: '#d63315',
+                        backgroundColor: '#cf1717',
                         justifyContent: 'center',
                         alignItems: 'center',
                     }}>
@@ -390,10 +390,14 @@ class UserInterface extends Component {
                 }}>
                 <View style={styles.modalOuter}>
                     <View style={styles.modalInner}>
-
+                   
                             <Text style={styles.contentText}>
-                                {`Number of tokens you have collected so far.\n\nCollect more at each landmark to fill up all the slots.\n\nThey are denoted by a blue plaque.`}
+                                {`Number of tokens you have collected so far.\n\nCollect tokens at each blue information plaque to fill up all the slots.\n\nThey are denoted by a blue plaque as shown below.`}
                               </Text>
+                              <Image
+                             source={{uri:'https://firebasestorage.googleapis.com/v0/b/orion-57b76.appspot.com/o/tokens%2FIMG_3736%5B2193%5D.jpg?alt=media&token=f4c4a3b8-3a51-45bb-a2a1-5b2c48afc504'}}
+                             style={styles.tokenImg}
+                         />
                             <TouchableHighlight
                               onPress={() => {
                                 this.setModalVisible();
@@ -424,8 +428,8 @@ const styles = StyleSheet.create({
     margin:0
     },
     modalInner:{
-    width: Dimensions.get('window').width * 0.5,
-    height: Dimensions.get('window').height * 0.42,
+    width: Dimensions.get('window').width * 0.8,
+    height: Dimensions.get('window').height * .6,
     backgroundColor: '#EBD5B3',
     padding: 20,
     borderRadius:15
@@ -445,9 +449,15 @@ const styles = StyleSheet.create({
    marginTop:5
  },
    tokenImg:{
-     width: 40,
-     height: 40,
-     bottom: -20,
+     width: 160,
+     height: 160,
+     left: 60,
      resizeMode: 'stretch'
-   }
+   },
+   tokenIcon:{
+    width: 40,
+    height: 40,
+ 
+    resizeMode: 'stretch'
+  }
 });

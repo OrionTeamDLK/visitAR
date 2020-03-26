@@ -40,6 +40,11 @@ export default class SettingsScreen extends React.Component {
       termsDisplay:!this.state.termsDisplay
     })
     :null
+    term==="permissionsDisplay"?
+    this.setState({
+      permissionsDisplay:!this.state.permissionsDisplay
+    })
+    :null
   }
 
 
@@ -86,7 +91,8 @@ export default class SettingsScreen extends React.Component {
 
           <TouchableOpacity
               style={styles.touchStyle}
-              onPress={ () => console.log("permissions pressed")}
+
+              onPress={() => { this.setModalVisible("permissionsDisplay") }}
           >
               <View
                   style={styles.viewStyle}>
@@ -167,6 +173,29 @@ export default class SettingsScreen extends React.Component {
           </View>
         </View>
     </Modal>
+
+    <Modal
+    animationType="fade"
+    transparent={true}
+    visible={this.state.permissionsDisplay}
+    onRequestClose={() => {
+      console.log('Modal has been closed.');
+    }}>
+    <View style={styles.modalOuter}>
+        <View style={styles.modalInnerPermissions}>
+                <TouchableHighlight
+                  onPress={() => {
+                    this.setModalVisible("permissionsDisplay");
+                  }}>
+                  <Text
+                    style={styles.closeText}
+                    >Close</Text>
+                </TouchableHighlight>
+                <Text style={{fontSize:23, fontWeight:'bold', textAlign:'center'}}>Permissions requested</Text>
+                <Text style={{fontSize:18, textAlign:'center'}}>Location - so we know where you are to direct you along the tour route.</Text>
+        </View>
+      </View>
+  </Modal>
 </View>
 
       </View>
@@ -192,6 +221,14 @@ const styles = StyleSheet.create({
   padding: 20,
   overflow:'hidden',
   borderRadius: 20,
+},
+modalInnerPermissions:{
+width: Dimensions.get('window').width * .7,
+height: Dimensions.get('window').height * .2,
+backgroundColor: '#EBD5B3',
+padding: 20,
+overflow:'hidden',
+borderRadius: 20,
 },
 closeButton:{
   marginTop:50,
