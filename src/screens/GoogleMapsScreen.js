@@ -54,7 +54,6 @@ import { Notifications } from 'expo';
 import {getUserID} from '../../Utils/user_func';
 import Images from'../../assets/images';
 import {AsyncStorage} from 'react-native';
-import {initializeAuth} from '../../Utils/user_func';
 
 var closestToken;
 var num_of_tokens = 0;
@@ -111,20 +110,6 @@ export default class GoogleMapsScreen extends React.Component {
         }
     }
 
-    async componentWillMount() {
-      // let access_token = await AsyncStorage.getItem('JWT');
-      // if(access_token === null){
-      //   initializeAuth();
-      //   access_token = await AsyncStorage.getItem('JWT');
-      // }
-      // Axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
-      // console.log("ACCSESS TOKEN: " + access_token);
-
-
-
-
-    }
-
     async componentDidMount() {
 
         const result = await Axios({
@@ -133,7 +118,7 @@ export default class GoogleMapsScreen extends React.Component {
         });
 
         Axios.defaults.headers.common["Authorization"] = `Bearer ${result.data}`;
-
+        await AsyncStorage.setItem('JWT',result.data);
 
         this.registerForPushNotifications();
 
@@ -529,7 +514,7 @@ export default class GoogleMapsScreen extends React.Component {
 
                }
                //token that is not on the route (birthplace of darcey magee)
-              
+
                if(tokens[2]!=99999999){
                 tokens[2] = getPreciseDistance(
 
@@ -539,7 +524,7 @@ export default class GoogleMapsScreen extends React.Component {
               this.setState({token3});
 
                }
-              
+
                //abbey
                if(tokens[3]!=99999999){
                 tokens[3] = getPreciseDistance(
@@ -598,8 +583,8 @@ export default class GoogleMapsScreen extends React.Component {
 
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
                   //test value close to my house(emma)
-                 // { latitude: 54.191527, longitude:-6.399936} 
-                 
+                 // { latitude: 54.191527, longitude:-6.399936}
+
                   { latitude: 54.038969, longitude:-6.185382}
                 );
               this.setState({token8});
