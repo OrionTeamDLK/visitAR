@@ -54,9 +54,7 @@ import { Notifications } from 'expo';
 import {getUserID} from '../../Utils/user_func';
 import Images from'../../assets/images';
 import {AsyncStorage} from 'react-native';
-
-
-
+import {initializeAuth} from '../../Utils/user_func';
 
 var closestToken;
 var num_of_tokens = 0;
@@ -113,24 +111,32 @@ export default class GoogleMapsScreen extends React.Component {
         }
     }
 
+    async componentWillMount() {
+      // let access_token = await AsyncStorage.getItem('JWT');
+      // if(access_token === null){
+      //   initializeAuth();
+      //   access_token = await AsyncStorage.getItem('JWT');
+      // }
+      // Axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
+      // console.log("ACCSESS TOKEN: " + access_token);
+
+
+
+
+    }
+
     async componentDidMount() {
+
+        const result = await Axios({
+          method: "get",
+          url: 'https://orion-visitar.herokuapp.com/auth'
+        });
+
+        Axios.defaults.headers.common["Authorization"] = `Bearer ${result.data}`;
+
+
         this.registerForPushNotifications();
 
-        // const encodeBody = {};
-        //
-        // const uid = getUserID();
-        // if(uid!=null){
-        //   encodeBody = {
-        //     "uid": uid
-        //   }
-        // } else {
-        //   encodeBody = {
-        //     "uid": null
-        //   }
-        // }
-        //set Axios Request Auth Header with JWT Token
-        const access_token = await AsyncStorage.getItem('JWT');
-        Axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
 
         //Declaring a variable, status. to ask for permission for location services.
         let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -154,6 +160,31 @@ export default class GoogleMapsScreen extends React.Component {
         this.setTokens();
 
         this.getWaypoints();
+
+        try {
+          const HAS_LAUNCHED = 'hasLaunched';
+          const OPEN_HELP = 'open_help';
+
+          const res = await AsyncStorage.getItem(HAS_LAUNCHED
+          );
+
+          if(res === null){
+            AsyncStorage.setItem(OPEN_HELP, 'true');
+            AsyncStorage.setItem(HAS_LAUNCHED, 'true');
+          } else {
+            AsyncStorage.setItem(OPEN_HELP, 'false');
+          }
+
+          const open_help = await AsyncStorage.getItem(OPEN_HELP);
+          console.log(open_help);
+          if(open_help === 'true'){
+            this.props.navigation.navigate('Help')
+          }
+
+        } catch (e) {
+          console.log(e);
+        }
+
 
         Location.watchPositionAsync(LOCATION_SETTINGS, location => {
 
@@ -255,6 +286,17 @@ export default class GoogleMapsScreen extends React.Component {
 
     }
 
+    getAsyncData = async (key) => {
+        try {
+          const value = await AsyncStorage.getItem(key);
+          if (value !== null) {
+            return value;
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
     setCurrentLocToCarlingford = () => {
 
         const latitudeCarlingford= 54.041000
@@ -268,12 +310,11 @@ export default class GoogleMapsScreen extends React.Component {
         }
 
 
-        console.log("Continuing")
-
         this.setState({
-            latitude: latitudeCarlingford,
-            longitude: longitudeCarlingford
+          latitude: latitudeCarlingford,
+          longitude: longitudeCarlingford
         });
+
         clearTimeout(timer);
         this.hideLoader();
         //wait timer
@@ -292,14 +333,11 @@ export default class GoogleMapsScreen extends React.Component {
     }
 
     setCurrentLocation = async () => {
-        console.log('alert')
         let location = await Location.getCurrentPositionAsync({});
-        console.log(location)
         this.setState({
             latitude: location.coords.latitude,
             longitude: location.coords.longitude
         })
-        console.log(`User position Lat,Long : ${this.state.latitude},${this.state.longitude}`)
     };
 
     getWaypoints = async () => {
