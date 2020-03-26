@@ -529,7 +529,7 @@ export default class GoogleMapsScreen extends React.Component {
 
                }
                //token that is not on the route (birthplace of darcey magee)
-              
+
                if(tokens[2]!=99999999){
                 tokens[2] = getPreciseDistance(
 
@@ -539,7 +539,7 @@ export default class GoogleMapsScreen extends React.Component {
               this.setState({token3});
 
                }
-              
+
                //abbey
                if(tokens[3]!=99999999){
                 tokens[3] = getPreciseDistance(
@@ -598,8 +598,8 @@ export default class GoogleMapsScreen extends React.Component {
 
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
                   //test value close to my house(emma)
-                 // { latitude: 54.191527, longitude:-6.399936} 
-                 
+                 // { latitude: 54.191527, longitude:-6.399936}
+
                   { latitude: 54.038969, longitude:-6.185382}
                 );
               this.setState({token8});
@@ -838,7 +838,7 @@ export default class GoogleMapsScreen extends React.Component {
                               resetOnChange={false}
                               apikey={GOOGLE_MAPS_APIKEY}
                               strokeWidth={10}
-                              strokeColor="#20fc03"
+                              strokeColor="#cf1717"
                               mode="WALKING"
                               precision="low"
                           />
