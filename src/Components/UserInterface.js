@@ -429,7 +429,7 @@ const styles = StyleSheet.create({
     },
     modalInner:{
     width: Dimensions.get('window').width * 0.8,
-    height: Dimensions.get('window').height * 0.5,
+    height: Dimensions.get('window').height * .6,
     backgroundColor: '#EBD5B3',
     padding: 20,
     borderRadius:15
@@ -449,9 +449,9 @@ const styles = StyleSheet.create({
    marginTop:5
  },
    tokenImg:{
-     width: 100,
-     height: 100,
-     left: 70,
+     width: 160,
+     height: 160,
+     left: 60,
      resizeMode: 'stretch'
    },
    tokenIcon:{

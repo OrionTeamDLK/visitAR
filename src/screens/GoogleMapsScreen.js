@@ -1137,15 +1137,15 @@ const styles = StyleSheet.create({
     margin:0
     },
     modalInner:{
-    width: Dimensions.get('window').width * 0.5,
-    height: Dimensions.get('window').height * 0.21,
+    width: Dimensions.get('window').width * 0.8,
+    height: Dimensions.get('window').height * 0.6,
     backgroundColor: '#EBD5B3',
     padding: 20,
     borderRadius:15
   },
   modalInnerInfo:{
-    width: Dimensions.get('window').width * 0.5,
-    height: Dimensions.get('window').height * 0.33,
+    width: Dimensions.get('window').width * 0.8,
+    height: Dimensions.get('window').height  * 0.25,
     backgroundColor: '#EBD5B3',
     padding: 20,
     borderRadius:15
