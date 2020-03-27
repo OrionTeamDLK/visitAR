@@ -161,7 +161,6 @@ export default class GoogleMapsScreen extends React.Component {
           }
 
           const open_help = await AsyncStorage.getItem(OPEN_HELP);
-          console.log(open_help);
           if(open_help === 'true'){
             this.props.navigation.navigate('Help')
           }
@@ -188,6 +187,13 @@ export default class GoogleMapsScreen extends React.Component {
             if (waypoints != null && tourStarted) {
 
                 let distance = getDistance(location.coords, waypoints[nextLocation - 1].location);
+
+                if (tourStarted) {
+                    let tourCopy = { ...this.state.tour }
+                    tourCopy.disToLandmark = distance;
+                    this.setState({ tour: tourCopy })
+                }
+
                 //console.log(distance);
 
                 if ((distance < 20) && (waypoints[nextLocation - 1].id == nextLocation) && (!waypoints[nextLocation - 1].visited)) {
@@ -259,7 +265,12 @@ export default class GoogleMapsScreen extends React.Component {
             }
 
             let tourCopy = { ...this.state.tour }
+
+
+
             if (tourCopy.tourStarted) {
+
+
                 tourCopy.origin = {
                     latitude: location.coords.latitude,
                     longitude: location.coords.longitude
@@ -769,7 +780,8 @@ export default class GoogleMapsScreen extends React.Component {
         let {
             origin,
             destination,
-            tourStarted
+            tourStarted,
+            disToLandmark
         } = this.state.tour
 
         return (
@@ -814,7 +826,6 @@ export default class GoogleMapsScreen extends React.Component {
                             latitudeDelta: this.state.latitudeDelta,
                             longitudeDelta: this.state.longitudeDelta}}
                     >
-
                         {tourStarted && (
                           <MapViewDirections
                               origin={origin}
@@ -855,6 +866,10 @@ export default class GoogleMapsScreen extends React.Component {
                             </Callout>
                             </Marker>
                         }
+
+
+
+
 
                         {tourStarted && waypoints.map((waypoint, index) =>
 
@@ -952,6 +967,7 @@ export default class GoogleMapsScreen extends React.Component {
                             </Marker>)}
                     </MapView>
 
+
                     {this.state.showLoader && (
                         <Spinner
                             visible={true}
@@ -960,6 +976,8 @@ export default class GoogleMapsScreen extends React.Component {
                         />
                     )}
                     {this.state.tour.tourStarted?
+
+
                       <TouchableOpacity style={{
                           position: "absolute",
                           bottom: 150,
@@ -990,6 +1008,23 @@ export default class GoogleMapsScreen extends React.Component {
                       </TouchableOpacity>
                   :
                   null}
+
+                  {this.state.tour.tourStarted?
+                    <View style={{
+                        position: "absolute",
+                        top: 20,
+                        left: 175}}>
+
+                      <Text  style={{
+                          fontSize:35,
+                          textAlign:'center',
+                          color:'#4B6296'
+                      }}>{disToLandmark}M</Text>
+                    </View>
+                    :
+                    null
+                  }
+
 
                     <UserInterface
                         CallStartTour={this.toStart.bind(this)}
@@ -1159,50 +1194,53 @@ const styles = StyleSheet.create({
         height:48
     },
     modalOuter:{
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#00000080',
-    margin:0
+      flex: 1,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#00000080',
+      margin:0
     },
     modalInner:{
-    width: Dimensions.get('window').width * 0.8,
-    height: Dimensions.get('window').height * 0.2,
-    backgroundColor: '#EBD5B3',
-    padding: 20,
-    borderRadius:15
-  },
-  modalInnerInfo:{
-    width: Dimensions.get('window').width * 0.8,
-    height: Dimensions.get('window').height  * 0.25,
-    backgroundColor: '#EBD5B3',
-    padding: 20,
-    borderRadius:15
-  },
-  modalInnerInfoDistance:{
-    width: Dimensions.get('window').width * 0.8,
-    height: Dimensions.get('window').height * 0.4,
-    backgroundColor: '#EBD5B3',
-    padding: 20,
-    borderRadius:15
-  },
-  closeText:{
-    fontSize:30,
-    fontWeight:'bold',
-    textDecorationLine:'underline',
-    textAlign:'center',
-    marginTop:5
-  },
- contentText:{
-   fontSize:22,
-   textAlign:'center'
- },
- contentTextDistance:{
-   fontSize:24,
-   textAlign:'center'
- }
+      width: Dimensions.get('window').width * 0.8,
+      height: Dimensions.get('window').height * 0.2,
+      backgroundColor: '#EBD5B3',
+      padding: 20,
+      borderRadius:15
+    },
+    modalInnerInfo:{
+      width: Dimensions.get('window').width * 0.8,
+      height: Dimensions.get('window').height  * 0.25,
+      backgroundColor: '#EBD5B3',
+      padding: 20,
+      borderRadius:15
+    },
+    modalInnerInfoDistance:{
+      width: Dimensions.get('window').width * 0.8,
+      height: Dimensions.get('window').height * 0.4,
+      backgroundColor: '#EBD5B3',
+      padding: 20,
+      borderRadius:15
+    },
+    closeText:{
+      fontSize:30,
+      fontWeight:'bold',
+      textDecorationLine:'underline',
+      textAlign:'center',
+      marginTop:5
+    },
+   contentText:{
+     fontSize:22,
+     textAlign:'center'
+   },
+   distance_text: {
+
+   },
+   contentTextDistance:{
+     fontSize:24,
+     textAlign:'center'
+   }
 });
 
 const mapStyle = [{
