@@ -996,7 +996,7 @@ export default class GoogleMapsScreen extends React.Component {
                           textAlign:'center',
                           color:'#4B6296',
                           opacity:1
-                      }}>{disToLandmark}M</Text>
+                      }}>{disToLandmark}m</Text>
                       <Text  style={{
                           fontSize:22,
                           textAlign:'center',
