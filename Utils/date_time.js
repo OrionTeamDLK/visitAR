@@ -9,6 +9,28 @@ const getTimeDiff = (time1, time2) => {
   return `${diffResult.getHours()}:${diffResult.getMinutes()}:${diffResult.getSeconds()}`;
 }
 
+const getDate = () => {
+  let date = new Date();
+
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+
+  return  `${day}/${month}/${year}`;
+}
+
+const getTime = () => {
+  let date = new Date();
+
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  let seconds = date.getSeconds();
+
+  return `${hours}:${minutes}:${seconds}`;
+}
+
 export {
-  getTimeDiff
+  getTimeDiff,
+  getTime,
+  getDate
 }

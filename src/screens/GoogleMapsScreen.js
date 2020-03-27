@@ -52,6 +52,7 @@ import CustomMarker from "../Components/CustomMarker";
 import PickUpTokenButton from "../Components/PickUpTokenButton";
 import { Notifications } from 'expo';
 import {getUserID} from '../../Utils/user_func';
+import {getTime, getDate} from '../../Utils/date_time';
 import Images from'../../assets/images';
 import {AsyncStorage} from 'react-native';
 
@@ -220,46 +221,44 @@ export default class GoogleMapsScreen extends React.Component {
                         {cancelable: false},
                       );
 
-                        let date = new Date();
+                      newState.waypoints[nextLocation - 1].visited = true;
+                      newState.tour.nextLocation++;
+                      newState.tour.destination = newState.waypoints[newState.tour.nextLocation - 1].location;
+                      newState.tour.landmarks_visited.push({
+                        "id":newState.waypoints[nextLocation - 1].id,
+                        "title":newState.waypoints[nextLocation - 1].title,
+                        "time_visited":getTime()
+                      });
 
-                        //Get Time
-                        let hours = date.getHours();
-                        let minutes = date.getMinutes();
-                        let seconds = date.getSeconds();
-                        newState.waypoints[nextLocation - 1].visited = true;
-                        newState.tour.nextLocation++;
-                        newState.tour.destination = newState.waypoints[newState.tour.nextLocation - 1].location;
-                        newState.tour.landmarks_visited.push({
-                          "id":newState.waypoints[nextLocation - 1].id,
-                          "title":newState.waypoints[nextLocation - 1].title,
-                          "time_visited":`${hours}:${minutes}:${seconds}`
-                        });
-                        this.setState(newState);
+                      this.setState(newState);
 
                     } else {
 
-                        {/*put marker auto pop up*/}
-                        const PATTERN = [100, 500,200,600,200,500];
-                        Vibration.vibrate(PATTERN);
-                        const title = newState.waypoints[nextLocation - 1].title;
-                        const description = newState.waypoints[nextLocation - 1].description;
-                        // Works on both Android and iOS
-                        Alert.alert(
-                          title,
-                          description.substring(0, 100) + "...",
-                          [
-                            {text: 'View details', onPress: () => this.props.navigation.navigate('Landmark', { landmark: newState.waypoints[nextLocation - 1] })},
-                            {text: '', onPress: () => console.log('')},
-                            {text: 'Continue Tour', onPress: () => console.log('Continue Tour Pressed')},
-                          ],
-                          {cancelable: false},
-                        );
+                      const PATTERN = [100, 500,200,600,200,500];
+                      Vibration.vibrate(PATTERN);
+                      const title = newState.waypoints[nextLocation - 1].title;
+                      const description = newState.waypoints[nextLocation - 1].description;
+                      // Works on both Android and iOS
+                      Alert.alert(
+                        title,
+                        description.substring(0, 100) + "...",
+                        [
+                          {text: 'View details', onPress: () => this.props.navigation.navigate('Landmark', { landmark: newState.waypoints[nextLocation - 1] })},
+                          {text: '', onPress: () => console.log('')},
+                          {text: 'Continue Tour', onPress: () => console.log('Continue Tour Pressed')},
+                        ],
+                        {cancelable: false},
+                      );
 
-                        console.log("modal view state 2: " + this.state.infoModalVisible);
-                        newState.waypoints[nextLocation - 1].visited = true;
-                        newState.tour.landmarks_visited.push(newState.waypoints[nextLocation - 1].id);
-                        newState.tour.tour_completed = true;
-                        this.setState(newState);
+                      console.log("modal view state 2: " + this.state.infoModalVisible);
+                      newState.waypoints[nextLocation - 1].visited = true;
+                      newState.tour.landmarks_visited.push({
+                        "id":newState.waypoints[nextLocation - 1].id,
+                        "title":newState.waypoints[nextLocation - 1].title,
+                        "time_visited":getTime()
+                      });
+                      newState.tour.tour_completed = true;
+                      this.setState(newState);
                     }
                 }
             }
@@ -415,25 +414,13 @@ export default class GoogleMapsScreen extends React.Component {
 
         this.showLoader();
 
-        //create date object
-        let date = new Date();
-
-        //Get Time
-        let hours = date.getHours();
-        let minutes = date.getMinutes();
-        let seconds = date.getSeconds();
-
-        //// TODO:
-        //Switch back to original state copy, Json copy mmight be unnecessary
-
-
         //¯\_(ツ)_/¯
         const newState = JSON.parse(JSON.stringify(this.state));
 
         newState.tour.origin = null;
         newState.tour.destination = null;
         newState.tour.tourStarted = false;
-        newState.tour.time_finished = `${hours}:${minutes}:${seconds}`;
+        newState.tour.time_finished = getTime();
         newState.tour.tokens_collected = this.state.num_of_tokens;
         newState.uiState = 0;
 
@@ -455,22 +442,6 @@ export default class GoogleMapsScreen extends React.Component {
 
     toStart = () => {
         this.showLoader();
-        //alert("start tour stuff and things");
-        console.log("Setting the start point");
-
-        //create date object
-        let date = new Date();
-
-        //Get Time
-        let hours = date.getHours();
-        let minutes = date.getMinutes();
-        let seconds = date.getSeconds();
-
-        //Get Date
-        let day = date.getDate();
-        let month = date.getMonth() + 1;
-        let year = date.getFullYear();
-
 
         let tour = { ...this.state.tour }
         tour.origin = {
@@ -480,8 +451,8 @@ export default class GoogleMapsScreen extends React.Component {
         tour.destination = this.state.waypoints[0].location;
         tour.tourStarted = true;
 
-        tour.date         = `${day}/${month}/${year}`;
-        tour.time_started = `${hours}:${minutes}:${seconds}`;
+        tour.date         = getDate();
+        tour.time_started = getTime();
 
         this.setState({
             tour,
