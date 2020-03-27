@@ -434,6 +434,7 @@ export default class GoogleMapsScreen extends React.Component {
         newState.tour.destination = null;
         newState.tour.tourStarted = false;
         newState.tour.time_finished = `${hours}:${minutes}:${seconds}`;
+        newState.tour.tokens_collected = this.state.num_of_tokens;
         newState.uiState = 0;
 
 
