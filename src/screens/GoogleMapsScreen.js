@@ -1011,15 +1011,26 @@ export default class GoogleMapsScreen extends React.Component {
 
                   {this.state.tour.tourStarted?
                     <View style={{
+                        top:10,
                         position: "absolute",
-                        top: 20,
-                        left: 175}}>
+                        alignItems:'center',
+                        borderRadius:15,
+                        backgroundColor:"#e7e7e6",
+                        padding:3
+                      }}>
 
                       <Text  style={{
                           fontSize:35,
                           textAlign:'center',
-                          color:'#4B6296'
+                          color:'#4B6296',
+                          opacity:1
                       }}>{disToLandmark}M</Text>
+                      <Text  style={{
+                          fontSize:22,
+                          textAlign:'center',
+                          color:'#4B6296',
+                          opacity:1
+                      }}>To next Landmark</Text>
                     </View>
                     :
                     null
