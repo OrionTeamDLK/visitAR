@@ -128,7 +128,7 @@ export default class ProfileScreen extends React.Component {
       <Container style={styles.container}>
         <Content>
           <Image source={{ uri: image }} style={styles.profile_pic} />
-          <Text>Name: {this.state.name && null}</Text>
+        {/*  <Text>Name: {this.state.name && null}</Text>*/}
           <Text>Email: {this.state.email}</Text>
          {/* <Text>User ID: {this.state.uid}</Text>*/}
           {/*<Text>Photo URL: {this.state.photoURL}</Text>*/}
@@ -151,13 +151,14 @@ export default class ProfileScreen extends React.Component {
             navName="GMaps"
           />
 
-          <NavigationButton
+{/*          <NavigationButton
             style={styles.Button}
             data-test="ProfileScreen_button"
             title="Update Profile"
             icon="edit"
             navName="EditProfile"
           />
+          */}
         </Content>
         {this.state.showLoader && (
           <Spinner

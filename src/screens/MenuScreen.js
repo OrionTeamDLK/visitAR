@@ -40,7 +40,7 @@ export default class MenuScreen extends React.Component {
 					:
 					<NavigationButton
 						data-test="MenuScreen_button"
-						title="Login"
+						title="Login/Register"
 						icon="sign-in"
 						navName="Login"
 						styleText={{ color: "white", fontSize: 30 }}/>
