@@ -187,7 +187,7 @@ export default class Register extends React.Component {
               info
               onPress={this._pickImage}
             >
-              <Text style={{ color: "#fff" }}>Upload</Text>
+              <Text style={{ color: "#fff" }}>Upload profile picture</Text>
             </Button>
 
             <Button
