@@ -26,21 +26,23 @@ export default class App extends React.Component {
 				style={{padding: 5}}
 			>
 				<Image style={{width:"100%", height:"100%"}}
-					source={require('../../assets/HelpScreen1.png')}/>
+					source={require('../../assets/helpScreen/HelpScreen0.png')}/>
 				<Image style={{width:"100%", height:"100%"}}
-					source={require('../../assets/HelpScreen2.png')}/>
+					source={require('../../assets/helpScreen/HelpScreen1.png')}/>
 				<Image style={{width:"100%", height:"100%"}}
-					source={require('../../assets/HelpScreen3.png')}/>
+					source={require('../../assets/helpScreen/HelpScreen2.png')}/>
 				<Image style={{width:"100%", height:"100%"}}
-					source={require('../../assets/HelpScreen4.png')}/>
+					source={require('../../assets/helpScreen/HelpScreen3.png')}/>
 				<Image style={{width:"100%", height:"100%"}}
-					source={require('../../assets/HelpScreen5.png')}/>
+					source={require('../../assets/helpScreen/HelpScreen4.png')}/>
 				<Image style={{width:"100%", height:"100%"}}
-					source={require('../../assets/HelpScreen6.png')}/>
+					source={require('../../assets/helpScreen/HelpScreen5.png')}/>
 				<Image style={{width:"100%", height:"100%"}}
-					source={require('../../assets/HelpScreen7.png')}/>
+					source={require('../../assets/helpScreen/HelpScreen6.png')}/>
 				<Image style={{width:"100%", height:"100%"}}
-					source={require('../../assets/HelpScreen8.png')}/>
+					source={require('../../assets/helpScreen/HelpScreen7.png')}/>
+				<Image style={{width:"100%", height:"100%"}}
+					source={require('../../assets/helpScreen/HelpScreen8.png')}/>
 
 			</Swiper>
 		);
