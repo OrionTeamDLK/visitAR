@@ -534,7 +534,8 @@ export default class GoogleMapsScreen extends React.Component {
                 tokens[5] = getPreciseDistance(
 
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
-                  { latitude: 54.039803, longitude: -6.185992 }
+                  { latitude: 54.039855, longitude: -6.185469 }
+                 
                 );
               this.setState({token6});
 
