@@ -51,7 +51,7 @@ import InfoPopUp from "../Components/InfoPopUp";
 import CustomMarker from "../Components/CustomMarker";
 import PickUpTokenButton from "../Components/PickUpTokenButton";
 import { Notifications } from 'expo';
-import {getUserID} from '../../Utils/user_func';
+import {initializeAuth, getUserID} from '../../Utils/user_func';
 import {getTime, getDate} from '../../Utils/date_time';
 import Images from'../../assets/images';
 import {AsyncStorage} from 'react-native';
@@ -118,8 +118,8 @@ export default class GoogleMapsScreen extends React.Component {
           url: 'https://orion-visitar.herokuapp.com/auth'
         });
 
-        Axios.defaults.headers.common["Authorization"] = `Bearer ${result.data}`;
         await AsyncStorage.setItem('JWT',result.data);
+        Axios.defaults.headers.common["Authorization"] = `Bearer ${result.data}`;
 
         this.registerForPushNotifications();
 
@@ -406,6 +406,7 @@ export default class GoogleMapsScreen extends React.Component {
           data: this.state.tour
       });
 
+      console.log(this.state.tour)
 
       this.hideLoader();
     }
@@ -413,6 +414,10 @@ export default class GoogleMapsScreen extends React.Component {
     endTour = async () => {
 
         this.showLoader();
+
+
+        const uid = await getUserID();
+
 
         //¯\_(ツ)_/¯
         const newState = JSON.parse(JSON.stringify(this.state));
@@ -422,13 +427,8 @@ export default class GoogleMapsScreen extends React.Component {
         newState.tour.tourStarted = false;
         newState.tour.time_finished = getTime();
         newState.tour.tokens_collected = this.state.num_of_tokens;
+        newState.tour.uid = uid;
         newState.uiState = 0;
-
-
-        const uid = await getUserID();
-
-
-        //this.setState(newState);
 
         this.setState(newState, async () => {
           await this.postTour();
