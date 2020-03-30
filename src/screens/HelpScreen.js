@@ -23,13 +23,24 @@ export default class App extends React.Component {
 				scrollEnabled={this.state.outerScrollEnabled}
 				height={window.height}
 				width={window.width}
+				style={{padding: 5}}
 			>
-				<HelpInfo num='1' text='Click start tour button, follow blue line for your suggested route' />
-				<HelpInfo num='2' text='click the markers for more information, text to speech is available too' />
-				<HelpInfo num='3' text='Collect tokens at various landmarks' />
-				<HelpInfo num='4' text='Click end tour to finish and view your stats' />
 				<Image style={{width:"100%", height:"100%"}}
-					source={require('../../assets/splash.png')}/>
+					source={require('../../assets/HelpScreen1.png')}/>
+				<Image style={{width:"100%", height:"100%"}}
+					source={require('../../assets/HelpScreen2.png')}/>
+				<Image style={{width:"100%", height:"100%"}}
+					source={require('../../assets/HelpScreen3.png')}/>
+				<Image style={{width:"100%", height:"100%"}}
+					source={require('../../assets/HelpScreen4.png')}/>
+				<Image style={{width:"100%", height:"100%"}}
+					source={require('../../assets/HelpScreen5.png')}/>
+				<Image style={{width:"100%", height:"100%"}}
+					source={require('../../assets/HelpScreen6.png')}/>
+				<Image style={{width:"100%", height:"100%"}}
+					source={require('../../assets/HelpScreen7.png')}/>
+				<Image style={{width:"100%", height:"100%"}}
+					source={require('../../assets/HelpScreen8.png')}/>
 
 			</Swiper>
 		);
