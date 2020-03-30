@@ -66,33 +66,25 @@ export default class ProfileScreen extends React.Component {
 
     const access_token = await AsyncStorage.getItem('JWT');
     Axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
-//
-// axios({
-    //   method: "get",
-    //   url: `https://orion-visitar.herokuapp.com/favourite?uid=${user.uid}`
-    // }).then( (results) => {
-    //
-    //   const result = results.data.map(obj => obj.tour_id );
-    //   this.setState({ favourite: result });
-    // })
 
-    // axios({
-    //   method: "get",
-    //   url: `https://orion-visitar.herokuapp.com/history?uid=${user.uid}`
-    // }).then( (results) => {
-    //     //console.log(results.data)
-    //     // const result = results.data.map(obj => (
-    //     //   {
-    //     //     name: obj.tour_taken,
-    //     //     completed: obj.completed,
-    //     //     time_started: obj.time_started
-    //     //
-    //     //   }
-    //     // ) );
-    //
-    //     //console.log(result)
-    //     this.setState({ history: results.data });
-    // })
+
+    Axios({
+      method: "get",
+      url: `https://orion-visitar.herokuapp.com/tourlog?uid=${user.uid}`
+    }).then( (results) => {
+        console.log(results.data)
+        const result = results.data.map(obj => (
+          {
+            name: obj.tour_taken,
+            completed: obj.completed,
+            time_started: obj.time_started,
+            time_finished: obj.time_finished
+          }
+        ) );
+
+        console.log(result)
+        this.setState({ history: results.data });
+    })
 
     this.hideLoader();
   }
@@ -123,7 +115,7 @@ export default class ProfileScreen extends React.Component {
 
   render() {
     let { image, history } = this.state;
-
+    let key = 0;
     return (
       <Container style={styles.container}>
         <Content>
@@ -132,6 +124,25 @@ export default class ProfileScreen extends React.Component {
           <Text>Email: {this.state.email}</Text>
          {/* <Text>User ID: {this.state.uid}</Text>*/}
           {/*<Text>Photo URL: {this.state.photoURL}</Text>*/}
+
+          <Text style={styles.heading}>History</Text>
+
+         { history ?  history.map((item)=>(
+             <View  key={key++}>
+              <Text key={key++} style={styles.subHeading} >Name:{ item.tour_taken }</Text>
+              <Text key={key++}>Start:{ item.time_started }</Text>
+              <Text key={key++}>Finish:{ item.time_finished }</Text>
+
+              {item.landmarks_visited ? <Text style={styles.subHeading}>Landmarks visited</Text> : null}
+              {item.landmarks_visited ? item.landmarks_visited.map((item)=>(
+                <View  key={key++}>
+                  <Text key={key++}>Title:{ item.title }</Text>
+                </View> )
+              ) : null }
+
+            </View>)
+         ) : null}
+
 
           <Button
             style={styles.Button}

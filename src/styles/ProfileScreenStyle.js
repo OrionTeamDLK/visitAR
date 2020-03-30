@@ -25,5 +25,10 @@ export const styles = StyleSheet.create({
   heading: {
     margin:20,
     fontSize:20
+  },
+  subHeading: {
+    marginTop:10,
+    marginBottom:10,
+    fontSize:18
   }
 });
