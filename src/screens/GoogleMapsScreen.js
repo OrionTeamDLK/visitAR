@@ -612,7 +612,7 @@ export default class GoogleMapsScreen extends React.Component {
 
                  this.setModalVisible("tokenInfoVisible");
              }
-             else if (closestToken <=20 && this.state.num_of_tokens<=6 )//change closest toke to <=20 for release
+             else if (closestToken <=25 && this.state.num_of_tokens<=6 )//change closest toke to <=20 for release
              {
              //for loop to run through all of the tokens, to see if there is a token that matches the closest token
         				for( var i=0; i<tokens.length; i++)
@@ -1111,7 +1111,7 @@ export default class GoogleMapsScreen extends React.Component {
               <View style={styles.modalOuter}>
                   <View style={styles.modalInnerInfoDistance}>
                      <Text style={styles.contentTextDistance}>
-                          {closestToken}m{"\n"}From the nearest token!{"\n"}They are located at each landmark, and marked by a blue plaque.{"\n"} can you find it?
+                          {closestToken}m{"\n"}From the nearest token!{"\n"}They are located at each landmark that has a blue plaque.{"\n"} can you find it?
                     </Text>
 
               <TouchableHighlight
