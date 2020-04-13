@@ -225,6 +225,7 @@ export default class GoogleMapsScreen extends React.Component {
                       );
 
                       this.handleArriveAuido();
+                      this.setCurrentLocation();
 
                       newState.waypoints[nextLocation - 1].visited = true;
                       newState.tour.nextLocation++;
@@ -256,6 +257,7 @@ export default class GoogleMapsScreen extends React.Component {
                       );
 
                       this.handleArriveAuido();
+                      this.setCurrentLocation();
 
                       console.log("modal view state 2: " + this.state.infoModalVisible);
                       newState.waypoints[nextLocation - 1].visited = true;
@@ -314,7 +316,14 @@ export default class GoogleMapsScreen extends React.Component {
           await soundObject.playAsync();
       } catch (error) { console.log(error); }
     }
-
+    handleErrorAuido = async () => {
+      try {
+          const { sound: soundObject, status } = await
+              Audio.Sound.createAsync(require('../../assets/auido/error.wav'),
+              { shouldPlay: true });
+          await soundObject.playAsync();
+      } catch (error) { console.log(error); }
+    }
 
     getAsyncData = async (key) => {
         try {
@@ -648,6 +657,7 @@ export default class GoogleMapsScreen extends React.Component {
                  );*/
 
                  this.setModalVisible("tokenInfoVisible");
+                 this.handleErrorAuido();
              }
              else if (closestToken <=25 && this.state.num_of_tokens<=6 )//change closest toke to <=20 for release
              {
@@ -711,6 +721,7 @@ export default class GoogleMapsScreen extends React.Component {
                     if(this.state.num_of_tokens<6){
                       let tknDistance ="" +  closestToken + "m from the closest token!\nThey are located at each landmark, and marked by a blue plaque, can you find it?";
                       this.setModalVisible("distanceTokenModal");
+                      this.handleErrorAuido();
                     //nearest_token=("you are " + closestToken + " from the closest token!")
                     //alert("you are " + closestToken + "m from the closest token! They are located at each landmark, can you find it?");
       /*              Alert.alert(
