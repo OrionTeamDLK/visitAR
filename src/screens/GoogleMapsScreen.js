@@ -224,7 +224,7 @@ export default class GoogleMapsScreen extends React.Component {
                         {cancelable: false},
                       );
 
-                      this.handleAuido();
+                      this.handleArriveAuido();
 
                       newState.waypoints[nextLocation - 1].visited = true;
                       newState.tour.nextLocation++;
@@ -254,6 +254,8 @@ export default class GoogleMapsScreen extends React.Component {
                         ],
                         {cancelable: false},
                       );
+
+                      this.handleArriveAuido();
 
                       console.log("modal view state 2: " + this.state.infoModalVisible);
                       newState.waypoints[nextLocation - 1].visited = true;
@@ -286,14 +288,31 @@ export default class GoogleMapsScreen extends React.Component {
 
     }
 
-    handleAuido = async () => {
-      console.log("auido mehofd");
-        try {
-            const { sound: soundObject, status } = await
-                Audio.Sound.createAsync(require('../../assets/auido/tada01.wav'),
-                { shouldPlay: true });
-            await soundObject.playAsync();
-        } catch (error) { console.log(error); }
+    handleArriveAuido = async () => {
+      try {
+          const { sound: soundObject, status } = await
+              Audio.Sound.createAsync(require('../../assets/auido/arrive_loc.wav'),
+              { shouldPlay: true });
+          await soundObject.playAsync();
+      } catch (error) { console.log(error); }
+    }
+
+    handleTokenAuido = async () => {
+      try {
+          const { sound: soundObject, status } = await
+              Audio.Sound.createAsync(require('../../assets/auido/token_pickup.wav'),
+              { shouldPlay: true });
+          await soundObject.playAsync();
+      } catch (error) { console.log(error); }
+    }
+
+    handleEndTourAuido = async () => {
+      try {
+          const { sound: soundObject, status } = await
+              Audio.Sound.createAsync(require('../../assets/auido/end_tour.wav'),
+              { shouldPlay: true });
+          await soundObject.playAsync();
+      } catch (error) { console.log(error); }
     }
 
 
@@ -445,6 +464,8 @@ export default class GoogleMapsScreen extends React.Component {
         newState.tour.tokens_collected = this.state.num_of_tokens;
         newState.tour.uid = uid;
         newState.uiState = 0;
+
+        this.handleEndTourAuido();
 
         this.setState(newState, async () => {
           await this.postTour();
@@ -648,10 +669,12 @@ export default class GoogleMapsScreen extends React.Component {
                                   var token_number=tokens.indexOf(closestToken);
                                   if(this.state.num_of_tokens+1<6 ){
                                   this.setModalVisible("tokenUpdate");
-                                  Speech.speak('congratulations! you have found ' + (this.state.num_of_tokens + 1) +' of 6 tokens');
+                                  /*Speech.speak('congratulations! you have found ' + (this.state.num_of_tokens + 1) +' of 6 tokens');*/
+                                  this.handleTokenAuido();
                                   }
                                   else if(token_num==6)
                                   {
+                                    this.handleTokenAuido();
                                       Speech.speak('You have found all 6 tokens!, Congratulations!');
                                       this.setModalVisible("tokenCollect");
                                       //alert('you have found all 6 tokens! Congratuations!');
