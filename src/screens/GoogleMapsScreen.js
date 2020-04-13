@@ -55,6 +55,7 @@ import {initializeAuth, getUserID} from '../../Utils/user_func';
 import {getTime, getDate} from '../../Utils/date_time';
 import Images from'../../assets/images';
 import {AsyncStorage} from 'react-native';
+import { Audio } from 'expo-av';
 
 var closestToken;
 var num_of_tokens = 0;
@@ -70,6 +71,7 @@ var token8 = 0;
 
 
 var tokens = [token1, token2, token3, token4,token5,token6,token7,token8];
+  var soundObject  = new Audio.Sound();
 
 const LOCATION_SETTINGS = {
     accuracy: Location.Accuracy.Balanced,
@@ -79,6 +81,7 @@ const LOCATION_SETTINGS = {
 
 
 export default class GoogleMapsScreen extends React.Component {
+
 
     constructor(props) {
         super(props)
@@ -215,11 +218,13 @@ export default class GoogleMapsScreen extends React.Component {
                         description.substring(0, 100) + "...",
                         [
                           {text: 'View details', onPress: () => this.props.navigation.navigate('Landmark', { landmark: newState.waypoints[nextLocation - 1] })},
-                          {text: '', onPress: () => console.log('')},
+                          {text: 'find token', onPress: () => this.TokenGame()},
                           {text: 'Continue Tour', onPress: () => console.log('Continue Tour Pressed')},
                         ],
                         {cancelable: false},
                       );
+
+                      this.handleAuido();
 
                       newState.waypoints[nextLocation - 1].visited = true;
                       newState.tour.nextLocation++;
@@ -280,6 +285,17 @@ export default class GoogleMapsScreen extends React.Component {
         });
 
     }
+
+    handleAuido = async () => {
+      console.log("auido mehofd");
+        try {
+            const { sound: soundObject, status } = await
+                Audio.Sound.createAsync(require('../../assets/auido/tada01.wav'),
+                { shouldPlay: true });
+            await soundObject.playAsync();
+        } catch (error) { console.log(error); }
+    }
+
 
     getAsyncData = async (key) => {
         try {
@@ -535,7 +551,7 @@ export default class GoogleMapsScreen extends React.Component {
 
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
                   { latitude: 54.039855, longitude: -6.185469 }
-                 
+
                 );
               this.setState({token6});
 
@@ -790,6 +806,8 @@ export default class GoogleMapsScreen extends React.Component {
                         showsUserLocation
                         followsUserLocation
                         showsScale
+                        showsCompass={false}
+                        showsMyLocationButton={false}
                         data-test="MapView"
                         style={styles.mapStyle}
                         customMapStyle={mapStyle}
@@ -838,6 +856,20 @@ export default class GoogleMapsScreen extends React.Component {
                             </View>
                             </Callout>
                             </Marker>
+                        }
+
+                        {
+                          this.state.tour.tourStarted ?
+                          null
+                          :
+                          <Marker
+                          coordinate={{
+                            latitude: 54.039351,
+                            longitude: -6.185652
+                          }}
+                          >
+                          <Image source={require('../../assets/initialTourMarker.png')} />
+                          </Marker>
                         }
 
 

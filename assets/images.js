@@ -17,9 +17,6 @@ const images = {
   taffeVisited: require('./mapIcons/taffe-visited.png'),
   thosel: require('./mapIcons/thosel.png'),
   thoselVisited: require('./mapIcons/thosel-visited.png'),
-
-
 };
-
 
 export default images;
