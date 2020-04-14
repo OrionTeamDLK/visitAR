@@ -43,7 +43,17 @@ export default class LandmarkScreen extends React.Component {
     return (
       <View style={{flex:1}}>
         <Image source={ {uri: image } } style={{width: 500, height: 300}}/>
-        <Text style={styles.textTitle}>{title}</Text>
+        {title ==="Carlingford Castle" ?
+        <Text style={styles.textTitle}>{title}<Text>  </Text>
+          <Image
+            style={styles.tinyLogo}
+            source={require('../../assets/acessNo.png')}
+            resizeMode="stretch"
+          />
+        </Text>
+          :
+          <Text style={styles.textTitle}>{title}</Text>
+        }
         <ScrollView style={styles.scroll}>
         <Text style={styles.textContent}>{description}</Text>
         <View style={styles.centerView}>
@@ -108,5 +118,9 @@ const styles = StyleSheet.create({
     marginTop:10,
     alignItems:'center',
     justifyContent:'center'
-  }
+  },
+  tinyLogo: {
+  width: 40,
+  height: 40
+},
 });
