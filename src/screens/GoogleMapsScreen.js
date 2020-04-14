@@ -846,8 +846,8 @@ export default class GoogleMapsScreen extends React.Component {
                         style={styles.mapStyle}
                         customMapStyle={mapStyle}
                         initialRegion={{
-                            latitude: 54.041000,
-                            longitude: -6.185922,
+                            latitude: 54.041014,
+                            longitude: -6.185345,
                             latitudeDelta: this.state.latitudeDelta,
                             longitudeDelta: this.state.longitudeDelta}}
                     >
