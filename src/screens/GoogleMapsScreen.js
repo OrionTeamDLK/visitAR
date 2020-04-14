@@ -75,8 +75,8 @@ var tokens = [token1, token2, token3, token4,token5,token6,token7,token8];
 
 const LOCATION_SETTINGS = {
     accuracy: Location.Accuracy.Balanced,
-    timeInterval: 200,
-    distanceInterval: 0,
+    timeInterval: 2000,
+    distanceInterval: 0
 };
 
 
@@ -103,7 +103,8 @@ export default class GoogleMapsScreen extends React.Component {
                 origin: null,
                 destination: null,
                 nextLocation: 1,
-                landmarks_visited: []
+                landmarks_visited: [],
+                coords:[]
             },
             num_of_tokens:0,
             tokenUpdateVisible:false,
@@ -176,6 +177,8 @@ export default class GoogleMapsScreen extends React.Component {
 
         Location.watchPositionAsync(LOCATION_SETTINGS, location => {
 
+
+
             let {
                 waypoints
             } = this.state;
@@ -189,6 +192,11 @@ export default class GoogleMapsScreen extends React.Component {
 
 
             if (waypoints != null && tourStarted) {
+
+                console.log(location.coords);
+                let tourCopy = { ...this.state.tour }
+                tourCopy.coords.push(location.coords)
+                this.setState({ tour: tourCopy })
 
                 let distance = getDistance(location.coords, waypoints[nextLocation - 1].location);
 
