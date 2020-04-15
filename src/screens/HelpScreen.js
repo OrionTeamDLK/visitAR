@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Dimensions, Image, View, Button } from "react-native";
+import { StyleSheet, Dimensions, Image, View, TouchableOpacity, Text } from "react-native";
 import Swiper from "react-native-swiper";
 import HelpInfo from '../Components/HelpInfo';
 
@@ -15,6 +15,7 @@ export default class App extends React.Component {
 
 	render() {
 		return (
+		<>
 			<Swiper
 				loop
 				showsPagination={false}
@@ -25,14 +26,10 @@ export default class App extends React.Component {
 				width={window.width}
 				style={{paddingHorizontal: 10}}
 			>
-				<View
-				height={window.height}
-				width={window.width}
-				>
-					<Button style={{width:"100%", height: "100%"}} title="Begin Exploring!" />
-					<Image style={{width:"100%", height:"90%"}}
-						source={require('../../assets/helpScreen/HelpScreen0.png')}/>
-				</View>
+
+					
+				<Image style={{width:"100%", height:"90%"}}
+					source={require('../../assets/helpScreen/HelpScreen0.png')}/>
 				<Image style={{width:"100%", height:"100%"}}
 					source={require('../../assets/helpScreen/HelpScreen1.png')}/>
 				<Image style={{width:"100%", height:"100%"}}
@@ -51,6 +48,7 @@ export default class App extends React.Component {
 					source={require('../../assets/helpScreen/HelpScreen8.png')}/>
 
 			</Swiper>
+		</>
 		);
 	}
 }
