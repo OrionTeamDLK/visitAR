@@ -28,7 +28,7 @@ export default class App extends React.Component {
 			>
 
 					
-				<Image style={{width:"100%", height:"90%"}}
+				<Image style={{width:"100%", height:"100%"}}
 					source={require('../../assets/helpScreen/HelpScreen0.png')}/>
 				<Image style={{width:"100%", height:"100%"}}
 					source={require('../../assets/helpScreen/HelpScreen1.png')}/>
