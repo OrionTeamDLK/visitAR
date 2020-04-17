@@ -552,72 +552,62 @@ export default class GoogleMapsScreen extends React.Component {
                }
                //token that is not on the route (birthplace of darcey magee)
 
+                              //abbey
                if(tokens[2]!=99999999){
                 tokens[2] = getPreciseDistance(
 
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
-                  { latitude: 54.039403, longitude: -6.186478 }
+                  { latitude: 54.038039, longitude: -6.185042 }
                 );
               this.setState({token3});
 
                }
 
-               //abbey
+               //heritage ceentre
                if(tokens[3]!=99999999){
                 tokens[3] = getPreciseDistance(
 
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
-                  { latitude: 54.038039, longitude: -6.185042 }
+                  { latitude: 54.038039, longitude: -6.185042}
                 );
               this.setState({token4});
 
                }
-
-               //heritage ceentre
+                //town gaol
                if(tokens[4]!=99999999){
                 tokens[4] = getPreciseDistance(
-
-                  { latitude: position.coords.latitude, longitude: position.coords.longitude },
-                  { latitude: 54.038039, longitude: -6.185042}
-                );
-              this.setState({token5});
-
-               }
-                //town gaol
-               if(tokens[5]!=99999999){
-                tokens[5] = getPreciseDistance(
 
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
                   { latitude: 54.039855, longitude: -6.185469 }
 
                 );
-              this.setState({token6});
+              this.setState({token5});
 
                }
                //the mint
 
-               if(tokens[6]!=99999999){
-                tokens[6] = getPreciseDistance(
+               if(tokens[5]!=99999999){
+                tokens[5] = getPreciseDistance(
 
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
                   { latitude:54.040183, longitude: -6.186233 }
                 );
-              this.setState({token7});
+              this.setState({token6});
 
                }
                //taffes castle
-               if(tokens[7]!=99999999){
-                tokens[7] = getPreciseDistance(
+               if(tokens[6]!=99999999){
+                tokens[6] = getPreciseDistance(
 
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
                   { latitude: 54.040703, longitude:-6.186455 }
                 );
-              this.setState({token8});
+              this.setState({token7});
 
                }
 
-               if(tokens[8]!=99999999){
-                tokens[8] = getPreciseDistance(
+               if(tokens[7]!=99999999){
+                tokens[7] = getPreciseDistance(
 
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
                   //test value close to my house(emma)
@@ -667,7 +657,7 @@ export default class GoogleMapsScreen extends React.Component {
                  this.setModalVisible("tokenInfoVisible");
                  this.handleErrorAuido();
              }
-             else if (closestToken <=25 && this.state.num_of_tokens<=6 )//change closest toke to <=20 for release
+             else if (closestToken <=25 && this.state.num_of_tokens<=8 )//change closest toke to <=20 for release
              {
              //for loop to run through all of the tokens, to see if there is a token that matches the closest token
         				for( var i=0; i<tokens.length; i++)
@@ -677,7 +667,7 @@ export default class GoogleMapsScreen extends React.Component {
       						{
                                   //add a token to the count of tokens
                                   let token_num = this.state.num_of_tokens;
-                                  if(token_num<6)
+                                  if(token_num<8)
                                   {
                                   token_num++;
                                   }
@@ -685,15 +675,15 @@ export default class GoogleMapsScreen extends React.Component {
                                   //this.setState({num_of_tokens});
 
                                   var token_number=tokens.indexOf(closestToken);
-                                  if(this.state.num_of_tokens+1<6 ){
+                                  if(this.state.num_of_tokens+1<8){
                                   this.setModalVisible("tokenUpdate");
-                                  /*Speech.speak('congratulations! you have found ' + (this.state.num_of_tokens + 1) +' of 6 tokens');*/
+                                  /*Speech.speak('congratulations! you have found ' + (this.state.num_of_tokens + 1) +' of 8 tokens');*/
                                   this.handleTokenAuido();
                                   }
-                                  else if(token_num==6)
+                                  else if(token_num==8)
                                   {
                                     this.handleTokenAuido();
-                                      Speech.speak('You have found all 6 tokens!, Congratulations!');
+                                      Speech.speak('You have found all 8 tokens!, Congratulations!');
                                       this.setModalVisible("tokenCollect");
                                       //alert('you have found all 6 tokens! Congratuations!');
                                     /*  Alert.alert(
@@ -707,7 +697,7 @@ export default class GoogleMapsScreen extends React.Component {
                                   }
 
                                   //reset the token distance to 9999999 (a number that should always be bigger than the rest)and so that it will never be the minimum as above
-                                  if(token_num<6)
+                                  if(token_num<8)
                                   {
       							const index = tokens.indexOf(tokens[i]);
       							if (index !== -1)
