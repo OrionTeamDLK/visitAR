@@ -4,12 +4,14 @@ import {
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    justifyContent: "center"
+    backgroundColor: "#e4d9c0",
+    //justifyContent: "center",
+   
   },
   Button: {
-    marginTop: 10
+    marginTop: 10,
+    marginHorizontal: 10,
+    color: "#adadad"
   },
   profile_pic: {
     width: 200,
@@ -20,7 +22,8 @@ export const styles = StyleSheet.create({
     borderColor: "black",
     marginTop: 10,
     marginBottom: 10,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginHorizontal: 20
   },
   heading: {
     margin:20,
@@ -30,5 +33,13 @@ export const styles = StyleSheet.create({
     marginTop:10,
     marginBottom:10,
     fontSize:18
+  },
+  content_style: {
+    backgroundColor: "#d9d1bf",
+    alignItems: 'center',
+  },
+  displayName: {
+    fontSize: 30,
+    color: "white"
   }
 });

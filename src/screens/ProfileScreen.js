@@ -4,7 +4,8 @@ import {
     Text,
     StyleSheet,
     Image,
-    YellowBox
+    YellowBox,
+    contentContainerStyle
 } from "react-native";
 import NavigationButton from "../Components/NavigationButton";
 import {
@@ -24,7 +25,6 @@ import Axios from "axios";
 import {getUserID, getUser} from '../../Utils/user_func';
 import {styles} from "../styles/ProfileScreenStyle";
 import {AsyncStorage} from 'react-native';
-
 
 console.ignoredYellowBox = [
   "Setting a timer for a long period of time"];
@@ -119,9 +119,13 @@ export default class ProfileScreen extends React.Component {
     return (
       <Container style={styles.container}>
         <Content>
+        <Content contentContainerStyle={styles.content_style}>
           <Image source={{ uri: image }} style={styles.profile_pic} />
+       
         {/*  <Text>Name: {this.state.name && null}</Text>*/}
+          {/* <Text style={styles.displayName}>{this.state.displayName}</Text> */}
           <Text>Email: {this.state.email}</Text>
+        </Content>
          {/* <Text>User ID: {this.state.uid}</Text>*/}
           {/*<Text>Photo URL: {this.state.photoURL}</Text>*/}
 
@@ -151,16 +155,16 @@ export default class ProfileScreen extends React.Component {
             success
             onPress={() => this.logOut()}
           >
-            <Text style={{ color: "#fff" }}>Log out</Text>
+            <Text style={{ color: "#d11947", fontSize: 20, fontVariant: "bold" }}>Log out</Text>
           </Button>
 
-          <NavigationButton
+          {/* <NavigationButton
             style={styles.Button}
             data-test="ProfileScreen_button"
             title="Home"
             icon="home"
             navName="GMaps"
-          />
+          /> */}
 
 {/*          <NavigationButton
             style={styles.Button}
