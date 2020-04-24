@@ -111,7 +111,6 @@ export default class GoogleMapsScreen extends React.Component {
             tokenCollectVisible:false,
             tokenInfoVisible:false,
             distanceTokenModal:false
-
         }
     }
 
@@ -468,9 +467,7 @@ export default class GoogleMapsScreen extends React.Component {
 
         this.showLoader();
 
-
         const uid = await getUserID();
-
 
         //¯\_(ツ)_/¯
         const newState = JSON.parse(JSON.stringify(this.state));
@@ -493,6 +490,34 @@ export default class GoogleMapsScreen extends React.Component {
             tokens: this.state.num_of_tokens
           });
         });
+
+        this.setState({
+          showLoader: false,
+          uiState: 0,
+          waypoints: this.getWaypoints(),
+          tour: {
+              date: '',
+              time_started: 0,
+              time_finished: 0,
+              tourStarted: false,
+              tour_completed: false,
+              origin: null,
+              destination: null,
+              nextLocation: 1,
+              landmarks_visited: [],
+              coords:[]
+          },
+          tokenUpdateVisible:false,
+          tokenCollectVisible:false,
+          tokenInfoVisible:false,
+          distanceTokenModal:false
+        })
+
+        setTimeout(() => {
+        this.resetTokens();
+        this.setState({num_of_tokens:0})
+      }, 1500);
+
     }
 
     toStart = () => {
@@ -526,6 +551,13 @@ export default class GoogleMapsScreen extends React.Component {
     showLoader = () => this.setState({ showLoader: true });
 
     hideLoader = () => this.setState({ showLoader: false });
+
+    resetTokens = () => {
+      for(let i = 0; i < 8; i++){
+        console.log("resetting tokens")
+        tokens[i] = 40;
+      }
+    }
 
     setTokens = ()  => {
         navigator.geolocation.getCurrentPosition(
@@ -620,9 +652,6 @@ export default class GoogleMapsScreen extends React.Component {
 
                }
 
-
-
-
                error => Alert.alert(error.message),
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
             }
@@ -704,7 +733,7 @@ export default class GoogleMapsScreen extends React.Component {
       							if (index !== -1)
       							{
          							 tokens[index] = 99999999;
-                                  }
+                    }
                               }
 
                                   this.setState({tokens})	;
@@ -735,15 +764,8 @@ export default class GoogleMapsScreen extends React.Component {
                     );
                     */
                     }
-
-
        // this.setState({nearest_token});
                 }
-
-
-
-
-
 	  }
 
 
@@ -901,7 +923,7 @@ export default class GoogleMapsScreen extends React.Component {
                             longitude: -6.185652
                           }}
                           >
-                          <Image source={require('../../assets/initialTourMarker.png')} />
+                          <Image source={require('../../assets/initialTourMarker.png')} style={styles.initialMarkerStyle} />
                           </Marker>
                         }
 
@@ -1271,6 +1293,10 @@ const styles = StyleSheet.create({
       backgroundColor: '#EBD5B3',
       padding: 20,
       borderRadius:15
+    },
+    initialMarkerStyle:{
+      width: 368,
+      height: 331,
     },
     closeText:{
       fontSize:30,

@@ -8,7 +8,6 @@ import LinkButton from "../Components/LinkButton";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 
-
 const EndTourScreen =(props)=>{
 
 
@@ -35,13 +34,11 @@ const EndTourScreen =(props)=>{
                 No landmarks this time, hope you come back and check out more of Carlingford town
               </Text>
             }
-
-
             <View style={styles.viewBar} />
             {tokens === 0?
-            <Text style={styles.textMain}>No tokens this time.{"\n"}How many can you and your friends collect next time?</Text>
+            <Text style={styles.textMain}>No tokens this time.{"\n"}How many can you collect next time?</Text>
             :
-            <Text style={styles.textMain}>You have collected {tokens} out of 8 tokens! well done!!!{"\n"}How many can you and your friends collect next time?</Text>
+            <Text style={styles.textMain}>You have collected {tokens} out of 8 tokens! well done!!!{"\n"}How many can you collect next time?</Text>
             }
             <View style={styles.buttonsView}>
             <LinkButton icon="link" name="Leave Feedback" link='https://www.surveymonkey.com/r/HLQC9JD' />
