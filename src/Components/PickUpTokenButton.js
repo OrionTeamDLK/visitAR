@@ -12,7 +12,7 @@ const PickUpTokenButton = (props) => {
         style={{
           position: "absolute",
           left:Dimensions.get('window').width * 0.82,
-          top :Dimensions.get('window').height * 0.6
+          top :Dimensions.get('window').height * 0.68
         }}>
         <TouchableOpacity
             onPress={props.pickUpTokenGame}
