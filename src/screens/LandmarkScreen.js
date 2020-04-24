@@ -35,7 +35,7 @@ export default class LandmarkScreen extends React.Component {
 
   render() {
     //console.log(this.props.navigation.state.params.landmark)
-    let { title, description, location, image} = this.props.navigation.state.params.landmark;
+    let { title, description, location, image, link} = this.props.navigation.state.params.landmark;
 
 
 
@@ -73,7 +73,7 @@ export default class LandmarkScreen extends React.Component {
         </TouchableOpacity>
         }
         <Text style={{marginBottom:5}}>Play text to speech</Text>
-        <LinkButton icon="link" name="More Info" link='https://visitcarlingford.com/' />
+        <LinkButton icon="link" name="More Info" link={link}/>
         </View>
         </ScrollView>
       </View>

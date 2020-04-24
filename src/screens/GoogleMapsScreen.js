@@ -410,6 +410,7 @@ export default class GoogleMapsScreen extends React.Component {
                     "image": waypoint.image,
                     "fact": waypoint.fact,
                     "icon":waypoint.icon,
+                    "link":waypoint.link,
                     "location": {
                         "latitude": waypoint.location._latitude,
                         "longitude": waypoint.location._longitude
