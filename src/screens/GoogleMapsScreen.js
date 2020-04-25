@@ -643,9 +643,7 @@ export default class GoogleMapsScreen extends React.Component {
                 tokens[7] = getPreciseDistance(
 
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
-                  //test value close to my house(emma)
-                 // { latitude: 54.191527, longitude:-6.399936}
-
+                                
                   { latitude: 54.038969, longitude:-6.185382}
                 );
               this.setState({token8});
@@ -1197,10 +1195,28 @@ export default class GoogleMapsScreen extends React.Component {
               }}>
               <View style={styles.modalOuter}>
                   <View style={styles.modalInnerInfoDistance}>
-                     <Text style={styles.contentTextDistance}>
-                          {closestToken}m{"\n"}From the nearest token!{"\n"}They are located at each landmark that has a blue plaque.{"\n"} can you find it?
-                    </Text>
-
+                  {closestToken >250  ?
+                     <Text style={styles.contentTextDistance}>                       
+                     You are more than 250m from the closest token {"\n\n"}They are located at each landmark that has a blue plaque.{"\n"} Keep trying!
+                      </Text>
+                               :
+                               null
+                  }
+                  {closestToken <100 && closestToken >50 ?
+                     <Text style={styles.contentTextDistance}>                       
+                     You are less than 100m from the closest token {"\n\n"}They are located at each landmark that has a blue plaque.{"\n"} Nearly there!
+                      </Text>
+                               :
+                            null
+                  }
+                  {closestToken <50  ?
+                     <Text style={styles.contentTextDistance}>                       
+                     You are less than 50m from the closest token {"\n\n"}They are located at each landmark that has a blue plaque.{"\n"} So close!
+                      </Text>
+                               :
+                            null
+                  } 
+                     
               <TouchableHighlight
                      onPress={() => {
                         this.setModalVisible("distanceTokenModal");this.props.navigation.navigate('Help');
