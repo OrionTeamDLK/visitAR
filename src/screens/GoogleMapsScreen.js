@@ -1122,7 +1122,7 @@ export default class GoogleMapsScreen extends React.Component {
                                     You have collected a token!
                                   </Text>
                                   <Text style={styles.contentText}>
-                                              {this.state.num_of_tokens} out of 6 so far!
+                                              {this.state.num_of_tokens} out of 8 so far!
                                             </Text>
                                 <TouchableHighlight
                                   onPress={() => {

@@ -29,7 +29,7 @@
     "android": {
       "package": "com.oriondlk.visitar",
       "versionCode": 1,
-      "icon":"./big_icon.png"
+      "icon": "./big_icon.png"
     },
     "description": "version 1.2 of VisitAR app android and iphone builds"
   }
