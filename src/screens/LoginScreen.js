@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import NavigationButton from '../Components/NavigationButton';
 import RegisterButton from '../Components/RegisterButton';
 import * as Google from 'expo-google-app-auth';
 import { Container, Content, Header, Form, Input, Item, Button, Label } from 'native-base';
 import * as firebase from 'firebase';
 import {getUserID, isUserLoggedIn} from '../../Utils/user_func';
+import logo from "../../assets/logo02.png"
 
 export default class Login extends React.Component {
 
@@ -120,6 +121,7 @@ export default class Login extends React.Component {
   render() {
     return (
       <Container style={styles.container} >
+      <Content contentContainerStyle={styles.content_style}><Image style={styles.Image}source={logo}/></Content>      
         <Form>
           <Item floatingLabel>
             <Label>Email: </Label>
@@ -160,8 +162,8 @@ export default class Login extends React.Component {
           </Button>
     </Form>*/}
 
-        <View style={{borderTopColor: "#d9d9d9",
-    borderTopWidth: 2}} />
+        {/* <View style={{borderTopColor: "#d9d9d9",
+    borderTopWidth: 1}} /> */}
 
         <RegisterButton
         data-test = "LoginScreen_button"
@@ -181,10 +183,10 @@ export default class Login extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 30,
+    //paddingTop: 30,
     backgroundColor: '#fff',
-    justifyContent: 'center',
-    marginHorizontal: 10
+    //justifyContent: 'center',
+    marginHorizontal: 10,
   },
   Button: {
     marginTop: 25,
@@ -198,6 +200,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 15,
     backgroundColor: '#4267B2'
+  },
+  content_style: {
+    alignItems: "center"
+  },
+  Image: {
+    flex: 1,
+    aspectRatio: 1.5,
+     resizeMode: 'contain'
   }
 });
 
