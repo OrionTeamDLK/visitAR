@@ -257,7 +257,7 @@ export default class GoogleMapsScreen extends React.Component {
                         description.substring(0, 100) + "...",
                         [
                           {text: 'View details', onPress: () => this.props.navigation.navigate('Landmark', { landmark: newState.waypoints[nextLocation - 1] })},
-                          {text: '', onPress: () => console.log('')},
+                          {text: 'find token', onPress: () => this.TokenGame()},
                           {text: 'Continue Tour', onPress: () => console.log('Continue Tour Pressed')},
                         ],
                         {cancelable: false},
@@ -643,7 +643,7 @@ export default class GoogleMapsScreen extends React.Component {
                 tokens[7] = getPreciseDistance(
 
                   { latitude: position.coords.latitude, longitude: position.coords.longitude },
-                                
+
                   { latitude: 54.038969, longitude:-6.185382}
                 );
               this.setState({token8});
@@ -1196,27 +1196,27 @@ export default class GoogleMapsScreen extends React.Component {
               <View style={styles.modalOuter}>
                   <View style={styles.modalInnerInfoDistance}>
                   {closestToken >250  ?
-                     <Text style={styles.contentTextDistance}>                       
+                     <Text style={styles.contentTextDistance}>
                      You are more than 250m from the closest token {"\n\n"}They are located at each landmark that has a blue plaque.{"\n"} Keep trying!
                       </Text>
                                :
                                null
                   }
                   {closestToken <100 && closestToken >50 ?
-                     <Text style={styles.contentTextDistance}>                       
+                     <Text style={styles.contentTextDistance}>
                      You are less than 100m from the closest token {"\n\n"}They are located at each landmark that has a blue plaque.{"\n"} Nearly there!
                       </Text>
                                :
                             null
                   }
                   {closestToken <50  ?
-                     <Text style={styles.contentTextDistance}>                       
+                     <Text style={styles.contentTextDistance}>
                      You are less than 50m from the closest token {"\n\n"}They are located at each landmark that has a blue plaque.{"\n"} So close!
                       </Text>
                                :
                             null
-                  } 
-                     
+                  }
+
               <TouchableHighlight
                      onPress={() => {
                         this.setModalVisible("distanceTokenModal");this.props.navigation.navigate('Help');
