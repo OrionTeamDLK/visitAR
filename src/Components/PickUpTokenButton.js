@@ -11,7 +11,7 @@ const PickUpTokenButton = (props) => {
         <View
         style={{
           position: "absolute",
-          left:Dimensions.get('window').width * 0.82,
+          right: 20,
           top :Dimensions.get('window').height * 0.68
         }}>
         <TouchableOpacity

@@ -102,7 +102,8 @@ class UserInterface extends Component {
                     text: "Start Tour",
                     fontsize: 25,
                     showView: true,
-                    right: null
+                    right: null,
+                    top: Dimensions.get('window').height * 0.83,
                 },
                 {
                     onPress: this.props.CallReCenter,
@@ -112,7 +113,9 @@ class UserInterface extends Component {
                     text: "",
                     fontsize: 22,
                     showView: false,
-                    right: 20
+                    right: 20,
+                    bottom: 30,
+                    top: null
                 }]
         }
     }
@@ -391,9 +394,11 @@ class UserInterface extends Component {
                 {/*start tour button sharing props with recenter*/}
                 <TouchableOpacity style={{
                     position: "absolute",
-                    top:Dimensions.get('window').height * 0.83,
+                    top:this.state.uiState[this.props.status].top,
                     alignSelf: 'center',
-                    right: this.state.uiState[this.props.status].right
+                    right: this.state.uiState[this.props.status].right,
+                    bottom: this.state.uiState[this.props.status].bottom
+
                 }}
                     onPress={this.state.uiState[this.props.status].onPress}
                 >
