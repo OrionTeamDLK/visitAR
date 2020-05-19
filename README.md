@@ -51,4 +51,4 @@ To run the expo server.
 expo start
 ```
 
-To un the App, Scan the QR code with the Expo Phone App
+To run the App, Scan the QR code with the Expo Phone App
