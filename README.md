@@ -50,3 +50,5 @@ To run the expo server.
 ```
 expo start
 ```
+
+Tp run the App, Scan the QR code with the Expo Phone App
