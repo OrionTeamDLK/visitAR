@@ -22,7 +22,7 @@
     "expo-speech": "~7.0.0",
     "firebase": "^7.14.0",
     "geolib": "^3.2.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "native-base": "^2.13.8",
     "react": "16.8.3",
     "react-i18next": "^11.3.2",
